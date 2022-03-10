@@ -16,7 +16,6 @@ import {
   CheckBox,
   FormInput,
   HomeHeader,
-  OverlayModal,
   CustomPopup,
 } from '../../../components';
 import LinearGradient from 'react-native-linear-gradient';

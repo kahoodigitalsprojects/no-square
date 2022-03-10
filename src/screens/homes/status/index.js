@@ -71,7 +71,7 @@ const Status = props => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => props.navigation.goBack()}
+            onPress={() => props.navigation.navigate('home')}
             style={{
               width: 30,
               height: 30,

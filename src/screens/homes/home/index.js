@@ -12,6 +12,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
+import {Tooltip, colors} from 'react-native-elements';
 import {
   FormInput,
   AppButton,
@@ -22,8 +23,11 @@ import {
 } from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
+import {useIsFocused} from '@react-navigation/native';
 const Home = props => {
+  const isFocused = useIsFocused();
   const {navigation} = props;
+  const [state, setState] = useState(false);
   const statusData = [
     {
       imageUri: Images.Backgrounds.Ellipse1,
@@ -86,7 +90,9 @@ const Home = props => {
         flex: 1,
         backgroundColor: 'white',
       }}>
-      <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+      {isFocused && (
+        <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+      )}
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -118,9 +124,15 @@ const Home = props => {
                           style={styles.statusBox}
                           activeOpacity={0.8}
                           onPress={() => {
-                            props.navigation.navigate('Statics', {
-                              screen: 'status',
-                            });
+                            {
+                              i == 0
+                                ? props.navigation.navigate('Statics', {
+                                    screen: 'addStatus',
+                                  })
+                                : props.navigation.navigate('Statics', {
+                                    screen: 'status',
+                                  });
+                            }
                           }}>
                           <ImageBackground
                             source={item.imageUri}
@@ -143,22 +155,23 @@ const Home = props => {
                   })}
                 </ScrollView>
               </View>
-              <Text style={styles.newFeed}>News Feed</Text>
+              <Text style={styles.newFeed}>NoSquare Feed</Text>
               {Post.map((item, i) => {
                 return (
-                  <TouchableOpacity
-                    style={styles.PostVIew}
-                    activeOpacity={1}
-                    onPress={() => {
-                      props.navigation.navigate('Statics', {
-                        screen: 'innerPost',
-                      });
-                    }}>
+                  <View style={styles.PostVIew}>
                     <View style={styles.postHeader}>
                       <View style={styles.postHeaderContentLeft}>
                         <View
                           style={{flexDirection: 'row', alignItems: 'center'}}>
                           <TouchableOpacity
+                            onPress={() => {
+                              props.navigation.navigate('Statics', {
+                                screen: 'myProfile',
+                                params: {
+                                  check: true,
+                                },
+                              });
+                            }}
                             style={styles.postHeaderImg}
                             activeOpacity={0.8}>
                             <ImageBackground
@@ -187,11 +200,55 @@ const Home = props => {
                           </View>
                         </View>
 
-                        <View style={styles.dotLine}>
-                          <Image
-                            style={{width: 12.68, height: 3.6}}
-                            source={Images.Backgrounds.dotLine}
-                          />
+                        <View style={styles.postIcon}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setState(!state);
+                            }}
+                            style={styles.dotLine}
+                            activeOpacity={0.9}>
+                            <Icon
+                              style={{
+                                fontSize: 15,
+
+                                color: !state ? 'grey' : '#969EB7',
+                              }}
+                              borderColor="#969EB7"
+                              borderWidth={1}
+                              name={'bookmark'}
+                              type={'FontAwesome'}
+                            />
+                          </TouchableOpacity>
+
+                          <View style={styles.dotLine}>
+                            <Tooltip
+                              backgroundColor="#EFF2F7"
+                              width={110}
+                              height={80}
+                              popover={
+                                <View>
+                                  <Text>Report Post</Text>
+                                  <Text>Block User</Text>
+                                  <Text>Hide People</Text>
+                                </View>
+                              }>
+                              <>
+                                <View
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    display: 'flex',
+                                  }}>
+                                  <Image
+                                    source={Images.Backgrounds.dotLine}
+                                    style={styles.savedImage}
+                                  />
+                                </View>
+                              </>
+                            </Tooltip>
+                          </View>
                         </View>
                       </View>
                       <Text
@@ -204,7 +261,13 @@ const Home = props => {
                       </Text>
                       <Text style={{color: '#F54F84'}}>See more</Text>
 
-                      <View
+                      <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => {
+                          props.navigation.navigate('Statics', {
+                            screen: 'innerPost',
+                          });
+                        }}
                         style={{
                           width: '100%',
                           height: 217,
@@ -217,7 +280,7 @@ const Home = props => {
                           }}
                           source={item.image}
                         />
-                      </View>
+                      </TouchableOpacity>
                       <Text
                         style={{fontSize: 10, color: '#747EA0', marginTop: 5}}>
                         30 comments · 5 shares
@@ -334,7 +397,7 @@ const Home = props => {
                         </View>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </View>
                 );
               })}
             </View>
@@ -397,7 +460,7 @@ const styles = StyleSheet.create({
   PostVIew: {
     width: '100%',
     height: 442.03,
-    backgroundColor: 'red',
+
     marginTop: 15,
     borderRadius: 24,
     backgroundColor: '#FFFFFF',
@@ -425,12 +488,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#19295C',
   },
-  dotLine: {
-    width: 28.64,
+  postIcon: {
     height: 22.64,
-    alignItem: 'center',
-    justifyContent: 'center',
+    width: 50,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
+  dotLine: {
+    width: 22.64,
+    height: 22.64,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#EFF2F7',
+    borderRadius: 20,
+  },
+  savedImage: {
+    width: 12.68,
+    height: 3.62,
+  },
+
   icons: {
     flexDirection: 'row',
     marginTop: 10,

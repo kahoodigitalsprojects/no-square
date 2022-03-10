@@ -18,6 +18,7 @@ import {
   Header,
   HomeHeader,
   SearchBar,
+  TextWithLine,
 } from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon, Item} from 'native-base';
@@ -44,10 +45,33 @@ const ChatRoom = props => {
               <Text style={styles.textStyle}>Chat Rooms</Text>
               <View style={styles.textBorderLine}></View>
             </View>
+            <View style={{width: '100%', height: 38, marginTop: 20}}>
+              <TouchableOpacity
+                style={styles.createChatRoomBtn}
+                onPress={() => {
+                  props.navigation.navigate('Statics', {
+                    screen: 'createChatRoom',
+                  });
+                }}
+                activeOpacity={0.9}>
+                <Icon
+                  name="group-add"
+                  type="MaterialIcons"
+                  style={{color: 'white'}}
+                />
+                <Text style={{fontSize: 12, color: 'white', paddingLeft: 7}}>
+                  Create Chat Room
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-            <View style={styles.activeRoom}>
-              <Text style={styles.activeRoomText}>Active Room</Text>
-              <View style={styles.activeLine}></View>
+            <View style={{marginTop: 0}}>
+              <TextWithLine
+                text="Active Room"
+                left={0}
+                fontSize={15}
+                fontWeight="600"
+              />
             </View>
             <View style={styles.chatBox}>
               <TouchableOpacity
@@ -76,10 +100,12 @@ const ChatRoom = props => {
                 <Text style={{fontSize: 12}}>20k Members</Text>
               </View>
             </View>
-            <View style={styles.activeRoom}>
-              <Text style={styles.activeRoomText}>Available Room</Text>
-              <View style={styles.activeLine}></View>
-            </View>
+            <TextWithLine
+              text="Available Room"
+              left={0}
+              fontSize={15}
+              fontWeight="600"
+            />
             {ChatData.map((item, i) => {
               return (
                 <View style={styles.chatBox} key={i}>
@@ -100,7 +126,7 @@ const ChatRoom = props => {
 
                   <View
                     style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontSize: 10}}>20 min</Text>
+                    <Text style={{fontSize: 10}}>1 hour ago</Text>
                     <Text style={{fontSize: 12}}>20k Members</Text>
                   </View>
                 </View>
@@ -173,5 +199,16 @@ const styles = StyleSheet.create({
     color: '#6D6B6B',
     marginLeft: 10,
     fontWeight: '600',
+  },
+  createChatRoomBtn: {
+    width: '50%',
+    height: '100%',
+    borderRadius: 5,
+    backgroundColor: '#F54D83',
+    position: 'absolute',
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
 });

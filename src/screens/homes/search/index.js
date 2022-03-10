@@ -60,13 +60,9 @@ const Search = props => {
             </View>
             <View style={styles.elevationContent}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={styles.elevationHeadTextName}>Name</Text>
-                <Text style={styles.elevationHeadTextNameTitle}>Jennie</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.elevationHeadTextName}>Country </Text>
-                <Text style={styles.elevationHeadTextNameTitle}>
-                  United States
+                <Text style={styles.elevationHeadTextName2}>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                  diam nonumy eirmod tempor .
                 </Text>
               </View>
             </View>
@@ -109,14 +105,19 @@ const styles = StyleSheet.create({
   elevationHeadText: {fontSize: 15, color: '#19295C', fontWeight: 'bold'},
   elevationHeadTextName: {fontSize: 18, color: '#19295C', fontWeight: '500'},
   elevationHeadTextNameTitle: {fontSize: 20, color: '#888080', paddingLeft: 10},
-
+  elevationHeadTextName2: {
+    fontSize: 15,
+    color: '#888080',
+    textAlign: 'center',
+  },
   elevation2: {
     width: '100%',
     height: 124,
-    elevation: 0.2,
-    backgroundColor: '#888080',
-    opacity: 0.5,
+    elevation: 0.5,
+    backgroundColor: 'white',
     borderRadius: 30,
     marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

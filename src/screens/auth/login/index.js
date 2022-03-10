@@ -116,7 +116,7 @@ const Login = props => {
                     iconL
                     iconLName="mail"
                     iconLType="AntDesign"
-                    placeHolder="example@gmail.com"
+                    placeHolder="Enter your Email"
                     onFocus={() => setState({...state, focus: 'email'})}
                     onBlur={() => setState({...state, focus: ''})}
                   />
@@ -155,7 +155,7 @@ const Login = props => {
                       onPressR={() =>
                         setState({...state, secureText: !state.secureText})
                       }
-                      placeHolder="Password"
+                      placeHolder="**********"
                       onFocus={() => setState({...state, focus: 'password'})}
                       onBlur={() => setState({...state, focus: ''})}
                     />
@@ -205,6 +205,28 @@ const Login = props => {
                       </Text>
                     </TouchableOpacity>
                     <Text style={styles.bottomRightText}>here</Text>
+                  </View>
+
+                  <View style={styles.bottomText}>
+                    <Text style={styles.bottomLeftText}>
+                      Having Trouble logging In?
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.bottomSignTextbtn}
+                      onPress={() => {
+                        props.navigation.navigate('Statics', {
+                          screen: 'contactUs',
+                        });
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: '#F54F84',
+                          fontWeight: 'bold',
+                        }}>
+                        Contact Us
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>

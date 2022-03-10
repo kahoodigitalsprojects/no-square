@@ -35,6 +35,16 @@ const Settings = props => {
       onPress: 'privacySetting',
     },
     {
+      icon: Images.Backgrounds.privacy,
+      text: 'Subscriptions Plan',
+      rightText: '',
+      rightIcon: 'right',
+      rightIconType: 'AntDesign',
+      imageHeight: 30,
+      imageWidth: 30,
+      onPress: 'privacySetting',
+    },
+    {
       icon: Images.Backgrounds.terms,
       text: 'Terms of Use',
       rightText: '',
@@ -54,6 +64,16 @@ const Settings = props => {
       imageWidth: 14.98,
       onPress: 'changePassword',
     },
+    {
+      icon: Images.Backgrounds.lock,
+      text: 'Delete Account',
+      rightText: '',
+      rightIcon: '',
+      rightIconType: '',
+      imageHeight: 16.98,
+      imageWidth: 14.98,
+      onPress: 'deleteAccount',
+    },
   ];
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -62,7 +82,7 @@ const Settings = props => {
         <HomeHeader
           navigation={props.navigation}
           setting
-          text={'Setting'}
+          text={'Settings'}
           right
           settingIconProps={() => props.navigation.navigate('home')}
         />

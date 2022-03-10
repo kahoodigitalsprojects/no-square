@@ -145,11 +145,11 @@ const Connections = props => {
                   onPress={() => {
                     setState({...state, active: true});
                   }}>
-                  <Text style={{fontSize: 12}}>All</Text>
+                  <Text style={{fontSize: 12}}>Friends</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
-                    width: 69,
+                    width: 95,
                     height: 25,
                     borderRadius: 15,
                     backgroundColor:
@@ -160,52 +160,136 @@ const Connections = props => {
                   onPress={() => {
                     setState({...state, active: false});
                   }}>
-                  <Text style={{fontSize: 12, color: '#6D6B6B'}}>Recent</Text>
+                  <Text style={{fontSize: 12, color: '#6D6B6B'}}>
+                    Friend Request
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
 
-            {ChatData.map((item, i) => {
-              return (
-                <Swipeable rightButtons={rightButtons}>
-                  <TouchableOpacity
-                    style={styles.chatBox}
-                    onPress={() => {
-                      props.navigation.navigate('Statics', {screen: 'chat'});
-                    }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <View style={styles.chatProfile}>
-                        <Image
-                          source={item.image}
-                          style={{width: '100%', height: '100%'}}
-                        />
-                        {item.text === 'Helan' ||
-                        item.text === 'Marcia Dor' ||
-                        item.text === 'Lucy Grey' ? (
-                          <View style={styles.active}></View>
-                        ) : null}
-                      </View>
+            {state.active === true
+              ? ChatData.map((item, i) => {
+                  return (
+                    <Swipeable rightButtons={rightButtons}>
+                      <TouchableOpacity
+                        style={styles.chatBox}
+                        onPress={() => {
+                          props.navigation.navigate('Statics', {
+                            screen: 'chat',
+                          });
+                        }}
+                        activeOpacity={0.8}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <View style={styles.chatProfile}>
+                            <Image
+                              source={item.image}
+                              style={{width: '100%', height: '100%'}}
+                            />
+                            {item.text === 'Helan' ||
+                            item.text === 'Marcia Dor' ||
+                            item.text === 'Lucy Grey' ? (
+                              <View style={styles.active}></View>
+                            ) : null}
+                          </View>
 
-                      <View>
-                        <Text style={styles.profileName}>{item.text}</Text>
-                        <Text style={styles.profileTitle}>{item.title}</Text>
-                      </View>
-                    </View>
+                          <View>
+                            <Text style={styles.profileName}>{item.text}</Text>
+                            <Text style={styles.profileTitle}>
+                              {item.title}
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    </Swipeable>
+                  );
+                })
+              : ChatData.map((item, i) => {
+                  return (
+                    <TouchableOpacity
+                      style={styles.chatBox}
+                      onPress={() => {
+                        props.navigation.navigate('Statics', {
+                          screen: 'chat',
+                        });
+                      }}
+                      activeOpacity={0.8}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View style={styles.chatProfile}>
+                          <Image
+                            source={item.image}
+                            style={{width: '100%', height: '100%'}}
+                          />
+                          {item.text === 'Helan' ||
+                          item.text === 'Marcia Dor' ||
+                          item.text === 'Lucy Grey' ? (
+                            <View style={styles.active}></View>
+                          ) : null}
+                        </View>
 
-                    <View
-                      style={{alignItems: 'center', justifyContent: 'center'}}>
-                      <Text style={{fontSize: 10}}>20 min</Text>
-                      <Text style={{fontSize: 12}}>20k Members</Text>
-                    </View>
-                  </TouchableOpacity>
-                </Swipeable>
-              );
-            })}
+                        <View style={{}}>
+                          <Text style={styles.profileName}>{item.text}</Text>
+                          <Text style={styles.profileTitle}>{item.title}</Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexDirection: 'row',
+                          width: 120,
+                        }}>
+                        <View style={styles.rightContentHiddin}>
+                          <TouchableOpacity activeOpacity={0.9}>
+                            <View>
+                              <View style={styles.rightContentHiddinData}>
+                                <Image
+                                  source={Images.Backgrounds.block}
+                                  style={{width: 15, height: 15}}
+                                />
+                              </View>
+                              <Text style={{fontSize: 10, color: 'black'}}>
+                                Block
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+
+                          <TouchableOpacity
+                            activeOpacity={0.9}
+                            style={{marginLeft: 10}}>
+                            <View>
+                              <View
+                                style={{
+                                  width: 28,
+                                  height: 27,
+                                  borderRadius: 5,
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}>
+                                <Image
+                                  source={Images.Pictures.iconCross}
+                                  style={{width: 15, height: 15}}
+                                />
+                              </View>
+                              <Text style={{fontSize: 10, color: 'black'}}>
+                                unfriend
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
           </View>
         </>
       </ScrollView>

@@ -24,7 +24,7 @@ const UserComment = ({onReply, nested, isLikeButton}) => {
           <AppText
             text={'Lorem ipsum dolor sit amet, consetetur sadipscing 😍🥺 '}
             color={'grey'}
-            size={11}
+            size={10}
             // paddingT
           />
           <View
@@ -43,14 +43,21 @@ const UserComment = ({onReply, nested, isLikeButton}) => {
               activeOpacity={0.7}
               onPress={onReply}
               style={styles.commentComponentReply}>
-              <AppText text={'Like    '} color={'#2D3F7B'} />
+              <AppText text={'Like'} color={'#2D3F7B'} />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={onReply}
-              style={styles.commentComponentReply}>
+              style={styles.commentComponentReply2}>
               <AppText text={'Reply'} color={'#2D3F7B'} />
             </TouchableOpacity>
+
+            <View
+              activeOpacity={0.7}
+              onPress={onReply}
+              style={styles.commentTime}>
+              <AppText text={'2 Days Ago'} color={'#2D3F7B'} size={9} />
+            </View>
           </View>
         </View>
       </View>
@@ -71,8 +78,8 @@ const UserComment = ({onReply, nested, isLikeButton}) => {
                 <AppText text={'Amber Grey '} bold size={14} Spacing />
               </View>
               <AppText
-                text={'lorem ipsum constreif cvvcosfd '}
-                color={'grey'}
+                text="lorem ipsum constreif cvvcosfd "
+                color="grey"
                 size={11}
               />
             </View>
@@ -135,5 +142,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     padding: 2,
   },
-  commentComponentReply2: {},
+  commentComponentReply2: {marginTop: 0, padding: 2, marginLeft: 5},
+  commentTime: {
+    position: 'absolute',
+    right: 10,
+  },
 });

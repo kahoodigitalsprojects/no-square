@@ -13,10 +13,13 @@ import {Images, theme} from '../../constants';
 import {Switch} from 'react-native-paper';
 import {AppButton} from '..';
 import ForgetPassword from '../../screens/auth/forgetPassword';
+import {Icon} from 'native-base';
 const CustomPopup = props => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isSwitchOn2, setIsSwitchOn2] = useState(false);
   const [notifty, setNotify] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  const onToggleSwitch2 = () => setIsSwitchOn2(!isSwitchOn2);
   const {
     stateOverlay,
     setstateOverlay,
@@ -42,6 +45,9 @@ const CustomPopup = props => {
     forgetPassword,
     privacy,
     privacyText,
+    contactSendMessege,
+    accountDelete,
+    onDelete,
   } = props;
   return (
     <Overlay
@@ -170,14 +176,14 @@ const CustomPopup = props => {
                   style={{width: 21.77, height: 21.77}}
                 />
                 <Switch
-                  value={isSwitchOn}
-                  onValueChange={onToggleSwitch}
+                  value={isSwitchOn2}
+                  onValueChange={onToggleSwitch2}
                   color="#F54F84"
                   style={{width: 21.77, height: 21.77}}
                 />
               </View>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={OBonPress}>
               <LinearGradient
                 colors={['#F52667', '#F54F84']}
                 style={styles.footerRightData}>
@@ -322,6 +328,131 @@ const CustomPopup = props => {
           </TouchableOpacity>
         </View>
       )}
+      {contactSendMessege && (
+        <View style={{width: '90%', height: '100%', alignSelf: 'center'}}>
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
+            <Text style={{fontSize: 20, color: '#000000', fontWeight: 'bold'}}>
+              Thank You
+            </Text>
+            <View style={{marginTop: 15}}>
+              <Image
+                source={Images.Backgrounds.correct}
+                style={{width: 50, height: 50}}
+              />
+            </View>
+
+            <Text style={{fontSize: 20, marginTop: 10}}>Send Successfully</Text>
+            <LinearGradient
+              colors={['#F52667', '#F54F84']}
+              style={styles.loginBtn2}>
+              <AppButton label="Close" onPress={OBonPress} />
+            </LinearGradient>
+          </View>
+        </View>
+      )}
+      {accountDelete && (
+        <View style={{width: '90%', height: '100%', alignSelf: 'center'}}>
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
+            {notifty === true ? (
+              <Icon
+                name="delete-outline"
+                type="MaterialCommunityIcons"
+                style={{fontSize: 60, color: '#F54D83'}}
+              />
+            ) : (
+              <Text style={{fontSize: 20, color: '#BE0909'}}>Warning</Text>
+            )}
+          </View>
+
+          {notifty === true ? (
+            <View
+              style={{
+                width: '100%',
+                marginTop: 20,
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: 220,
+                  height: 58,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text style={{fontSize: 20, textAlign: 'center'}}>
+                  Account deleted successfully
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.paymentSuccesBtn}
+                onPress={onDelete}>
+                <Text style={{fontSize: 15, color: 'white'}}>Continue</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <>
+              <View
+                style={{
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 20,
+                  height: 52,
+                }}>
+                <Text
+                  style={{fontSize: 20, color: '#000000', textAlign: 'center'}}>
+                  Are you sure to Delete your account
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: '100%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: 20,
+                  justifyContent: 'space-evenly',
+                }}>
+                <TouchableOpacity
+                  style={[
+                    styles.btn2,
+                    {
+                      backgroundColor: 'white',
+                    },
+                  ]}
+                  activeOpacity={0.9}
+                  onPress={OBonPress}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#F54D83',
+                    }}>
+                    No
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.btn2}
+                  activeOpacity={0.9}
+                  onPress={() => {
+                    setNotify(true);
+                  }}>
+                  <Text style={{fontSize: 15, color: '#ffff'}}>Yes</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </View>
+      )}
 
       {privacy && (
         <View style={{width: '90%', height: '100%', alignSelf: 'center'}}>
@@ -443,6 +574,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  btn2: {
+    borderWidth: 1,
+    borderColor: '#F54D83',
+    width: 90,
+    height: 38,
+    borderRadius: 5,
+    backgroundColor: '#F54D83',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   paymentSuccesBtn: {
     marginTop: 20,
     width: '80%',
@@ -470,6 +612,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 56,
     borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loginBtn2: {
+    marginTop: 15,
+    width: '60%',
+    alignSelf: 'center',
+    height: 45,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

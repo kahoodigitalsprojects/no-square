@@ -28,6 +28,8 @@ const EditProfile = props => {
   const [state, setState] = useState({
     focus: false,
     secureText: true,
+    checked1: false,
+    checked2: false,
   });
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -84,9 +86,6 @@ const EditProfile = props => {
                 </LinearGradient>
               </TouchableOpacity>
             </ImageBackground>
-            <Text style={{fontSize: 15, color: '#211E1F', alignSelf: 'center'}}>
-              Jena William
-            </Text>
           </View>
           <View style={styles.mainContainer}>
             <View
@@ -178,12 +177,12 @@ const EditProfile = props => {
                 onPressR={() =>
                   setState({...state, secureText: !state.secureText})
                 }
-                placeHolder="Password"
+                placeHolder="*********"
               />
             </View>
             <View style={{marginTop: 5}}>
               <View style={styles.activeRoom}>
-                <Text style={styles.activeRoomText}>Descriptions</Text>
+                <Text style={styles.activeRoomText}>Description</Text>
               </View>
               <View
                 style={{
@@ -219,8 +218,8 @@ const EditProfile = props => {
                 </View>
                 <View style={{}}>
                   <CheckBox
-                    onPress={() => setState({checked2: !state.checked2})}
-                    checked={state.checked2}
+                    onPress={() => setState({checked1: !state.checked1})}
+                    checked={state.checked1}
                     left
                     checkedColor={'#F52A6A'}
                   />

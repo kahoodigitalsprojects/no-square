@@ -46,6 +46,7 @@ const Login = props => {
   const [state, setState] = useState({
     focus: false,
     secureText: true,
+    secureText2: true,
     checked: false,
     checked2: false,
   });
@@ -212,6 +213,42 @@ const Login = props => {
                     </View>
                   </View>
                 </View>
+
+                <View style={{marginVertical: 3}}>
+                  <Text
+                    style={{
+                      alignSelf: 'flex-start',
+                      fontSize: 14,
+                      color: Themes.textColors.blackText,
+                    }}>
+                    Age
+                  </Text>
+                  <View
+                    style={{
+                      marginVertical: 8,
+                      borderColor: state.focus === 'age' ? '#F54F84' : 'grey',
+                      borderWidth: state.focus === 'age' ? 1 : 0.5,
+                      borderRadius: 8,
+                    }}>
+                    <FormInput
+                      borderW={1}
+                      borderC={'#F52667'}
+                      autoCapitalize="none"
+                      value={userInfo.age}
+                      onChangeText={value =>
+                        setUserInfo({...userInfo, age: value})
+                      }
+                      keyboardType={'number-pad'}
+                      iconL
+                      iconLName="calendar-month-outline"
+                      iconLType="MaterialCommunityIcons"
+                      placeHolder="Enter Age"
+                      onFocus={() => setState({...state, focus: 'age'})}
+                      onBlur={() => setState({...state, focus: ''})}
+                    />
+                  </View>
+                </View>
+
                 <View style={{marginVertical: 3}}>
                   <Text
                     style={{
@@ -346,14 +383,14 @@ const Login = props => {
                         setUserInfo({...userInfo, confirmPassword: value})
                       }
                       iconL
-                      secureText={state.secureText}
+                      secureText={state.secureText2}
                       iconLName="lock"
                       iconLType="Feather"
                       iconR
-                      iconRName={state.secureText ? 'eye-with-line' : 'eye'}
+                      iconRName={state.secureText2 ? 'eye-with-line' : 'eye'}
                       iconRType="Entypo"
                       onPressR={() =>
-                        setState({...state, secureText: !state.secureText})
+                        setState({...state, secureText2: !state.secureText2})
                       }
                       placeHolder="*************"
                       onFocus={() =>
@@ -364,25 +401,15 @@ const Login = props => {
                   </View>
                 </View>
 
-                <View style={{marginTop: 5, alignSelf: 'center'}}>
-                  <Text
-                    style={{
-                      color: Themes.textColors.blackText,
-                    }}>
-                    NoSquare Membership is $3.99 a month
-                  </Text>
-                </View>
                 <View style={{paddingVertical: 20, width: '100%'}}>
                   <LinearGradient
                     colors={['#F52667', '#F54F84']}
                     style={styles.loginBtn}>
                     <AppButton
                       buttonStyle={styles.loginBtn}
-                      label="Proceed To Pay"
+                      label="Next"
                       onPress={() => {
-                        props.navigation.replace('statics', {
-                          screen: 'subcription',
-                        });
+                        props.navigation.navigate('subcrption');
                       }}
                     />
                   </LinearGradient>

@@ -6,8 +6,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image,
-  ImageBackground,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,7 +17,6 @@ import {
   HomeHeader,
 } from '../../../components';
 import {Themes, Images} from './../../../constants';
-import {Icon} from 'native-base';
 
 const ForgetPassword = props => {
   const [visible, setVisible] = useState(false);

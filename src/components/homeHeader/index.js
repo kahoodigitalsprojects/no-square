@@ -23,7 +23,7 @@ const HomeHeader = props => {
     settingIconProps,
     textColor,
   } = props;
-  const isDrawerOpen = useDrawerStatus();
+  // const isDrawerOpen = useDrawerStatus();
   return (
     <View style={styles.container}>
       <View style={styles.containerBox}>
@@ -33,11 +33,11 @@ const HomeHeader = props => {
               style={styles.left}
               onPress={() => {
                 props.navigation.openDrawer();
-                console.log(
-                  'I HAVE DRAWER STATUS',
-                  isDrawerOpen === 'open',
-                  isDrawerOpen,
-                );
+                // console.log(
+                //   'I HAVE DRAWER STATUS',
+                //   isDrawerOpen === 'open',
+                //   isDrawerOpen,
+                // );
               }}>
               <Image
                 source={Images.Pictures.homeLogo}

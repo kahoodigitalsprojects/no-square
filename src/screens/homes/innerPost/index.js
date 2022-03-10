@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -9,6 +9,7 @@ import {
   Image,
   ImageBackground,
   TextInput,
+  BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,6 +27,24 @@ import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 
 const InnerPost = props => {
+  useEffect(() => {
+    const backAction = () => {
+      props.navigation.navigate('MyTabs', {screen: 'home'});
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
   return (
     <SafeAreaView
       style={{
@@ -45,7 +64,6 @@ const InnerPost = props => {
             text={'Post'}
             fontSize={35}
             margin={-20}
-            settingIconProps={() => props.navigation.navigate('home')}
           />
           <View style={styles.mainContainer}>
             <TouchableOpacity

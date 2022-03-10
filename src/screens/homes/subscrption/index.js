@@ -68,9 +68,7 @@ const Subcrption = props => {
           contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.container}>
             <HomeHeader
-              onPress={() =>
-                props.navigation.navigate('Auth', {screen: 'signup'})
-              }
+              onPress={() => props.navigation.goBack('signup')}
               setting
               left
               text={'Subcriptions'}
@@ -182,7 +180,7 @@ const Subcrption = props => {
                 <AppButton
                   label="Proceed To Pay"
                   onPress={() => {
-                    props.navigation.replace('statics', {
+                    props.navigation.replace('Statics', {
                       screen: 'paymentMethod',
                     });
                   }}

@@ -13,271 +13,383 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-  UserComment,
-} from '../../../components';
+import {HomeHeader, TextWithLine, CustomPopup} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 
 const MyProfile = props => {
+  console.log('what is my props.routes', props.route);
+  const isCheck = props?.route?.params?.check || null;
   const {navigation} = props;
+  const [visible, setVisible] = useState(false);
+  const statusImage = [
+    {
+      icon1: Images.Backgrounds.status1,
+      icon2: Images.Backgrounds.status2,
+      icon3: Images.Backgrounds.status3,
+    },
+    {
+      icon1: Images.Backgrounds.status4,
+      icon2: Images.Backgrounds.status5,
+      icon3: Images.Backgrounds.status6,
+    },
+
+    {
+      icon1: Images.Backgrounds.status7,
+      icon2: Images.Backgrounds.status8,
+      icon3: Images.Backgrounds.status9,
+    },
+    {
+      icon1: Images.Backgrounds.status1,
+      icon2: Images.Backgrounds.status2,
+      icon3: Images.Backgrounds.status3,
+    },
+    {
+      icon1: Images.Backgrounds.status4,
+      icon2: Images.Backgrounds.status5,
+      icon3: Images.Backgrounds.status6,
+    },
+  ];
   const statusData = [
     {
       imageUri: Images.Backgrounds.Ellipse1,
       Text: 'You',
       plusIcon: Images.Pictures.plusIcon,
+      props: 'addStatus',
+    },
+    {
+      imageUri: Images.Backgrounds.Ellipse2,
+      Text: 'Yu Chin',
+      props: 'status',
+    },
+    {
+      imageUri: Images.Backgrounds.Ellipse3,
+      Text: 'Maria',
+      props: 'status',
+    },
+    {
+      imageUri: Images.Backgrounds.Ellipse4,
+      Text: 'Alexa',
+      props: 'status',
+    },
+    {
+      imageUri: Images.Backgrounds.Ellipse4,
+      Text: 'Alexa',
       props: 'status',
     },
     {
       imageUri: Images.Backgrounds.Ellipse2,
       Text: 'Yu Chin',
+      props: 'status',
+    },
+    {
+      imageUri: Images.Backgrounds.Ellipse4,
+      Text: 'Alexa',
+      props: 'status',
     },
     {
       imageUri: Images.Backgrounds.Ellipse3,
       Text: 'Maria',
-    },
-    {
-      imageUri: Images.Backgrounds.Ellipse4,
-      Text: 'Alexa',
-    },
-    {
-      imageUri: Images.Backgrounds.Ellipse4,
-      Text: 'Alexa',
-    },
-    {
-      imageUri: Images.Backgrounds.Ellipse2,
-      Text: 'Yu Chin',
-    },
-    {
-      imageUri: Images.Backgrounds.Ellipse4,
-      Text: 'Alexa',
-    },
-    {
-      imageUri: Images.Backgrounds.Ellipse3,
-      Text: 'Maria',
+      props: 'status',
     },
   ];
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-      }}>
-      <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.container}>
-          <HomeHeader
-            setting
-            left
-            text={'My Profile'}
-            fontSize={24}
-            onPress={() => {
-              props.navigation.navigate('MyTabs', {screen: 'home'});
-            }}
-          />
-          <View style={styles.mainContainer}>
-            <View
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <View style={styles.profileView}>
-                <ImageBackground
-                  source={Images.Backgrounds.myProfile}
-                  style={{width: 116, height: 119}}>
-                  <TouchableOpacity
-                    style={{
-                      position: 'absolute',
-                      top: -10,
-                      right: -20,
-                    }}
-                    activeOpacity={0.8}>
-                    <LinearGradient
-                      colors={['#F54F84', '#F52667']}
-                      style={styles.iconCamera}>
-                      <Image
-                        source={Images.Pictures.camera}
-                        style={{width: 25.49, height: 22.12}}
-                      />
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </ImageBackground>
-                <Text style={{fontSize: 15, color: '#211E1F'}}>
-                  Jena William
-                </Text>
-              </View>
+    <>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+        }}>
+        <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.container}>
+            <HomeHeader
+              setting
+              left
+              text={isCheck ? 'Profile' : 'My Profile'}
+              fontSize={24}
+              onPress={() => {
+                props.navigation.navigate('MyTabs', {screen: 'home'});
+              }}
+            />
+            <View style={styles.mainContainer}>
               <View
                 style={{
-                  width: '58%',
-                  height: 150,
-
-                  alignItems: 'center',
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                 }}>
+                <View style={styles.profileView}>
+                  <ImageBackground
+                    source={Images.Backgrounds.myProfile}
+                    style={{width: 116, height: 119}}>
+                    {isCheck ? null : (
+                      <TouchableOpacity
+                        style={{
+                          position: 'absolute',
+                          top: -10,
+                          right: -20,
+                        }}
+                        activeOpacity={0.8}>
+                        <LinearGradient
+                          colors={['#F54F84', '#F52667']}
+                          style={styles.iconCamera}>
+                          <Image
+                            source={Images.Pictures.camera}
+                            style={{width: 25.49, height: 22.12}}
+                          />
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    )}
+                  </ImageBackground>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#211E1F',
+                      textAlign: 'center',
+                    }}>
+                    Jena William
+                  </Text>
+                </View>
                 <View
                   style={{
-                    width: '100%',
-                    height: 100,
+                    width: '58%',
+                    height: 150,
+
                     alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
                   }}>
-                  <View style={{alignItems: 'center'}}>
-                    <Text style={{fontSize: 15, color: '#211E1F'}}>50</Text>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        color: '#211E1F',
-                        fontWeight: 'bold',
-                      }}>
-                      Post
-                    </Text>
-                  </View>
-                  <View style={{alignItems: 'center'}}>
-                    <Text style={{fontSize: 15, color: '#211E1F'}}>64</Text>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        color: '#211E1F',
-                        fontWeight: 'bold',
-                      }}>
-                      Friends
-                    </Text>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    props.navigation.navigate('Statics', {
-                      screen: 'editProfile',
-                    });
-                  }}>
-                  <LinearGradient
-                    colors={['#F54F84', '#F52667']}
+                  <View
                     style={{
-                      width: 207,
-                      height: 46,
-                      borderRadius: 10,
+                      width: '100%',
+                      height: 100,
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      flexDirection: 'row',
+                      justifyContent: 'space-evenly',
                     }}>
-                    <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                      Edit Profile
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View style={styles.activeRoom}>
-              <Text style={styles.activeRoomText}>Recent Status</Text>
-              <View style={styles.activeLine}></View>
-            </View>
-
-            <View style={styles.header}>
-              <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal={true}
-                contentContainerStyle={{flexGrow: 1}}>
-                {statusData.map((item, i) => {
-                  return (
-                    <View
+                    <View style={{alignItems: 'center'}}>
+                      <Text style={{fontSize: 15, color: '#211E1F'}}>50</Text>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          color: '#211E1F',
+                          fontWeight: 'bold',
+                        }}>
+                        Post
+                      </Text>
+                    </View>
+                    <View style={{alignItems: 'center'}}>
+                      <Text style={{fontSize: 15, color: '#211E1F'}}>64</Text>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          color: '#211E1F',
+                          fontWeight: 'bold',
+                        }}>
+                        Friends
+                      </Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      props.navigation.navigate('Statics', {
+                        screen: 'editProfile',
+                      });
+                    }}>
+                    <LinearGradient
+                      colors={['#F54F84', '#F52667']}
                       style={{
+                        width: 207,
+                        height: 46,
+                        borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <TouchableOpacity
-                        style={styles.statusBox}
-                        activeOpacity={0.8}
-                        onPress={() => {
-                          props.navigation.navigate(item.props);
+                      <Text style={{fontSize: 16, color: '#FFFFFF'}}>
+                        {isCheck ? 'Sent Friend Request' : 'Edit Profile'}
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <TextWithLine fontSize={15} left={0} text={'Recent Status'} />
+              <View style={styles.header}>
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+                  horizontal={true}
+                  contentContainerStyle={{flexGrow: 1}}>
+                  {statusData.map((item, i) => {
+                    return (
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}>
-                        <ImageBackground
-                          source={item.imageUri}
-                          style={{width: 65, height: 65}}>
-                          {item.Text === 'You' ? (
-                            <TouchableOpacity
-                              style={styles.plusBtn}
-                              activeOpacity={0.8}>
-                              <Image
-                                source={item.plusIcon}
-                                style={{width: '100%', height: '100%'}}
-                              />
-                            </TouchableOpacity>
-                          ) : null}
-                        </ImageBackground>
-                      </TouchableOpacity>
-                      <Text>{item.Text}</Text>
+                        <TouchableOpacity
+                          style={styles.statusBox}
+                          activeOpacity={0.8}
+                          onPress={() => {
+                            props.navigation.navigate(item.props);
+                          }}>
+                          <ImageBackground
+                            source={item.imageUri}
+                            style={{width: 65, height: 65}}>
+                            {item.Text === 'You' ? (
+                              <TouchableOpacity
+                                style={styles.plusBtn}
+                                activeOpacity={0.8}>
+                                <Image
+                                  source={item.plusIcon}
+                                  style={{width: '100%', height: '100%'}}
+                                />
+                              </TouchableOpacity>
+                            ) : null}
+                          </ImageBackground>
+                        </TouchableOpacity>
+                        <Text>{item.Text}</Text>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+              <TextWithLine left={0} text={'Description'} fontSize={15} />
+              <View
+                style={{
+                  width: '90%',
+                  // height: 50,
+                  minHeight: 50,
+                  marginTop: 10,
+                  alignSelf: 'center',
+                }}>
+                <Text style={{color: 'black', fontSize: 12}}>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua
+                </Text>
+              </View>
+              <TextWithLine left={0} text={'Contact Details'} fontSize={15} />
+              <View style={{width: '100%', marginTop: 10}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    height: 20,
+
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="mail" type="AntDesign" style={{fontSize: 18}} />
+                  <Text style={{fontSize: 12, color: 'black', paddingLeft: 5}}>
+                    info@abc.com
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    height: 20,
+                    marginTop: 5,
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="phone" type="Feather" style={{fontSize: 18}} />
+                  <Text style={{fontSize: 12, color: 'black', paddingLeft: 5}}>
+                    +12304568429
+                  </Text>
+                </View>
+              </View>
+              <TextWithLine left={0} text={'Post'} fontSize={15} />
+              {isCheck ? null : (
+                <TouchableOpacity
+                  style={{
+                    width: 40,
+                    height: 37,
+                    borderRadius: 5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'flex-end',
+                    marginTop: 5,
+                    borderColor: '#F54F84',
+                    borderWidth: 2,
+                  }}
+                  onPress={() => {
+                    setVisible(true);
+                  }}
+                  activeOpacity={0.8}>
+                  <Icon
+                    name="plus"
+                    type="AntDesign"
+                    style={{color: '#F54F84', fontWeight: 'bold', fontSize: 35}}
+                  />
+                </TouchableOpacity>
+              )}
+
+              <View
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  marginTop: 20,
+                }}>
+                {statusImage.map((item, i) => {
+                  return (
+                    <View style={{width: '100%', marginBottom: 10}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                        <View style={{width: '30%', height: 113}}>
+                          <ImageBackground
+                            source={item.icon1}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}></ImageBackground>
+                        </View>
+
+                        <View style={{width: '30%', height: 113}}>
+                          <ImageBackground
+                            source={item.icon2}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}></ImageBackground>
+                        </View>
+                        <View style={{width: '30%', height: 113}}>
+                          <ImageBackground
+                            source={item.icon3}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}></ImageBackground>
+                        </View>
+                      </View>
                     </View>
                   );
                 })}
-              </ScrollView>
-            </View>
-            <View style={styles.activeRoom}>
-              <Text style={styles.activeRoomText}>Descriptions</Text>
-              <View style={styles.activeLine}></View>
-            </View>
-            <View
-              style={{
-                width: '90%',
-                // height: 50,
-                minHeight: 50,
-                marginTop: 10,
-                alignSelf: 'center',
-              }}>
-              <Text style={{color: 'black', fontSize: 12}}>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua
-              </Text>
-            </View>
-            <View style={styles.activeRoom}>
-              <Text style={styles.activeRoomText}>Contact Details</Text>
-              <View style={styles.activeLine}></View>
-            </View>
-            <View style={{width: '100%', marginTop: 10}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: 20,
-
-                  alignItems: 'center',
-                }}>
-                <Icon name="mail" type="AntDesign" style={{fontSize: 18}} />
-                <Text style={{fontSize: 12, color: 'black', paddingLeft: 5}}>
-                  info@abc.com
-                </Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: 20,
-                  marginTop: 5,
-                  alignItems: 'center',
-                }}>
-                <Icon name="phone" type="Feather" style={{fontSize: 18}} />
-                <Text style={{fontSize: 12, color: 'black', paddingLeft: 5}}>
-                  +12304568429
-                </Text>
-              </View>
-            </View>
-            <View style={styles.postRoom}>
-              <Text style={styles.postRoomText}>Post</Text>
-              <View style={styles.postLine}></View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+
+      <CustomPopup
+        stateOverlay={visible}
+        setstateOverlay={() => setVisible(false)}
+        modelHeight={341}
+        tabPopup
+        border_radius={15}
+        OBonPress={() => {
+          setVisible(false);
+        }}
+      />
+    </>
   );
 };
 
@@ -314,7 +426,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeRoomText: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#211E1F',
     fontWeight: '500',
     alignItems: 'center',

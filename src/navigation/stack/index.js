@@ -31,6 +31,12 @@ import NotificationSettings from '../../screens/homes/notificationSettings';
 import ChatRoom from '../../screens/homes/chatRoom';
 import Chat from '../../screens/homes/chat';
 import Recording from '../../components/recording';
+import AddStatus from '../../screens/homes/addStatus';
+import Status3 from '../../screens/homes/status3';
+import CreactChatRoom from '../../screens/homes/chatRoom-1';
+import ContactUs from '../../screens/homes/contactUs';
+import DeleteAccount from '../../screens/homes/deleteAccount';
+import DeleteAccountConfirmation from '../../screens/homes/deleteAccountConfirmation';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +74,11 @@ const Auth = () => {
       <Stack.Screen
         name="forgetPassword"
         component={ForgetPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="subcrption"
+        component={Subcrption}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -137,6 +148,32 @@ export const Homes = () => {
       <Stack.Screen
         name="status"
         component={Status}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="addStatus"
+        component={AddStatus}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="createChatRoom"
+        component={CreactChatRoom}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="contactUs"
+        component={ContactUs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="deleteAccount"
+        component={DeleteAccount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="deleteAccountConfirmation"
+        component={DeleteAccountConfirmation}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -242,14 +279,41 @@ export const Statics = () => {
         component={SearchPage}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="subcription"
-        component={Subcrption}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name="notificationPage"
         component={NotificationPage}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="addStatus"
+        component={AddStatus}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="status3"
+        component={Status3}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="createChatRoom"
+        component={CreactChatRoom}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="contactUs"
+        component={ContactUs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="deleteAccount"
+        component={DeleteAccount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="deleteAccountConfirmation"
+        component={DeleteAccountConfirmation}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

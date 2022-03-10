@@ -82,14 +82,16 @@ const NotificationPrivacy = props => {
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <HomeHeader
-        navigation={props.navigation}
-        setting
-        right
-        settingIconProps={() => props.navigation.navigate('home')}
-        text={'Notifications Privacy'}
-        onPress={'settings'}
-      />
+      <View style={{marginTop: 40}}>
+        <HomeHeader
+          navigation={props.navigation}
+          setting
+          right
+          settingIconProps={() => props.navigation.goBack()}
+          text={'Notifications Privacy'}
+          onPress={'settings'}
+        />
+      </View>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}

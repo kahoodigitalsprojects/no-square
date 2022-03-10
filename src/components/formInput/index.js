@@ -29,6 +29,8 @@ const FormInput = ({
   autoCapitalize,
   borderRadius,
   phoneNo,
+  height,
+  textHeight,
 }) => {
   return (
     <View
@@ -41,7 +43,7 @@ const FormInput = ({
         backgroundColor: bgColor || null,
         borderWidth: borderW || 0,
         borderColor: borderC,
-        height: 45,
+        height: height || 45,
       }}>
       {iconL && (
         <View
@@ -75,14 +77,16 @@ const FormInput = ({
         </View>
       )}
       <TextInput
-        style={
-          styleI || {
+        style={[
+          styleI,
+          {
             width: iconL && iconR ? '80%' : iconL ? '90%' : '100%',
             paddingLeft: iconL ? 0 : 10,
             color: 'black',
-            // height: '100%',
-          }
-        }
+            textAlignVertical: multiLine ? 'top' : 'center',
+            height: textHeight || null,
+          },
+        ]}
         value={value}
         autoCapitalize={autoCapitalize}
         placeholder={placeHolder}

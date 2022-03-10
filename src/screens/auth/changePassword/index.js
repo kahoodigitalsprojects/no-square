@@ -18,14 +18,18 @@ import {HomeHeader, FormInput, AppButton} from '../../../components';
 const ChangePassword = props => {
   const [userInfo, setUserInfo] = useState({
     email: '',
-    password: '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
   });
 
   const [error, setError] = useState();
 
   const [state, setState] = useState({
     focus: false,
-    secureText: true,
+    secureText1: true,
+    secureText2: true,
+    secureText3: true,
   });
 
   const showToast = text => {
@@ -63,30 +67,31 @@ const ChangePassword = props => {
             <View
               style={{
                 marginVertical: 28,
-                borderColor: state.focus === 'password' ? '#F54F84' : 'grey',
-                borderWidth: state.focus === 'password' ? 1 : 0.5,
+                borderColor:
+                  state.focus === 'currentPassword' ? '#F54F84' : 'grey',
+                borderWidth: state.focus === 'currentPassword' ? 1 : 0.5,
                 borderRadius: 10,
               }}>
               <FormInput
                 borderRadius={10}
                 borderW={1}
                 borderC={'#F52667'}
-                value={userInfo.password}
+                value={userInfo.currentPassword}
                 onChangeText={value =>
-                  setUserInfo({...userInfo, password: value})
+                  setUserInfo({...userInfo, currentPassword: value})
                 }
                 iconL
-                secureText={state.secureText}
+                secureText={state.secureText1}
                 iconLName="lock"
                 iconLType="Feather"
                 iconR
-                iconRName={state.secureText ? 'eye-with-line' : 'eye'}
+                iconRName={state.secureText1 ? 'eye-with-line' : 'eye'}
                 iconRType="Entypo"
                 onPressR={() =>
-                  setState({...state, secureText: !state.secureText})
+                  setState({...state, secureText1: !state.secureText1})
                 }
                 placeHolder="Enter Current Password"
-                onFocus={() => setState({...state, focus: 'password'})}
+                onFocus={() => setState({...state, focus: 'currentPassword'})}
                 onBlur={() => setState({...state, focus: ''})}
               />
             </View>
@@ -103,19 +108,19 @@ const ChangePassword = props => {
                 borderRadius={10}
                 borderW={1}
                 borderC={'#F52667'}
-                value={userInfo.password}
+                value={userInfo.newPassword}
                 onChangeText={value =>
-                  setUserInfo({...userInfo, password: value})
+                  setUserInfo({...userInfo, newPassword: value})
                 }
                 iconL
-                secureText={state.secureText}
+                secureText={state.secureText2}
                 iconLName="lock"
                 iconLType="Feather"
                 iconR
-                iconRName={state.secureText ? 'eye-with-line' : 'eye'}
+                iconRName={state.secureText2 ? 'eye-with-line' : 'eye'}
                 iconRType="Entypo"
                 onPressR={() =>
-                  setState({...state, secureText: !state.secureText})
+                  setState({...state, secureText2: !state.secureText2})
                 }
                 placeHolder="Enter New Password"
                 onFocus={() =>
@@ -137,19 +142,19 @@ const ChangePassword = props => {
                 borderRadius={10}
                 borderW={1}
                 borderC={'#F52667'}
-                value={userInfo.password}
+                value={userInfo.confirmPassword}
                 onChangeText={value =>
-                  setUserInfo({...userInfo, password: value})
+                  setUserInfo({...userInfo, confirmPassword: value})
                 }
                 iconL
-                secureText={state.secureText}
+                secureText={state.secureText3}
                 iconLName="lock"
                 iconLType="Feather"
                 iconR
-                iconRName={state.secureText ? 'eye-with-line' : 'eye'}
+                iconRName={state.secureText3 ? 'eye-with-line' : 'eye'}
                 iconRType="Entypo"
                 onPressR={() =>
-                  setState({...state, secureText: !state.secureText})
+                  setState({...state, secureText3: !state.secureText3})
                 }
                 placeHolder="Confirm Password"
                 onFocus={() => setState({...state, focus: 'Confirm Password'})}

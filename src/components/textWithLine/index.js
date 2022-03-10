@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const TextWithLine = ({text, left, right}) => {
+const TextWithLine = ({text, left, right, fontSize, fontWeight, lineColor}) => {
   return (
     <>
       <View
@@ -17,7 +17,7 @@ const TextWithLine = ({text, left, right}) => {
           style={{
             width: '100%',
             height: 2,
-            backgroundColor: 'grey',
+            backgroundColor: lineColor || 'grey',
             alignItems: 'center',
           }}>
           <View
@@ -33,9 +33,9 @@ const TextWithLine = ({text, left, right}) => {
             }}>
             <Text
               style={{
-                fontSize: 18,
+                fontSize: fontSize || 18,
                 color: '#211E1F',
-                fontWeight: 'bold',
+                fontWeight: fontWeight || 'bold',
               }}>
               {text}
             </Text>

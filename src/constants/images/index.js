@@ -30,6 +30,7 @@ const Images = {
     photos: require('../../assets/images/photos.png'),
     iconCross: require('../../assets/images/iconCross.png'),
     masterCard: require('../../assets/images/masterCard.png'),
+    send: require('../../assets/images/send.png'),
   },
   Backgrounds: {
     splashBg: require('../../assets/images/splashBg.png'),
