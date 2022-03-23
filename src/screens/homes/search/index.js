@@ -31,7 +31,7 @@ const Search = props => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
         <HomeHeader navigation={props.navigation} home notify />
-        <SearchBar />
+        <SearchBar placeholder={'Search for People'} />
         <View style={styles.mainBody}>
           <View style={styles.corouselStyle}>
             <Corousel />
@@ -42,11 +42,11 @@ const Search = props => {
             </View>
             <View style={styles.elevationContent}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={styles.elevationHeadTextName}>Name</Text>
+                <Text style={styles.elevationHeadTextName}>Name :</Text>
                 <Text style={styles.elevationHeadTextNameTitle}>Jennie</Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={styles.elevationHeadTextName}>Country </Text>
+                <Text style={styles.elevationHeadTextName}>Country :</Text>
                 <Text style={styles.elevationHeadTextNameTitle}>
                   United States
                 </Text>

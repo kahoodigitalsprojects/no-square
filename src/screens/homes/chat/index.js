@@ -183,7 +183,10 @@ const Chat = props => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.goBack();
+              }}>
               <Icon name="chevron-back" type="Ionicons" />
             </TouchableOpacity>
           </View>
@@ -201,7 +204,7 @@ const Chat = props => {
             }}>
             <View style={{width: 60, aspectRatio: 1, borderRadius: 100}}>
               <Image
-                source={Images.Backgrounds.chatProfile1}
+                source={Images.Backgrounds.chatProfile}
                 style={{width: '100%', height: '100%'}}
                 resizeMode="contain"
               />
@@ -227,49 +230,85 @@ const Chat = props => {
             }>
             {messages.map((message, i) => {
               return (
-                <View
-                  style={{
-                    width: '70%',
-
-                    flexDirection:
-                      message?.user?._id == 1 ? 'row' : 'row-reverse',
-                    marginVertical: 10,
-                    alignItems: 'flex-start',
-
-                    alignSelf:
-                      message?.user?._id == 1 ? 'flex-start' : 'flex-end',
-                  }}>
+                <>
                   <View
                     style={{
-                      marginLeft: message?.user?._id == 1 ? 0 : 5,
-                      marginRight: message?.user?._id == 1 ? 5 : 0,
-                      width: 40,
-                      aspectRatio: 1,
-                      borderRadius: 100,
-                      marginTop: 5,
+                      width: '70%',
+
+                      flexDirection:
+                        message?.user?._id == 1 ? 'row' : 'row-reverse',
+                      marginVertical: 10,
+                      alignItems: 'flex-start',
+
+                      alignSelf:
+                        message?.user?._id == 1 ? 'flex-start' : 'flex-end',
                     }}>
-                    <Image
-                      source={Images.Backgrounds.chatProfile1}
-                      style={{width: '100%', height: '100%'}}
-                    />
+                    <View
+                      style={{
+                        marginLeft: message?.user?._id == 1 ? 0 : 5,
+                        marginRight: message?.user?._id == 1 ? 5 : 0,
+                        width: 40,
+                        aspectRatio: 1,
+                        borderRadius: 100,
+                        marginTop: 5,
+                      }}>
+                      <Image
+                        source={Images.Backgrounds.chatProfile}
+                        style={{width: '100%', height: '100%'}}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        minHeight: 50,
+                        paddingVertical: 10,
+                        overflow: 'hidden',
+                        //   height: '90%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor:
+                          message?.user?._id == 1 ? '#4996D6' : '#F54F84',
+                        borderRadius: 25,
+                        paddingHorizontal: 10,
+                        minWidth: 80,
+                      }}>
+                      <Text style={{color: '#fff'}}> {message?.text} </Text>
+                    </View>
+                    <View
+                      style={{
+                        alignSelf: 'center',
+                        width: 3.6,
+                        height: 18,
+                        marginLeft: 5,
+                        marginRight: 5,
+                        justifyContent: 'space-between',
+                      }}>
+                      <View
+                        style={{
+                          opacity: 0.5,
+                          width: '100%',
+                          height: '30%',
+                          borderRadius: 100,
+                          backgroundColor: '#4E4C4Ccc',
+                        }}></View>
+                      <View
+                        style={{
+                          borderRadius: 100,
+                          width: '100%',
+                          height: '30%',
+                          backgroundColor: '#4E4C4Ccc',
+                          opacity: 0.5,
+                        }}></View>
+                      <View
+                        style={{
+                          opacity: 0.5,
+                          borderRadius: 100,
+                          width: '100%',
+                          height: '30%',
+                          backgroundColor: '#4E4C4Ccc',
+                        }}></View>
+                    </View>
                   </View>
-                  <View
-                    style={{
-                      minHeight: 50,
-                      paddingVertical: 10,
-                      overflow: 'hidden',
-                      //   height: '90%',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor:
-                        message?.user?._id == 1 ? '#4996D6' : '#F54F84',
-                      borderRadius: 25,
-                      paddingHorizontal: 10,
-                      minWidth: 80,
-                    }}>
-                    <Text style={{color: '#fff'}}> {message?.text} </Text>
-                  </View>
-                </View>
+                </>
               );
             })}
           </ScrollView>
@@ -308,26 +347,39 @@ const Chat = props => {
               placeholder="Type Here"
               value={message}
               onChangeText={text => {
-                setMessage(text);
+                setMessage(text.trimStart());
               }}
-              style={{width: '90%'}}
+              style={{width: '80%'}}
             />
+            <View
+              style={{
+                position: 'absolute',
+                right: 5,
+                justifyContent: 'center',
+              }}>
+              <Icon
+                name="attachment"
+                type="Entypo"
+                style={{color: '#00000030'}}
+              />
+            </View>
           </View>
-
-          <View
-            style={{
-              width: '10%',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}>
-            <Icon
-              name="send"
-              type="MaterialIcons"
-              style={{color: '#F54F84'}}
-              onPress={onSend}
-            />
-          </View>
+          {message.length <= 0 ? null : (
+            <View
+              style={{
+                width: '10%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}>
+              <Icon
+                name="send"
+                type="MaterialIcons"
+                style={{color: '#F54F84'}}
+                onPress={onSend}
+              />
+            </View>
+          )}
         </View>
       </View>
     </SafeAreaView>

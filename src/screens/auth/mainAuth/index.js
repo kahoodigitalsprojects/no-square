@@ -19,14 +19,15 @@ const MainAuth = props => {
   const {navigation} = props;
   return (
     <>
-      <ImageBackground
-        source={Images.Backgrounds.authBackground}
-        style={styles.screenContainer}>
-        <StatusBar backgroundColor={'transparent'} translucent={true} />
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{flexGrow: 1}}>
+        <ImageBackground
+          source={Images.Backgrounds.authBackground}
+          style={styles.screenContainer}>
+          <StatusBar backgroundColor={'transparent'} translucent={true} />
+
           <View style={styles.screenBody}>
             <View
               style={{
@@ -74,8 +75,8 @@ const MainAuth = props => {
               </View>
             </View>
           </View>
-        </ScrollView>
-      </ImageBackground>
+        </ImageBackground>
+      </ScrollView>
     </>
   );
 };

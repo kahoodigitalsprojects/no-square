@@ -10,17 +10,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
-import Toast from 'react-native-toast-message';
+
 import {Tooltip, colors} from 'react-native-elements';
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-} from '../../../components';
+import {HomeHeader, SearchBar} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 import {useIsFocused} from '@react-navigation/native';

@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {Text, TouchableOpacity, View, Image} from 'react-native';
 import {Themes, Images} from './../../constants';
 import {Icon} from 'native-base';
 

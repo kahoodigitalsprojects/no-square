@@ -7,20 +7,10 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ImageBackground,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-  UserComment,
-} from '../../../components';
+import {HomeHeader, SearchBar, TextWithLine} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 
@@ -55,10 +45,15 @@ const SearchPage = props => {
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
       <HomeHeader
+        settingIconProps={() => {
+          props.navigation.navigate('MyTabs', {screen: 'home'});
+        }}
         navigation={props.navigation}
         setting
         text={'Search'}
-        onPress={'home'}
+        onPress={() => {
+          props.navigation.goBack();
+        }}
         left
         right
       />
@@ -68,10 +63,7 @@ const SearchPage = props => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.body}>
-          <View style={styles.activeRoom}>
-            <Text style={styles.activeRoomText}>Recent Search</Text>
-            <View style={styles.activeLine}></View>
-          </View>
+          <TextWithLine text={'Recent Search'} left={0} />
           {data.map((item, i) => {
             return (
               <View style={styles.chatBox}>
@@ -81,12 +73,7 @@ const SearchPage = props => {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    props.navigation.navigate('statics', {
-                      screen: 'businessChat',
-                    });
-                  }}>
+                  activeOpacity={0.8}>
                   <View style={styles.chatProfile}>
                     <Image
                       source={Images.Backgrounds.chatProfile3}

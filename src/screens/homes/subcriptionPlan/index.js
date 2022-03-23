@@ -1,34 +1,12 @@
 import React, {useState} from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  ImageBackground,
-  Picker,
-} from 'react-native';
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  CustomPopup,
-} from '../../../components';
+import {ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {AppButton, HomeHeader, CustomPopup} from '../../../components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import {Themes, Images} from './../../../constants';
-import {Icon} from 'native-base';
-import {color} from 'react-native-reanimated';
-
-const Subcrption = props => {
+const SubcriptionPlan = props => {
   const {navigation} = props;
-  const [error, setError] = useState('');
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -68,23 +46,55 @@ const Subcrption = props => {
           contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.container}>
             <HomeHeader
-              onPress={() => navigation.goBack()}
+              settingIconProps={() => navigation.goBack()}
               setting
-              left
-              text={'Subcriptions'}
-              textColor={'black'}
+              right
+              text={'Subscriptions Plan'}
+              textColor={'#191919B8'}
               fontSize={24}
             />
             <View style={styles.mainContainer}>
-              <View style={styles.headerTextView}>
-                <Text style={styles.headerText}>
-                  Select you subscription plan according to your need and get
-                  some new sugar friends
-                </Text>
+              <View style={styles.headerView}>
+                <View
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    height: '50%',
+                  }}>
+                  <Text style={{fontSize: 18, color: '#323232'}}>
+                    Sign Up Date
+                  </Text>
+                  <Text style={{fontSize: 13, color: '#323232'}}>
+                    2/20/2022
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    height: '50%',
+                  }}>
+                  <Text style={{fontSize: 18, color: '#323232'}}>
+                    Subscriptions Expiry
+                  </Text>
+                  <Text style={{fontSize: 13, color: '#323232'}}>
+                    4/20/2022
+                  </Text>
+                </View>
               </View>
-              <View style={styles.headerTextView2}>
-                <Text style={styles.headerText2}>
-                  Nosquare Membership Is $3.99 For 1 Month
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  width: '100%',
+                  marginTop: 10,
+                }}></View>
+              <View style={{width: '100%', marginTop: 30}}>
+                <Text style={{fontSize: 18, color: '#323232'}}>
+                  {' '}
+                  Subscriptions Extention
                 </Text>
               </View>
               <View style={{width: '100%', marginTop: 30}}>
@@ -116,84 +126,6 @@ const Subcrption = props => {
               <Text style={{marginTop: 20, fontSize: 15, color: '#615C5C'}}>
                 Amount Payable $3.99
               </Text>
-              <View
-                style={{
-                  width: '100%',
-
-                  marginTop: 10,
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <View>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <View
-                      style={{
-                        width: '10%',
-                        flexDirection: 'row',
-                        borderColor: 'black',
-                      }}>
-                      <View style={{flexDirection: 'row'}}>
-                        <CheckBox
-                          alignItem={'flex-start'}
-                          onPress={() => setState({checked: !state.checked})}
-                          checked={state.checked}
-                        />
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '88%',
-                        flexWrap: 'wrap',
-                      }}>
-                      <Text
-                        Text
-                        style={{
-                          fontSize: 15,
-                          color: 'black',
-                          fontWeight: '600',
-                        }}>
-                        I agree with all
-                      </Text>
-                      <Text>
-                        <TouchableOpacity
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingLeft: 5,
-                          }}
-                          onPress={() => {
-                            setVisible(true);
-                            setState({...state, text: 'Terms & Conditions'});
-                          }}>
-                          <Text style={{color: '#F54F84'}}>
-                            Terms & Conditions
-                          </Text>
-                        </TouchableOpacity>
-                      </Text>
-                      <Text
-                        Text
-                        style={{
-                          fontSize: 15,
-                          color: 'black',
-                          fontWeight: '600',
-                          paddingLeft: 5,
-                        }}>
-                        add
-                      </Text>
-
-                      <TouchableOpacity
-                        style={{marginLeft: 5}}
-                        onPress={() => {
-                          setVisible(true);
-                          setState({...state, text: 'Privacy Policy'});
-                        }}>
-                        <Text style={{color: '#F54F84'}}>Privacy Policy</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
 
               <LinearGradient
                 colors={['#F52667', '#F54F84']}
@@ -229,7 +161,7 @@ const Subcrption = props => {
   );
 };
 
-export default Subcrption;
+export default SubcriptionPlan;
 
 const styles = StyleSheet.create({
   container: {
@@ -243,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingBottom: 250,
   },
-  headerTextView: {
+  headerView: {
     width: '100%',
     height: 79,
     alignItems: 'center',

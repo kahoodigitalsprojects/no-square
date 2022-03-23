@@ -47,6 +47,7 @@ const CustomPopup = props => {
     privacyText,
     contactSendMessege,
     accountDelete,
+    friendRequest,
     onDelete,
   } = props;
   return (
@@ -287,6 +288,50 @@ const CustomPopup = props => {
               </View>
             </>
           )}
+        </View>
+      )}
+      {friendRequest && (
+        <View style={{width: '90%', height: '100%', alignSelf: 'center'}}>
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
+            <Text style={{fontSize: 20, color: '#000000', fontWeight: 'bold'}}>
+              Notify
+            </Text>
+          </View>
+
+          <View
+            style={{
+              width: '100%',
+              marginTop: 20,
+              alignItems: 'center',
+            }}>
+            <Image
+              source={Images.Backgrounds.correct}
+              style={{width: 69, height: 69}}
+            />
+            <View
+              style={{
+                width: 220,
+                height: 58,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text style={{fontSize: 20, color: '#2E2B2B'}}>
+                Friend Request Sent!
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.paymentSuccesBtn}
+              onPress={OBonPress}>
+              <Text style={{fontSize: 15, color: 'white'}}>Continue</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
 

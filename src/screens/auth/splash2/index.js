@@ -19,14 +19,14 @@ const Splash2 = ({navigation}) => {
   // }, []);
 
   return (
-    <ImageBackground
-      style={styles.screenContainer}
-      resizeMode={'stretch'}
-      source={Images.Backgrounds.splashBg2}>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{flexGrow: 1}}>
+      <ImageBackground
+        style={styles.screenContainer}
+        resizeMode={'stretch'}
+        source={Images.Backgrounds.splashBg2}>
         <StatusBar backgroundColor={'transparent'} translucent={true} />
 
         <View style={{width: '100%', height: '100%'}}>
@@ -65,8 +65,8 @@ const Splash2 = ({navigation}) => {
             </View>
           </View>
         </View>
-      </ScrollView>
-    </ImageBackground>
+      </ImageBackground>
+    </ScrollView>
   );
 };
 
