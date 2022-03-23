@@ -12,7 +12,7 @@ const CustomTabBar = props => {
       {navTo: 'home', icon: Images.Pictures.homeIcon},
       {navTo: 'chatRoom', icon: Images.Pictures.usersIcon},
       // {navTo: '', icon: ''},
-      {navTo: 'connections', icon: Images.Pictures.msgIcon},
+      {navTo: 'messeges', icon: Images.Pictures.msgIcon},
       {navTo: 'search', icon: Images.Pictures.lesbainIcon},
     ],
   });
@@ -44,9 +44,6 @@ const CustomTabBar = props => {
               style={{
                 width: 71,
                 height: 73,
-                // marginTop: -65,
-                // position: 'absolute',
-                // left: '40%',
                 alignSelf: 'center',
               }}
               activeOpacity={0.7}
@@ -63,23 +60,10 @@ const CustomTabBar = props => {
           {state.bottomTab.map((item, i) => {
             const isFocused = bIndex.index === i;
 
-            // return i === 2 ? (
-            // <TouchableOpacity
-            //   style={{width: 71, height: 73, marginTop: -65}}
-            //   activeOpacity={0.7}
-            //   onPress={() => {
-            //     setVisible(true);
-            //   }}>
-            //   <Image
-            //     source={Images.Pictures.tabBtn}
-            //     style={{width: '100%', height: '100%'}}
-            //   />
-            // </TouchableOpacity>
-            // ) : (
             return (
               <TouchableOpacity
                 key={i}
-                style={{width: 30, height: 30, marginRight: i == 1 ? 80 : 0}}
+                style={{width: 30, height: 30, marginRight: i === 1 ? 80 : 0}}
                 onPress={() => {
                   setState({...state, index: 0});
                   props.navigation.navigate(item.navTo);

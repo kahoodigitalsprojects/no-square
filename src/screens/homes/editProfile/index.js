@@ -12,16 +12,8 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-  UserComment,
-} from '../../../components';
-import {Themes, Images} from './../../../constants';
+import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
+import {Images} from './../../../constants';
 import {Icon} from 'native-base';
 
 const EditProfile = props => {
@@ -112,7 +104,26 @@ const EditProfile = props => {
                 borderBottomWidth: 1,
               }}>
               <FormInput
-                placeHolder="JOHN"
+                placeHolder="SMITH"
+                placeHolderColor={'black'}
+                iconColor={'black'}
+                iconLName="user"
+                iconLType="AntDesign"
+                iconR
+                iconRName="edit"
+                iconRType="AntDesign"
+                iconL
+              />
+            </View>
+
+            <View
+              style={{
+                borderBottomColor: 'black',
+                marginTop: 35,
+                borderBottomWidth: 1,
+              }}>
+              <FormInput
+                placeHolder="User Name          "
                 placeHolderColor={'black'}
                 iconColor={'black'}
                 iconLName="user"

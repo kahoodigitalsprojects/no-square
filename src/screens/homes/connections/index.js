@@ -101,7 +101,9 @@ const Connections = props => {
               borderRadius: 5,
               alignItems: 'center',
               justifyContent: 'center',
-            }}>
+              backgroundColor: '#F779A1',
+            }}
+            opacity={0.3}>
             <Image
               source={Images.Pictures.iconCross}
               style={{width: 15, height: 15}}
@@ -120,7 +122,7 @@ const Connections = props => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
         <>
-          <HomeHeader navigation={props.navigation} home />
+          <HomeHeader home navigation={props.navigation} {...props} notify />
           <SearchBar />
           <View style={styles.mainBody}>
             <View style={styles.chatText}>
@@ -173,11 +175,11 @@ const Connections = props => {
                     <Swipeable rightButtons={rightButtons}>
                       <TouchableOpacity
                         style={styles.chatBox}
-                        onPress={() => {
-                          props.navigation.navigate('Statics', {
-                            screen: 'chat',
-                          });
-                        }}
+                        // onPress={() => {
+                        //   props.navigation.navigate('Statics', {
+                        //     screen: 'chat',
+                        //   });
+                        // }}
                         activeOpacity={0.8}>
                         <View
                           style={{
@@ -212,11 +214,11 @@ const Connections = props => {
                   return (
                     <TouchableOpacity
                       style={styles.chatBox}
-                      onPress={() => {
-                        props.navigation.navigate('Statics', {
-                          screen: 'chat',
-                        });
-                      }}
+                      // onPress={() => {
+                      //   props.navigation.navigate('Statics', {
+                      //     screen: 'chat',
+                      //   });
+                      // }}
                       activeOpacity={0.8}>
                       <View
                         style={{
@@ -244,21 +246,27 @@ const Connections = props => {
                       <View
                         style={{
                           alignItems: 'center',
-                          justifyContent: 'center',
+                          justifyContent: 'flex-end',
                           flexDirection: 'row',
                           width: 120,
                         }}>
                         <View style={styles.rightContentHiddin}>
                           <TouchableOpacity activeOpacity={0.9}>
-                            <View>
+                            <View style={{marginRight: 20}}>
                               <View style={styles.rightContentHiddinData}>
-                                <Image
-                                  source={Images.Backgrounds.block}
-                                  style={{width: 15, height: 15}}
+                                <Icon
+                                  name="adduser"
+                                  type="AntDesign"
+                                  style={{fontSize: 15, color: 'white'}}
                                 />
                               </View>
-                              <Text style={{fontSize: 10, color: 'black'}}>
-                                Block
+                              <Text
+                                style={{
+                                  fontSize: 10,
+                                  color: 'black',
+                                  width: 35,
+                                }}>
+                                Accept
                               </Text>
                             </View>
                           </TouchableOpacity>
@@ -274,14 +282,17 @@ const Connections = props => {
                                   borderRadius: 5,
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                }}>
-                                <Image
-                                  source={Images.Pictures.iconCross}
-                                  style={{width: 15, height: 15}}
+                                  backgroundColor: '#F779A1',
+                                }}
+                                opacity={0.8}>
+                                <Icon
+                                  name="block"
+                                  type="Entypo"
+                                  style={{fontSize: 15, color: 'white'}}
                                 />
                               </View>
                               <Text style={{fontSize: 10, color: 'black'}}>
-                                unfriend
+                                Reject
                               </Text>
                             </View>
                           </TouchableOpacity>

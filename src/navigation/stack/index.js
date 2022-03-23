@@ -37,6 +37,9 @@ import CreactChatRoom from '../../screens/homes/chatRoom-1';
 import ContactUs from '../../screens/homes/contactUs';
 import DeleteAccount from '../../screens/homes/deleteAccount';
 import DeleteAccountConfirmation from '../../screens/homes/deleteAccountConfirmation';
+import SubcriptionPlan from '../../screens/homes/subcriptionPlan';
+import Messeges from '../../screens/homes/messeges';
+import BusinessRoom from '../../screens/homes/businessRoom';
 
 const Stack = createNativeStackNavigator();
 
@@ -174,6 +177,21 @@ export const Homes = () => {
       <Stack.Screen
         name="deleteAccountConfirmation"
         component={DeleteAccountConfirmation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="subcriptionPlan"
+        component={SubcriptionPlan}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="messeges"
+        component={Messeges}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="businessRoom"
+        component={BusinessRoom}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -314,6 +332,16 @@ export const Statics = () => {
       <Stack.Screen
         name="deleteAccountConfirmation"
         component={DeleteAccountConfirmation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="subcriptionPlan"
+        component={SubcriptionPlan}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="businessRoom"
+        component={BusinessRoom}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

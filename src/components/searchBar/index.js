@@ -2,7 +2,7 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import {Icon} from 'native-base';
 
-const SearchBar = ({width}) => {
+const SearchBar = ({width, placeholder}) => {
   return (
     <View
       style={{
@@ -37,7 +37,8 @@ const SearchBar = ({width}) => {
           />
         </View>
         <View style={{width: '85%', height: 40}}>
-          <TextInput placeholder="Search for Friends"></TextInput>
+          <TextInput
+            placeholder={placeholder || 'Search for Friends'}></TextInput>
         </View>
       </View>
     </View>

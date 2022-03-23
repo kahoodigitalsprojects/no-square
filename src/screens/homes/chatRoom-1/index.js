@@ -240,7 +240,7 @@ const CreactChatRoom = props => {
                   <AppButton
                     label="Create"
                     onPress={() => {
-                      props.navigation.navigate('subcrption');
+                      props.navigation.navigate('businessRoom');
                     }}
                   />
                 </LinearGradient>

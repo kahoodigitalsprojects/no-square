@@ -1,5 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  ImageBackground,
+} from 'react-native';
 
 import {Themes, Images} from './../../constants';
 import {Icon} from 'native-base';
@@ -33,11 +40,6 @@ const HomeHeader = props => {
               style={styles.left}
               onPress={() => {
                 props.navigation.openDrawer();
-                // console.log(
-                //   'I HAVE DRAWER STATUS',
-                //   isDrawerOpen === 'open',
-                //   isDrawerOpen,
-                // );
               }}>
               <Image
                 source={Images.Pictures.homeLogo}
@@ -74,11 +76,11 @@ const HomeHeader = props => {
                     screen: 'notificationPage',
                   });
                 }}>
-                <Image
+                <ImageBackground
                   source={Images.Pictures.notificationIcon}
-                  style={{width: 25.36, height: 29.97}}
-                />
-                <View style={styles.rightIcon}></View>
+                  style={{width: 25.36, height: 29.97}}>
+                  <View style={styles.rightIcon}></View>
+                </ImageBackground>
               </TouchableOpacity>
             )}
           </>
@@ -178,8 +180,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#FB0E0E',
     position: 'absolute',
-    right: 12,
-    top: 12,
+    right: 0,
+    top: 2,
     // top: 14,
     // right: 18,
   },

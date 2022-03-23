@@ -99,6 +99,7 @@ const Images = {
     slider1: require('../../assets/images/slider1.png'),
     slider2: require('../../assets/images/slider2.png'),
     slider3: require('../../assets/images/slider3.png'),
+    chatProfile: require('../../assets/images/chatProfile.png'),
   },
 };
 

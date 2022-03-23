@@ -11,15 +11,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-  TextWithLine,
-} from '../../../components';
+import {HomeHeader, SearchBar, TextWithLine} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon, Item} from 'native-base';
 

@@ -40,7 +40,7 @@ const CustomDrawer = ({navigation}) => {
     },
     {
       stack: 'MyTabs',
-      image: Images.Pictures.chat,
+      image: Images.Pictures.user,
       text: 'Chat Rooms',
       rightText: '',
       nav: 'chatRoom',
@@ -49,14 +49,21 @@ const CustomDrawer = ({navigation}) => {
       image: Images.Pictures.lesbian,
       text: 'All Messages',
       rightText: '',
-      nav: 'connections',
+      nav: 'messeges',
       stack: 'MyTabs',
     },
     {
       image: Images.Pictures.lesbian,
       text: 'Saved',
-      rightText: '50',
+      rightText: '9',
       nav: 'savedPost',
+      stack: 'Statics',
+    },
+    {
+      image: Images.Pictures.lesbian,
+      text: 'Contact Us',
+      rightText: '',
+      nav: 'contactUs',
       stack: 'Statics',
     },
   ];
@@ -115,7 +122,7 @@ const CustomDrawer = ({navigation}) => {
                     San Jose, CA
                   </Text>
                   <Text style={{fontSize: 13, color: '#FFEE00'}}>
-                    Premium{' '}
+                    Premium
                     <Icon
                       name="star"
                       type="AntDesign"
@@ -232,11 +239,20 @@ const CustomDrawer = ({navigation}) => {
                 width: 161,
                 borderBottomWidth: 2,
                 borderBottomColor: 'white',
+                flexDirection: 'row',
                 marginTop: 20,
+                alignItems: 'center',
+                justifyContent: 'space-between',
               }}>
               <Text style={{fontSize: 15, color: 'white', marginLeft: 5}}>
-                Recent Chat
+                Recent Message
               </Text>
+
+              <Icon
+                name="down"
+                type="AntDesign"
+                style={{fontSize: 14, color: 'white'}}
+              />
             </View>
 
             <View
@@ -343,7 +359,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 80,
     borderBottomRightRadius: 50,
     width: '100%',
-
     height: '100%',
     overflow: 'hidden',
   },

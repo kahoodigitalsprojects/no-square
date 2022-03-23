@@ -51,9 +51,7 @@ const PaymentMethod = props => {
           setting
           text={'Payment Method'}
           fontSize={35}
-          onPress={() => {
-            props.navigation.navigate('subcription');
-          }}
+          onPress={() => navigation.goBack()}
         />
 
         <ScrollView

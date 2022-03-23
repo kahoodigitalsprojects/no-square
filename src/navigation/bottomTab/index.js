@@ -7,6 +7,7 @@ import {Homes} from '../stack';
 import Search from '../../screens/homes/search';
 import Connections from '../../screens/homes/connections';
 import Home from '../../screens/homes/home';
+import Messeges from '../../screens/homes/messeges';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,11 +23,10 @@ const MyTabs = () => {
       />
 
       <Tab.Screen
-        name="connections"
-        component={Connections}
+        name="messeges"
+        component={Messeges}
         options={{headerShown: false}}
       />
-
       <Tab.Screen
         name="search"
         component={Search}

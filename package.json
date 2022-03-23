@@ -31,6 +31,7 @@
     "react-native-screens": "^3.10.2",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.1",
+    "react-native-swipe-cards": "^0.1.1",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-swipeable": "^0.6.0",
     "react-native-toast-message": "^2.1.1",

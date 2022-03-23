@@ -121,6 +121,7 @@ const MyProfile = props => {
                   width: '100%',
                   flexDirection: 'row',
                   justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}>
                 <View style={styles.profileView}>
                   <ImageBackground
@@ -145,6 +146,7 @@ const MyProfile = props => {
                       </TouchableOpacity>
                     )}
                   </ImageBackground>
+
                   <Text
                     style={{
                       fontSize: 15,
@@ -153,12 +155,23 @@ const MyProfile = props => {
                     }}>
                     Jena William
                   </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: '#211E1F',
+                      marginLeft: 12,
+                    }}>
+                    @Jena
+                  </Text>
                 </View>
+
                 <View
                   style={{
                     width: '58%',
-                    height: 150,
+                    height: 170,
 
+                    justifyContent: 'flex-start',
+                    marginTop: -10,
                     alignItems: 'center',
                   }}>
                   <View
@@ -193,6 +206,7 @@ const MyProfile = props => {
                     </View>
                   </View>
                   <TouchableOpacity
+                    style={{width: '100%'}}
                     activeOpacity={0.8}
                     onPress={() => {
                       props.navigation.navigate('Statics', {
@@ -202,7 +216,7 @@ const MyProfile = props => {
                     <LinearGradient
                       colors={['#F54F84', '#F52667']}
                       style={{
-                        width: 207,
+                        width: '100%',
                         height: 46,
                         borderRadius: 10,
                         alignItems: 'center',
@@ -414,9 +428,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   profileView: {
+    justifyContent: 'center',
     width: '35%',
     height: 170,
-    justifyContent: 'center',
   },
   activeRoom: {
     width: '100%',

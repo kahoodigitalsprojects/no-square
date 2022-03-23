@@ -42,7 +42,10 @@ const Settings = props => {
       rightIconType: 'AntDesign',
       imageHeight: 30,
       imageWidth: 30,
-      onPress: 'privacySetting',
+      statics: 1,
+      onPath: () => {
+        props.navigation.navigate('Statics', {screen: 'subcriptionPlan'});
+      },
     },
     {
       icon: Images.Backgrounds.terms,
@@ -97,9 +100,15 @@ const Settings = props => {
               <TouchableOpacity
                 style={styles.bodyItems}
                 activeOpacity={0.8}
-                onPress={() => {
-                  i === 2 ? null : props.navigation.navigate(item.onPress);
-                }}>
+                onPress={
+                  item.statics == 1
+                    ? item.onPath
+                    : () => {
+                        i === 2
+                          ? null
+                          : props.navigation.navigate(item.onPress);
+                      }
+                }>
                 <View style={styles.item1}>
                   <Image
                     source={item.icon}

@@ -11,13 +11,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-} from '../../../components';
+import {FormInput, AppButton, CheckBox, Header} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 
@@ -35,6 +29,7 @@ const Login = props => {
   const [userInfo, setUserInfo] = useState({
     firstName: '',
     LastName: '',
+    userName: '',
     email: '',
     confirmPassword: '',
     password: '',
@@ -91,7 +86,7 @@ const Login = props => {
           <Header
             leftIcon
             text
-            leftIconProps={() => props.navigation.navigate('mainAuth')}
+            leftIconProps={() => props.navigation.goBack()}
           />
           <View style={styles.mainBody}>
             <View style={styles.screenBody}>
@@ -165,6 +160,41 @@ const Login = props => {
                       onFocus={() => setState({...state, focus: 'lastName'})}
                       onBlur={() => setState({...state, focus: ''})}
                     />
+                  </View>
+
+                  <View style={{marginVertical: 5}}>
+                    <Text
+                      style={{
+                        alignSelf: 'flex-start',
+                        fontSize: 14,
+                        color: Themes.textColors.blackText,
+                      }}>
+                      User Name
+                    </Text>
+                    <View
+                      style={{
+                        marginVertical: 8,
+                        borderColor:
+                          state.focus === 'userName' ? '#F54F84' : 'grey',
+                        borderWidth: state.focus === 'userName' ? 1 : 0.5,
+                        borderRadius: 8,
+                      }}>
+                      <FormInput
+                        borderW={1}
+                        borderC={'#F52667'}
+                        autoCapitalize="none"
+                        value={userInfo.userName}
+                        onChangeText={value =>
+                          setUserInfo({...userInfo, userName: value})
+                        }
+                        iconL
+                        iconLName="user"
+                        iconLType="AntDesign"
+                        placeHolder="Enter Your User Name"
+                        onFocus={() => setState({...state, focus: 'userName'})}
+                        onBlur={() => setState({...state, focus: ''})}
+                      />
+                    </View>
                   </View>
                   <Text style={{color: '#272626'}}>Gender</Text>
                   <View
@@ -413,6 +443,34 @@ const Login = props => {
                       }}
                     />
                   </LinearGradient>
+                  <View
+                    style={{
+                      marginTop: 10,
+                      width: '100%',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <Text style={{fontSize: 15, color: 'black'}}>
+                      Having Trouble Signing In?
+                    </Text>
+                    <TouchableOpacity
+                      style={{marginLeft: 5}}
+                      activeOpacity={0.7}
+                      onPress={() => {
+                        props.navigation.navigate('Statics', {
+                          screen: 'contactUs',
+                        });
+                      }}>
+                      <Text
+                        style={{
+                          color: '#F52768',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        Contact Us
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
