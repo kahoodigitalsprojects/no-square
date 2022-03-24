@@ -23,8 +23,10 @@ import {
 import {Themes, Images} from './../../../constants';
 import {Icon, Item} from 'native-base';
 import {TouchableWithoutFeedback} from 'react-native';
+import Animated from 'react-native-reanimated';
 
 const Connections = props => {
+  console.log(Animated);
   const [state, setState] = useState({
     active: true,
     listViewData: [{}],
@@ -186,6 +188,7 @@ const Connections = props => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'center',
+                            marginLeft: 40,
                           }}>
                           <View style={styles.chatProfile}>
                             <Image
@@ -393,6 +396,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    paddingRight: 20,
   },
   rightContentHiddinData: {
     width: 28,

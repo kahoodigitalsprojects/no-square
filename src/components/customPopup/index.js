@@ -358,10 +358,10 @@ const CustomPopup = props => {
               marginTop: 40,
             }}>
             <Text style={{fontSize: 20, color: '#2E2B2B'}}>
-              Password Reset Link Sent In Email
+              Password Reset Link Sent In
             </Text>
             <Text style={{fontSize: 20, color: '#2E2B2B'}}>
-              Check Your Inbox
+              Email Check Your Inbox
             </Text>
           </View>
           <TouchableOpacity

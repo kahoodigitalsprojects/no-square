@@ -146,29 +146,31 @@ const MyProfile = props => {
                       </TouchableOpacity>
                     )}
                   </ImageBackground>
-
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      color: '#211E1F',
-                      textAlign: 'center',
-                    }}>
-                    Jena William
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: '#211E1F',
-                      marginLeft: 12,
-                    }}>
-                    @Jena
-                  </Text>
+                  <View style={{alignItems: 'center', alignSelf: 'flex-start'}}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color: '#211E1F',
+                        textAlign: 'center',
+                      }}>
+                      Jena William
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: '#211E1F',
+                        marginLeft: 12,
+                      }}>
+                      @Jena
+                    </Text>
+                  </View>
                 </View>
 
                 <View
                   style={{
-                    width: '58%',
                     height: 170,
+                    flex: 1,
+                    paddingLeft: 30,
 
                     justifyContent: 'flex-start',
                     marginTop: -10,
@@ -208,11 +210,15 @@ const MyProfile = props => {
                   <TouchableOpacity
                     style={{width: '100%'}}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      props.navigation.navigate('Statics', {
-                        screen: 'editProfile',
-                      });
-                    }}>
+                    onPress={
+                      isCheck
+                        ? null
+                        : () => {
+                            props.navigation.navigate('Statics', {
+                              screen: 'editProfile',
+                            });
+                          }
+                    }>
                     <LinearGradient
                       colors={['#F54F84', '#F52667']}
                       style={{
@@ -246,13 +252,19 @@ const MyProfile = props => {
                         <TouchableOpacity
                           style={styles.statusBox}
                           activeOpacity={0.8}
-                          onPress={() => {
-                            props.navigation.navigate(item.props);
-                          }}>
+                          onPress={
+                            isCheck
+                              ? () => {
+                                  props.navigation.navigate('status');
+                                }
+                              : () => {
+                                  props.navigation.navigate(item.props);
+                                }
+                          }>
                           <ImageBackground
                             source={item.imageUri}
                             style={{width: 65, height: 65}}>
-                            {item.Text === 'You' ? (
+                            {isCheck ? null : item.Text === 'You' ? (
                               <TouchableOpacity
                                 style={styles.plusBtn}
                                 activeOpacity={0.8}>
@@ -264,12 +276,19 @@ const MyProfile = props => {
                             ) : null}
                           </ImageBackground>
                         </TouchableOpacity>
-                        <Text>{item.Text}</Text>
+
+                        {isCheck ? null : <Text>{item.Text}</Text>}
                       </View>
                     );
                   })}
                 </ScrollView>
               </View>
+              {isCheck ? (
+                <Text
+                  style={{top: -7, left: 7, color: '#262223', fontSize: 15}}>
+                  Recent Story
+                </Text>
+              ) : null}
               <TextWithLine left={0} text={'Description'} fontSize={15} />
               <View
                 style={{
@@ -429,7 +448,6 @@ const styles = StyleSheet.create({
   },
   profileView: {
     justifyContent: 'center',
-    width: '35%',
     height: 170,
   },
   activeRoom: {

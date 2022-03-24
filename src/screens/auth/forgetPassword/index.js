@@ -60,7 +60,7 @@ const ForgetPassword = props => {
 
             <View style={styles.mainContainer}>
               <View style={styles.HeaderText}>
-                <Text style={{fontSize: 20, color: '#191919B8'}}>
+                <Text style={{fontSize: 19, color: '#191919B8'}}>
                   Enter Your Registered Email To Get The Password Reset Link
                 </Text>
               </View>

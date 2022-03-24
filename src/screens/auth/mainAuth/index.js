@@ -19,64 +19,66 @@ const MainAuth = props => {
   const {navigation} = props;
   return (
     <>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
-        <ImageBackground
-          source={Images.Backgrounds.authBackground}
-          style={styles.screenContainer}>
-          <StatusBar backgroundColor={'transparent'} translucent={true} />
+      <View style={{flex: 1}}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{flexGrow: 1}}>
+          <ImageBackground
+            source={Images.Backgrounds.authBackground}
+            style={styles.screenContainer}>
+            <StatusBar backgroundColor={'transparent'} translucent={true} />
 
-          <View style={styles.screenBody}>
-            <View
-              style={{
-                marginTop: 60,
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={Images.Pictures.authLogo}
-                style={{width: 153, height: 151}}
-              />
-              <Text
+            <View style={styles.screenBody}>
+              <View
                 style={{
-                  fontSize: 49,
-                  color: Themes.textColors.whiteText,
-                  marginTop: 20,
+                  marginTop: 60,
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                NoSquare
-              </Text>
-              <View style={{width: 284, height: 68, marginTop: 20}}>
+                <Image
+                  source={Images.Pictures.authLogo}
+                  style={{width: 153, height: 151}}
+                />
                 <Text
-                  style={{fontSize: 15, color: Themes.textColors.whiteText}}>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt ut labore et dolore
+                  style={{
+                    fontSize: 49,
+                    color: Themes.textColors.whiteText,
+                    marginTop: 20,
+                  }}>
+                  NoSquare
                 </Text>
+                <View style={{width: 284, height: 68, marginTop: 20}}>
+                  <Text
+                    style={{fontSize: 15, color: Themes.textColors.whiteText}}>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                    diam nonumy eirmod tempor invidunt ut labore et dolore
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.authButtonContainer}>
+                <LinearGradient
+                  colors={['#F54F84', '#F52667']}
+                  style={styles.authButton}>
+                  <AppButton
+                    buttonStyle={styles.footerBtn}
+                    label="Log In"
+                    onPress={() => navigation.navigate('login')}
+                  />
+                </LinearGradient>
+                <View style={styles.authButton}>
+                  <AppButton
+                    buttonStyle={styles.footerBtn2}
+                    label="Sign Up"
+                    onPress={() => navigation.navigate('signup')}
+                  />
+                </View>
               </View>
             </View>
-            <View style={styles.authButtonContainer}>
-              <LinearGradient
-                colors={['#F54F84', '#F52667']}
-                style={styles.authButton}>
-                <AppButton
-                  buttonStyle={styles.footerBtn}
-                  label="Login"
-                  onPress={() => navigation.navigate('login')}
-                />
-              </LinearGradient>
-              <View style={styles.authButton}>
-                <AppButton
-                  buttonStyle={styles.footerBtn2}
-                  label="Sign up"
-                  onPress={() => navigation.navigate('signup')}
-                />
-              </View>
-            </View>
-          </View>
-        </ImageBackground>
-      </ScrollView>
+          </ImageBackground>
+        </ScrollView>
+      </View>
     </>
   );
 };
@@ -85,7 +87,8 @@ export default MainAuth;
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
   },
 
   screenBody: {

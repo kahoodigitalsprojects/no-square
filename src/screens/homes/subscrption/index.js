@@ -71,7 +71,7 @@ const Subcrption = props => {
               onPress={() => navigation.goBack()}
               setting
               left
-              text={'Subcriptions'}
+              text={'Subscriptions'}
               textColor={'black'}
               fontSize={24}
             />

@@ -19,54 +19,57 @@ const Splash2 = ({navigation}) => {
   // }, []);
 
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{flexGrow: 1}}>
-      <ImageBackground
-        style={styles.screenContainer}
-        resizeMode={'stretch'}
-        source={Images.Backgrounds.splashBg2}>
-        <StatusBar backgroundColor={'transparent'} translucent={true} />
+    <View style={{flex: 1}}>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{flexGrow: 1}}>
+        <ImageBackground
+          style={styles.screenContainer}
+          resizeMode={'stretch'}
+          source={Images.Backgrounds.splashBg2}>
+          <StatusBar backgroundColor={'transparent'} translucent={true} />
 
-        <View style={{width: '100%', height: '100%'}}>
-          <View style={{width: '100%', marginTop: 80}}>
-            <Header viewHeight={213} width={210} heightImage={213} />
-          </View>
-          <View style={styles.textView}>
-            <Text style={styles.textline1}>
-              Learn to
-              <Text style={styles.textline1Part2}> Sugar</Text>
-            </Text>
-            <Text style={styles.textline2}>and</Text>
-            <Text style={styles.textline3}>
-              Meet New Sugar <Text style={styles.textline3Part2}>Friend</Text>
-            </Text>
-          </View>
-          <View style={styles.footer}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => {
-                navigation.navigate('mainAuth');
-              }}>
-              <LinearGradient
-                colors={['#F54F84', '#F52667']}
-                style={styles.footerBtn}>
-                <Text style={styles.btnText}>Continue...</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+          <View style={{width: '100%', height: '100%'}}>
+            <View style={{width: '100%', marginTop: 80}}>
+              <Header viewHeight={213} width={210} heightImage={213} />
+            </View>
+            <View style={styles.textView}>
+              <Text style={styles.textline1}>
+                Learn to
+                <Text style={styles.textline1Part2}> Sugar</Text>
+              </Text>
+              <Text style={styles.textline2}>and</Text>
+              <Text style={styles.textline3}>
+                Meet New Sugar{' '}
+                <Text style={styles.textline3Part2}>Friends</Text>
+              </Text>
+            </View>
+            <View style={styles.footer}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  navigation.navigate('mainAuth');
+                }}>
+                <LinearGradient
+                  colors={['#F54F84', '#F52667']}
+                  style={styles.footerBtn}>
+                  <Text style={styles.btnText}>Continue...</Text>
+                </LinearGradient>
+              </TouchableOpacity>
 
-            <View style={styles.sliderView}>
-              <View style={styles.sliderBtn}></View>
-              <LinearGradient
-                colors={['#6BB6E3', '#009DFF']}
-                style={styles.linearBtn}></LinearGradient>
-              <View style={styles.sliderBtn}></View>
+              <View style={styles.sliderView}>
+                <View style={styles.sliderBtn}></View>
+                <LinearGradient
+                  colors={['#6BB6E3', '#009DFF']}
+                  style={styles.linearBtn}></LinearGradient>
+                <View style={styles.sliderBtn}></View>
+              </View>
             </View>
           </View>
-        </View>
-      </ImageBackground>
-    </ScrollView>
+        </ImageBackground>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -74,7 +77,8 @@ export default Splash2;
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
   },
   footer: {
     width: '100%',
