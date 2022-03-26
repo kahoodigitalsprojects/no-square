@@ -18,6 +18,7 @@ const Messeges = props => {
   const [state, setState] = useState({
     active: true,
     listViewData: [{}],
+    boxWidth: false,
   });
   const ChatData = [
     {
@@ -78,7 +79,7 @@ const Messeges = props => {
               style={{width: 15, height: 15}}
             />
           </View>
-          <Text style={{fontSize: 10, color: 'black'}}>Block</Text>
+          <Text style={{fontSize: 9, color: 'black'}}>Block</Text>
         </View>
       </TouchableOpacity>
 
@@ -95,11 +96,11 @@ const Messeges = props => {
             }}
             opacity={0.3}>
             <Image
-              source={Images.Pictures.iconCross}
+              source={Images.Pictures.delete}
               style={{width: 15, height: 15}}
             />
           </View>
-          <Text style={{fontSize: 10, color: 'black'}}>unfriend</Text>
+          <Text style={{fontSize: 9, color: 'black'}}>Delete</Text>
         </View>
       </TouchableOpacity>
     </View>,
@@ -153,6 +154,18 @@ const Messeges = props => {
                         <Text style={styles.profileName}>{item.text}</Text>
                         <Text style={styles.profileTitle}>{item.title}</Text>
                       </View>
+                    </View>
+                    <View
+                      style={{
+                        alignSelf: 'flex-end',
+                        height: 60,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: 15,
+                      }}>
+                      <Text style={{color: '#707070', fontSize: 10}}>
+                        20 min
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 </Swipeable>
@@ -218,9 +231,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   chatBox: {
-    width: '90%',
+    width: '100%',
     height: 60,
-
     flexDirection: 'row',
     marginTop: 20,
     alignSelf: 'center',
@@ -245,9 +257,12 @@ const styles = StyleSheet.create({
   rightContentHiddin: {
     marginTop: 10,
     height: 60,
-    width: '40%',
-    marginRight: 20,
+    width: '20%',
+
+    marginLeft: 18,
+
     alignItems: 'center',
+
     justifyContent: 'center',
     flexDirection: 'row',
   },

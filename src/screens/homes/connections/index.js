@@ -90,7 +90,7 @@ const Connections = props => {
               style={{width: 15, height: 15}}
             />
           </View>
-          <Text style={{fontSize: 10, color: 'black'}}>Block</Text>
+          <Text style={{fontSize: 9, color: 'black'}}>Block</Text>
         </View>
       </TouchableOpacity>
 
@@ -111,7 +111,7 @@ const Connections = props => {
               style={{width: 15, height: 15}}
             />
           </View>
-          <Text style={{fontSize: 10, color: 'black'}}>unfriend</Text>
+          <Text style={{fontSize: 9, color: 'black'}}>unfriend</Text>
         </View>
       </TouchableOpacity>
     </View>,
@@ -253,7 +253,7 @@ const Connections = props => {
                           flexDirection: 'row',
                           width: 120,
                         }}>
-                        <View style={styles.rightContentHiddin}>
+                        <View style={styles.rightContentHiddin2}>
                           <TouchableOpacity activeOpacity={0.9}>
                             <View style={{marginRight: 20}}>
                               <View style={styles.rightContentHiddinData}>
@@ -320,6 +320,7 @@ const styles = StyleSheet.create({
   },
   mainBody: {
     width: '90%',
+
     height: '100%',
     alignSelf: 'center',
     paddingBottom: 30,
@@ -364,13 +365,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   chatBox: {
-    width: '90%',
+    width: '100%',
     height: 60,
-
     flexDirection: 'row',
     marginTop: 20,
-    alignSelf: 'center',
-    justifyContent: 'space-between',
   },
   chatProfile: {width: 60, height: 60},
   profileName: {
@@ -391,12 +389,21 @@ const styles = StyleSheet.create({
   rightContentHiddin: {
     marginTop: 10,
     height: 60,
-    width: '40%',
-    marginRight: 20,
+    width: '20%',
+    marginLeft: 18,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingRight: 20,
+  },
+  rightContentHiddin2: {
+    marginTop: 10,
+    height: 60,
+    width: '40%',
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   rightContentHiddinData: {
     width: 28,

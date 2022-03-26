@@ -31,6 +31,7 @@ const Images = {
     iconCross: require('../../assets/images/iconCross.png'),
     masterCard: require('../../assets/images/masterCard.png'),
     send: require('../../assets/images/send.png'),
+    delete: require('../../assets/images/delete.png'),
   },
   Backgrounds: {
     splashBg: require('../../assets/images/splashBg.png'),

@@ -99,6 +99,10 @@ const SubcriptionPlan = props => {
               </View>
               <View style={{width: '100%', marginTop: 30}}>
                 <DropDownPicker
+                  placeholder={items[0].label}
+                  placeholderStyle={{
+                    textAlign: 'center',
+                  }}
                   open={open}
                   value={value}
                   items={items}

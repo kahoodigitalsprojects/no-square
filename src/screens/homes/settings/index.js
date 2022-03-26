@@ -10,8 +10,9 @@ import {
 import React from 'react';
 import {Icon, Item} from 'native-base';
 import {Themes, Images} from './../../../constants';
-import {HomeHeader} from '../../../components';
+import {HomeHeader, CustomPopup} from '../../../components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+const [visible, setVisible] = useState(false);
 const Settings = props => {
   const Data = [
     {
@@ -55,7 +56,10 @@ const Settings = props => {
       rightIconType: 'AntDesign',
       imageHeight: 30,
       imageWidth: 30,
-      // onPress: '',
+      onProps: () => {
+        setVisible(true);
+        setState({...state, text: 'Terms & Conditions'});
+      },
     },
     {
       icon: Images.Backgrounds.lock,
@@ -79,71 +83,89 @@ const Settings = props => {
     },
   ];
   return (
-    <SafeAreaView style={styles.screenContainer}>
-      <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <View style={{marginTop: 40}}>
-        <HomeHeader
-          navigation={props.navigation}
-          setting
-          text={'Settings'}
-          right
-          settingIconProps={() => props.navigation.navigate('home')}
-        />
-      </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.body}>
-          {Data.map((item, i) => {
-            return (
-              <TouchableOpacity
-                style={styles.bodyItems}
-                activeOpacity={0.8}
-                onPress={
-                  item.statics == 1
-                    ? item.onPath
-                    : () => {
-                        i === 2
-                          ? null
-                          : props.navigation.navigate(item.onPress);
-                      }
-                }>
-                <View style={styles.item1}>
-                  <Image
-                    source={item.icon}
-                    style={{width: item.imageWidth, height: item.imageHeight}}
-                  />
-                </View>
-
-                <View style={styles.item2}>
-                  <Text style={{fontSize: 12, color: '#323232'}}>
-                    {item.text}
-                  </Text>
-                </View>
-                <View style={styles.item3}>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: '#C2C2C2',
-                      fontWeight: '900',
-                      width: 30,
-                      height: 16,
-                    }}>
-                    {item.rightText}
-                  </Text>
-                  <Icon
-                    name={item.rightIcon}
-                    type={item.rightIconType}
-                    style={{fontSize: 18, color: '#F54F84'}}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+    <>
+      <SafeAreaView style={styles.screenContainer}>
+        <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+        <View style={{marginTop: 40}}>
+          <HomeHeader
+            navigation={props.navigation}
+            setting
+            text={'Settings'}
+            right
+            settingIconProps={() => props.navigation.navigate('home')}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.body}>
+            {Data.map((item, i) => {
+              return (
+                <TouchableOpacity
+                  style={styles.bodyItems}
+                  activeOpacity={0.8}
+                  onPress={
+                    item.text === 'Terms of Use'
+                      ? item.onProps
+                      : item.statics == 1
+                      ? item.onPath
+                      : () => {
+                          i === 2
+                            ? null
+                            : props.navigation.navigate(item.onPress);
+                        }
+                  }>
+                  <View style={styles.item1}>
+                    <Image
+                      source={item.icon}
+                      style={{width: item.imageWidth, height: item.imageHeight}}
+                    />
+                  </View>
+
+                  <View style={styles.item2}>
+                    <Text style={{fontSize: 12, color: '#323232'}}>
+                      {item.text}
+                    </Text>
+                  </View>
+                  <View style={styles.item3}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: '#C2C2C2',
+                        fontWeight: '900',
+                        width: 30,
+                        height: 16,
+                      }}>
+                      {item.rightText}
+                    </Text>
+                    <Icon
+                      name={item.rightIcon}
+                      type={item.rightIconType}
+                      style={{fontSize: 18, color: '#F54F84'}}
+                    />
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+
+      <CustomPopup
+        stateOverlay={visible}
+        setstateOverlay={() => setVisible(false)}
+        modelHeight={618}
+        modelWidth={332}
+        privacy
+        paymentSuccesProps={navigation}
+        border_radius={30}
+        privacyText={state.text}
+        OBonPress={() => {
+          setVisible(false);
+        }}
+      />
+    </>
   );
 };
 
