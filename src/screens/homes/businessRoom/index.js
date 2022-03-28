@@ -289,22 +289,25 @@ const BusinessRoom = props => {
               />
             </View>
           </View>
-          {message.length <= 0 ? null : (
-            <View
-              style={{
-                width: '10%',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}>
+          <View
+            style={{
+              width: '10%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={message.length <= 0}
+              onPress={onSend}>
               <Icon
                 name="send"
                 type="MaterialIcons"
-                style={{color: '#F54F84'}}
-                onPress={onSend}
+                style={{color: message.length <= 0 ? 'grey' : '#F54F84'}}
+                // onPress={onSend}
               />
-            </View>
-          )}
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </SafeAreaView>

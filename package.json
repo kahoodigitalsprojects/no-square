@@ -37,7 +37,8 @@
     "react-native-toast-message": "^2.1.1",
     "react-native-vector-icons": "^9.0.0",
     "react-native-video": "^5.2.0",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "rn-tooltip": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
