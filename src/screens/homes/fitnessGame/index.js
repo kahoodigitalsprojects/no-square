@@ -34,12 +34,9 @@ const FitnessGame = props => {
       nav2: 'blogs',
     },
   ];
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-      }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
 
       <View style={styles.container}>

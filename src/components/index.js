@@ -12,3 +12,4 @@ export * from './customPopup';
 export * from './appText';
 export * from './userComment';
 export * from './textWithLine';
+export * from './postComponent';

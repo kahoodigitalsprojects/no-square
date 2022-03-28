@@ -8,15 +8,19 @@ import {
   View,
   Image,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {Tooltip, colors} from 'react-native-elements';
-import {HomeHeader, SearchBar} from '../../../components';
+import {colors} from 'react-native-elements';
+import {HomeHeader, PostComponent, SearchBar} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 import {useIsFocused} from '@react-navigation/native';
+import Tooltip from 'rn-tooltip';
 const Home = props => {
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+
   const isFocused = useIsFocused();
   const {navigation} = props;
   const [state, setState] = useState(false);
@@ -56,8 +60,7 @@ const Home = props => {
       Text: 'Maria',
     },
   ];
-
-  const Post = [
+  const [Post, setPost] = useState([
     {
       image: Images.Backgrounds.postImage,
       text: 'Lorem ipsum dolor sit amet, consetetur sadipscing 🥺',
@@ -65,6 +68,7 @@ const Home = props => {
       name: ' Daniela Fernández Ramos',
       commentProfile: Images.Backgrounds.commentProfile,
       commentName: 'Carolyn Gordon',
+      tooltip: false,
     },
     {
       image: Images.Backgrounds.postImage2,
@@ -73,15 +77,12 @@ const Home = props => {
       name: ' Daniela Fernández Ramos',
       commentProfile: Images.Backgrounds.Profile,
       commentName: 'Amber Gray',
+      tooltip: false,
     },
-  ];
+  ]);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-      }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       {isFocused && (
         <StatusBar backgroundColor={'white'} barStyle="dark-content" />
       )}
@@ -147,249 +148,297 @@ const Home = props => {
                   })}
                 </ScrollView>
               </View>
+
               <Text style={styles.newFeed}>NoSquare Feed</Text>
+              {/* <View
+                style={{
+                  height: 200,
+                  width: '100%',
+                  backgroundColor: 'red',
+                  zIndex: 9999,
+                }}></View> */}
+              {Post.filter(item => item.tooltip).length ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setPost(Post.map(item => ({...item, tooltip: false})));
+                  }}
+                  onLongPress={() => {
+                    console.log('NATHI KAR KXH');
+                  }}
+                  style={{
+                    position: 'absolute',
+                    height: Dimensions.get('window').height,
+                    width: '100%',
+                    zIndex: 10,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    // backgroundColor: 'rgba(0,0,0,0.5)',
+                  }}></TouchableOpacity>
+              ) : null}
               {Post.map((item, i) => {
                 return (
-                  <View style={styles.PostVIew}>
-                    <View style={styles.postHeader}>
-                      <View style={styles.postHeaderContentLeft}>
-                        <View
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              props.navigation.navigate('Statics', {
-                                screen: 'myProfile',
-                                params: {
-                                  check: true,
-                                },
-                              });
-                            }}
-                            style={styles.postHeaderImg}
-                            activeOpacity={0.8}>
-                            <ImageBackground
-                              source={Images.Backgrounds.profileImg}
-                              style={{
-                                height: '100%',
-                                height: '100%',
-                              }}></ImageBackground>
-                          </TouchableOpacity>
-                          <View>
-                            <Text style={styles.postHeaderContentRight}>
-                              {item.name}
-                            </Text>
-                            <Text
-                              style={{
-                                fontSize: 9,
-                                color: '#BABDC9',
-                                paddingLeft: 10,
-                              }}>
-                              <Image
-                                source={Images.Backgrounds.globe}
-                                style={{width: 8.1, height: 8.1}}
-                              />
-                              {'  '}3 hours ago
-                            </Text>
-                          </View>
-                        </View>
+                  <PostComponent
+                    onToolTipPress={i => {
+                      setPost(
+                        Post.map((val, index) => {
+                          if (i == index) {
+                            val.tooltip
+                              ? (val.tooltip = false)
+                              : (val.tooltip = true);
+                          } else {
+                            val.tooltip = false;
+                          }
+                          return val;
+                        }),
+                      );
+                    }}
+                    index={i}
+                    key={i}
+                    post={item}
+                    onProfilePress={() => {
+                      props.navigation.navigate('Statics', {
+                        screen: 'myProfile',
+                        params: {
+                          check: true,
+                        },
+                      });
+                    }}
+                    onPostPress={() => {
+                      props.navigation.navigate('Statics', {
+                        screen: 'innerPost',
+                      });
+                    }}
+                  />
 
-                        <View style={styles.postIcon}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              setState(!state);
-                            }}
-                            style={styles.dotLine}
-                            activeOpacity={0.9}>
-                            <Icon
-                              style={{
-                                fontSize: 15,
+                  // <View style={styles.PostVIew}>
+                  //   <View style={styles.postHeader}>
+                  //     <View style={styles.postHeaderContentLeft}>
+                  //       <View
+                  //         style={{flexDirection: 'row', alignItems: 'center'}}>
+                  //         <TouchableOpacity
+                  //           onPress={() => {
+                  //             props.navigation.navigate('Statics', {
+                  //               screen: 'myProfile',
+                  //               params: {
+                  //                 check: true,
+                  //               },
+                  //             });
+                  //           }}
+                  //           style={styles.postHeaderImg}
+                  //           activeOpacity={0.8}>
+                  //           <ImageBackground
+                  //             source={Images.Backgrounds.profileImg}
+                  //             style={{
+                  //               height: '100%',
+                  //               height: '100%',
+                  //             }}></ImageBackground>
+                  //         </TouchableOpacity>
+                  //         <View>
+                  //           <Text style={styles.postHeaderContentRight}>
+                  //             {item.name}
+                  //           </Text>
+                  //           <Text
+                  //             style={{
+                  //               fontSize: 9,
+                  //               color: '#BABDC9',
+                  //               paddingLeft: 10,
+                  //             }}>
+                  //             <Image
+                  //               source={Images.Backgrounds.globe}
+                  //               style={{width: 8.1, height: 8.1}}
+                  //             />
+                  //             {'  '}3 hours ago
+                  //           </Text>
+                  //         </View>
+                  //       </View>
 
-                                color: !state ? 'grey' : '#969EB7',
-                              }}
-                              borderColor="#969EB7"
-                              borderWidth={1}
-                              name={'bookmark'}
-                              type={'FontAwesome'}
-                            />
-                          </TouchableOpacity>
+                  //       <View style={styles.postIcon}>
+                  //         <TouchableOpacity
+                  //           onPress={() => {
+                  //             setState(!state);
+                  //           }}
+                  //           style={styles.dotLine}
+                  //           activeOpacity={0.9}>
+                  //           <Icon
+                  //             style={{
+                  //               fontSize: 15,
 
-                          <View style={styles.dotLine}>
-                            <Tooltip
-                              backgroundColor="#EFF2F7"
-                              width={110}
-                              height={80}
-                              popover={
-                                <View>
-                                  <Text>Report Post</Text>
-                                  <Text>Block User</Text>
-                                  <Text>Hide People</Text>
-                                </View>
-                              }>
-                              <>
-                                <View
-                                  style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    display: 'flex',
-                                  }}>
-                                  <Image
-                                    source={Images.Backgrounds.dotLine}
-                                    style={styles.savedImage}
-                                  />
-                                </View>
-                              </>
-                            </Tooltip>
-                          </View>
-                        </View>
-                      </View>
-                      <Text
-                        style={{
-                          width: '100%',
-                          fontSize: 12,
-                          color: '#444D6E',
-                        }}>
-                        {item.text}
-                      </Text>
-                      <Text style={{color: '#F54F84'}}>See more</Text>
+                  //               color: !state ? 'grey' : '#969EB7',
+                  //             }}
+                  //             borderColor="#969EB7"
+                  //             borderWidth={1}
+                  //             name={'bookmark'}
+                  //             type={'FontAwesome'}
+                  //           />
+                  //         </TouchableOpacity>
+                  //         <TouchableOpacity
+                  //           onPress={() => {
+                  //             setTooltipVisible(!tooltipVisible);
+                  //           }}
+                  //           style={styles.dotLine}
+                  //           activeOpacity={0.9}>
+                  //           <Icon
+                  //             name="dots-three-horizontal"
+                  //             type="Entypo"
+                  //             style={{
+                  //               fontSize: 15,
+                  //             }}
+                  //           />
+                  //         </TouchableOpacity>
+                  //       </View>
+                  //     </View>
+                  //     <Text
+                  //       style={{
+                  //         width: '100%',
+                  //         fontSize: 12,
+                  //         color: '#444D6E',
+                  //       }}>
+                  //       {item.text}
+                  //     </Text>
+                  //     <Text style={{color: '#F54F84'}}>See more</Text>
 
-                      <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() => {
-                          props.navigation.navigate('Statics', {
-                            screen: 'innerPost',
-                          });
-                        }}
-                        style={{
-                          width: '100%',
-                          height: 217,
-                        }}>
-                        <Image
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            borderRadius: 14,
-                          }}
-                          source={item.image}
-                        />
-                      </TouchableOpacity>
-                      <Text
-                        style={{fontSize: 10, color: '#747EA0', marginTop: 5}}>
-                        30 comments · 5 shares
-                      </Text>
-                      <View
-                        style={{
-                          width: '100%',
-                          height: 100.9,
-                        }}>
-                        <View style={styles.icons}>
-                          <View style={{flexDirection: 'row'}}>
-                            <TouchableOpacity
-                              style={styles.likeBtn}
-                              activeOpacity={0.7}>
-                              <Image
-                                source={Images.Backgrounds.like}
-                                style={{width: 14.71, height: 13.24}}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              style={styles.iconBtn}
-                              activeOpacity={0.7}>
-                              <Image
-                                source={Images.Backgrounds.chat}
-                                style={{width: 14.71, height: 13.24}}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.iconBtn}>
-                              <Image
-                                source={Images.Backgrounds.move}
-                                style={{width: 14.71, height: 13.24}}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItem: 'center',
-                              justifyContent: 'center',
-                            }}>
-                            <Text
-                              style={{
-                                marginTop: 2,
-                                color: '#747EA0',
-                                fontSize: 9,
-                              }}>
-                              1.2k
-                            </Text>
-                            <TouchableOpacity style={styles.rightIconBtn}>
-                              <Icon
-                                name="like"
-                                type="Fontisto"
-                                style={{
-                                  fontSize: 8,
-                                  alignSelf: 'center',
-                                  color: 'white',
-                                }}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.rightIconBtn2}>
-                              <Icon
-                                name="heart"
-                                type="AntDesign"
-                                style={{
-                                  fontSize: 8,
-                                  alignSelf: 'center',
-                                  color: 'white',
-                                }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
+                  //     <TouchableOpacity
+                  //       activeOpacity={1}
+                  //       onPress={() => {
+                  //         props.navigation.navigate('Statics', {
+                  //           screen: 'innerPost',
+                  //         });
+                  //       }}
+                  //       style={{
+                  //         width: '100%',
+                  //         height: 217,
+                  //       }}>
+                  //       <Image
+                  //         style={{
+                  //           width: '100%',
+                  //           height: '100%',
+                  //           borderRadius: 14,
+                  //         }}
+                  //         source={item.image}
+                  //       />
+                  //     </TouchableOpacity>
+                  //     <Text
+                  //       style={{fontSize: 10, color: '#747EA0', marginTop: 5}}>
+                  //       30 comments · 5 shares
+                  //     </Text>
+                  //     <View
+                  //       style={{
+                  //         width: '100%',
+                  //         height: 100.9,
+                  //       }}>
+                  //       <View style={styles.icons}>
+                  //         <View style={{flexDirection: 'row'}}>
+                  //           <TouchableOpacity
+                  //             style={styles.likeBtn}
+                  //             activeOpacity={0.7}>
+                  //             <Image
+                  //               source={Images.Backgrounds.like}
+                  //               style={{width: 14.71, height: 13.24}}
+                  //             />
+                  //           </TouchableOpacity>
+                  //           <TouchableOpacity
+                  //             style={styles.iconBtn}
+                  //             activeOpacity={0.7}>
+                  //             <Image
+                  //               source={Images.Backgrounds.chat}
+                  //               style={{width: 14.71, height: 13.24}}
+                  //             />
+                  //           </TouchableOpacity>
+                  //           <TouchableOpacity style={styles.iconBtn}>
+                  //             <Image
+                  //               source={Images.Backgrounds.move}
+                  //               style={{width: 14.71, height: 13.24}}
+                  //             />
+                  //           </TouchableOpacity>
+                  //         </View>
+                  //         <View
+                  //           style={{
+                  //             flexDirection: 'row',
+                  //             alignItem: 'center',
+                  //             justifyContent: 'center',
+                  //           }}>
+                  //           <Text
+                  //             style={{
+                  //               marginTop: 2,
+                  //               color: '#747EA0',
+                  //               fontSize: 9,
+                  //             }}>
+                  //             1.2k
+                  //           </Text>
+                  //           <TouchableOpacity style={styles.rightIconBtn}>
+                  //             <Icon
+                  //               name="like"
+                  //               type="Fontisto"
+                  //               style={{
+                  //                 fontSize: 8,
+                  //                 alignSelf: 'center',
+                  //                 color: 'white',
+                  //               }}
+                  //             />
+                  //           </TouchableOpacity>
+                  //           <TouchableOpacity style={styles.rightIconBtn2}>
+                  //             <Icon
+                  //               name="heart"
+                  //               type="AntDesign"
+                  //               style={{
+                  //                 fontSize: 8,
+                  //                 alignSelf: 'center',
+                  //                 color: 'white',
+                  //               }}
+                  //             />
+                  //           </TouchableOpacity>
+                  //         </View>
+                  //       </View>
 
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            widht: '100%',
-                            marginTop: 10,
-                          }}>
-                          <View style={{marginTop: 5}}>
-                            <ImageBackground
-                              source={item.commentProfile}
-                              style={{
-                                width: 25.11,
-                                height: 25.11,
-                              }}></ImageBackground>
-                          </View>
+                  //       <View
+                  //         style={{
+                  //           flexDirection: 'row',
+                  //           widht: '100%',
+                  //           marginTop: 10,
+                  //         }}>
+                  //         <View style={{marginTop: 5}}>
+                  //           <ImageBackground
+                  //             source={item.commentProfile}
+                  //             style={{
+                  //               width: 25.11,
+                  //               height: 25.11,
+                  //             }}></ImageBackground>
+                  //         </View>
 
-                          <View style={{marginLeft: 10}}>
-                            <Text
-                              style={{
-                                color: '#1B1B1B',
-                                fontSize: 10,
-                                fontWeight: 'bold',
-                              }}>
-                              {item.commentName}
-                            </Text>
-                            <Text>Lorem ipsum dolor sit amet, consetetur</Text>
-                            <View style={{flexDirection: 'row'}}>
-                              <TouchableOpacity activeOpacity={0.7}>
-                                <Text style={{color: '#2D3F7B', fontSize: 9}}>
-                                  Like
-                                </Text>
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                style={{marginLeft: 5}}
-                                activeOpacity={0.7}>
-                                <Text style={{color: '#2D3F7B', fontSize: 9}}>
-                                  Reply
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
+                  //         <View style={{marginLeft: 10}}>
+                  //           <Text
+                  //             style={{
+                  //               color: '#1B1B1B',
+                  //               fontSize: 10,
+                  //               fontWeight: 'bold',
+                  //             }}>
+                  //             {item.commentName}
+                  //           </Text>
+                  //           <Text>Lorem ipsum dolor sit amet, consetetur</Text>
+                  //           <View style={{flexDirection: 'row'}}>
+                  //             <TouchableOpacity activeOpacity={0.7}>
+                  //               <Text style={{color: '#2D3F7B', fontSize: 9}}>
+                  //                 Like
+                  //               </Text>
+                  //             </TouchableOpacity>
+                  //             <TouchableOpacity
+                  //               style={{marginLeft: 5}}
+                  //               activeOpacity={0.7}>
+                  //               <Text style={{color: '#2D3F7B', fontSize: 9}}>
+                  //                 Reply
+                  //               </Text>
+                  //             </TouchableOpacity>
+                  //           </View>
+                  //         </View>
+                  //       </View>
+                  //     </View>
+                  //   </View>
+                  //   {tooltipVisible && (
+                  //     <View style={styles.postToolDrop}></View>
+                  //   )}
+                  // </View>
                 );
               })}
             </View>
@@ -402,6 +451,16 @@ const Home = props => {
 
 export default Home;
 const styles = StyleSheet.create({
+  postToolDrop: {
+    width: 150,
+    minHeight: 100,
+    position: 'absolute',
+    backgroundColor: '#EFF2F7',
+    top: 40,
+    borderRadius: 14,
+    right: '5%',
+  },
+
   container: {
     width: '100%',
     height: '100%',

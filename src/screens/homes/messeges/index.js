@@ -27,48 +27,57 @@ const Messeges = props => {
     {
       image: Images.Backgrounds.chatProfile2,
       text: 'Alicia Sierra',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile1,
       text: 'Alison Parker',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile2,
       text: 'Alicia Sierra',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile4,
       text: 'Marcia Dor',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: true,
     },
 
     {
       image: Images.Backgrounds.chatProfile3,
       text: 'Helan',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: true,
     },
     {
       image: Images.Backgrounds.chatProfile2,
       text: 'Alicia Sierra',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile1,
       text: 'Lucy Grey',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: true,
     },
     {
       image: Images.Backgrounds.chatProfile3,
       text: 'Anna May',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile4,
       text: 'Helan',
-      title: 'You: I m waiting for.',
+      title: '27 Mutual Friends',
+      active: true,
     },
   ];
 
@@ -223,6 +232,7 @@ const Messeges = props => {
                         source={item.image}
                         style={{width: '100%', height: '100%'}}
                       />
+                      {item.active && <View style={styles.active}></View>}
                     </View>
                     <View style={{flex: 1, paddingLeft: 15}}>
                       <Text style={styles.profileName}>{item.text}</Text>
@@ -247,7 +257,7 @@ const Messeges = props => {
                             alignItems: 'center',
                             marginBottom: 5,
                           }}>
-                          <Text style={{fontSize: 10}}>5</Text>
+                          <Text style={{fontSize: 10, color: '#fff'}}>5</Text>
                         </View>
                       )}
                       <Text style={{color: '#707070', fontSize: 10}}>
@@ -412,6 +422,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 100,
     height: 60,
+  },
+
+  active: {
+    width: 13,
+    height: 13,
+    borderRadius: 14,
+    backgroundColor: '#24A206',
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 });
 const SCREEN_WIDTH = Dimensions.get('window').width;

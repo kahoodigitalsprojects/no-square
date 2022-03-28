@@ -234,7 +234,6 @@ const Chat = props => {
                   <View
                     style={{
                       width: '70%',
-
                       flexDirection:
                         message?.user?._id == 1 ? 'row' : 'row-reverse',
                       marginVertical: 10,
@@ -262,7 +261,6 @@ const Chat = props => {
                         minHeight: 50,
                         paddingVertical: 10,
                         overflow: 'hidden',
-                        //   height: '90%',
                         justifyContent: 'center',
                         alignItems: 'center',
                         backgroundColor:
@@ -319,7 +317,6 @@ const Chat = props => {
             width: '100%',
             height: orientation ? '10%' : '15%',
             marginBottom: 5,
-
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -364,22 +361,26 @@ const Chat = props => {
               />
             </View>
           </View>
-          {message.length <= 0 ? null : (
-            <View
-              style={{
-                width: '10%',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}>
+          {/* {message.length <= 0 ? null : ( */}
+          <View
+            style={{
+              width: '10%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}>
+            <TouchableOpacity
+              disabled={message.length <= 0}
+              activeOpacity={0.7}
+              onPress={onSend}>
               <Icon
                 name="send"
                 type="MaterialIcons"
-                style={{color: '#F54F84'}}
-                onPress={onSend}
+                style={{color: message.length <= 0 ? 'grey' : '#F54F84'}}
               />
-            </View>
-          )}
+            </TouchableOpacity>
+          </View>
+          {/* )} */}
         </View>
       </View>
     </SafeAreaView>

@@ -12,27 +12,163 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-} from '../../../components';
+import {HomeHeader, SearchBar} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 
 const Blogs = props => {
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-      }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
 
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <HomeHeader setting left text="Discover" />
+
+        <View style={{width: '90%', alignSelf: 'center'}}>
+          <View style={styles.boxImage}>
+            <ImageBackground
+              source={Images.Backgrounds.mainBox}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}>
+              <View style={styles.boxIconMain}>
+                <TouchableOpacity style={styles.boxIconBtn} activeOpacity={0.9}>
+                  <Image
+                    source={Images.Backgrounds.boxShare}
+                    style={{width: 23.9, height: 27.36}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.boxIconBtn} activeOpacity={0.9}>
+                  <Image
+                    source={Images.Backgrounds.boxLock}
+                    style={{width: 23.9, height: 27.36}}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.boxTextView}>
+                <Text style={styles.boxText}>
+                  Lorem ipsum dolor sit amet, consetetur Sadipscing.
+                </Text>
+              </View>
+              <View style={styles.profileview}>
+                <View style={styles.profileImg}>
+                  <Image
+                    source={Images.Backgrounds.profileIcon}
+                    style={{width: '100%', height: '100%', borderRadius: 100}}
+                  />
+                </View>
+                <Text style={{fontSize: 12, color: 'white', paddingLeft: 5}}>
+                  Martha Dorthy
+                </Text>
+              </View>
+            </ImageBackground>
+          </View>
+
+          <View style={{paddingTop: 20}}>
+            <View
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                minHeight: 100,
+                marginBottom: 20,
+              }}>
+              <View
+                style={{paddingTop: 30, width: 100, justifyContent: 'center'}}>
+                <Text
+                  style={{
+                    transform: [{rotate: '-90deg'}],
+                    fontSize: 20,
+                    color: '#000000',
+                  }}>
+                  Introduction
+                </Text>
+              </View>
+              <View style={{width: '70%'}}>
+                <Text>
+                  Luyam erat, sed diam voluptua. At vero eos et accusam et justo
+                  duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                  takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat, sed diam voluptua. At vero eos et accusam et justo duo
+                  dolores et ea rebum. Stet clita kasd gubergren, no sea
+                  takimata sanctus est Lorem ipsum dolor sit amet.
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                minHeight: 100,
+                marginBottom: 20,
+              }}>
+              <View style={{width: 100}}>
+                <Text
+                  style={{
+                    transform: [{rotate: '-90deg'}],
+                    fontSize: 20,
+                    color: '#000000',
+                  }}>
+                  About
+                </Text>
+              </View>
+              <View style={{width: '70%'}}>
+                <Text>
+                  Luyam erat, sed diam voluptua. At vero eos et accusam et justo
+                  duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                  takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat, sed diam voluptua. At vero eos et accusam et justo duo
+                  dolores et ea rebum. Stet clita kasd gubergren, no sea
+                  takimata sanctus est Lorem ipsum dolor sit amet.
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                minHeight: 100,
+              }}>
+              <View
+                style={{
+                  width: 100,
+                  paddingTop: 30,
+                  justifyContent: 'center',
+                  height: '50%',
+                }}>
+                <Text
+                  style={{
+                    transform: [{rotate: '-90deg'}],
+                    fontSize: 20,
+                    color: '#000000',
+                  }}>
+                  Conclusion
+                </Text>
+              </View>
+              <View style={{width: '70%'}}>
+                <Text>
+                  Luyam erat, sed diam voluptua. At vero eos et accusam et justo
+                  duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                  takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat, sed diam voluptua. At vero eos et accusam et justo duo
+                  dolores et ea rebum. Stet clita kasd gubergren, no sea
+                  takimata sanctus est Lorem ipsum dolor sit amet.
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+      {/* <View style={styles.container}>
         <HomeHeader setting left text={'Discover'} />
         <View style={styles.mainContainer}>
           <ScrollView
@@ -150,7 +286,7 @@ const Blogs = props => {
             </View>
           </ScrollView>
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
@@ -171,7 +307,7 @@ const styles = StyleSheet.create({
   },
   boxImage: {
     width: '100%',
-    height: 383,
+    height: 350,
     borderRadius: 20,
     overflow: 'hidden',
   },
