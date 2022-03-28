@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Swipeable from 'react-native-swipeable';
+// import Swipeable from 'react-native-swipeable';
 import {
   ScrollView,
   StatusBar,
@@ -8,11 +8,14 @@ import {
   TouchableOpacity,
   View,
   Image,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {HomeHeader, SearchBar} from '../../../components';
 import {Themes, Images} from './../../../constants';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Messeges = props => {
   const [state, setState] = useState({
@@ -105,6 +108,75 @@ const Messeges = props => {
       </TouchableOpacity>
     </View>,
   ];
+
+  const rightSwipe = (progress, dragX) => {
+    console.log({dragX});
+    return (
+      <View
+        style={{
+          width: 100,
+          height: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Animated.View
+          style={{
+            width: '100%',
+            height: '100%',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // transform: [
+            //   {
+            //     translateX: dragX.interpolate({
+            //       inputRange: [0, 0, 100],
+            //       outputRange: [0, 0, 100],
+            //     }),
+            //   },
+            // ],
+          }}>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View>
+              <View style={styles.rightContentHiddinData}>
+                <Image
+                  source={Images.Backgrounds.block}
+                  style={{width: 15, height: 15}}
+                />
+              </View>
+              <Text style={{fontSize: 9, color: 'black'}}>Block</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity activeOpacity={0.9} style={{marginLeft: 10}}>
+            <View>
+              <View
+                style={{
+                  width: 28,
+                  height: 27,
+                  borderRadius: 5,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#F779A1',
+                }}
+                opacity={0.3}>
+                <Image
+                  source={Images.Pictures.delete}
+                  style={{width: 15, height: 15}}
+                />
+              </View>
+              <Text style={{fontSize: 9, color: 'black'}}>Delete</Text>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+      // </View>
+
+      // </View>
+      // </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
@@ -123,52 +195,114 @@ const Messeges = props => {
 
             {ChatData.map((item, i) => {
               return (
-                <Swipeable rightButtons={rightButtons}>
+                <Swipeable
+                  renderRightActions={rightSwipe}
+                  containerStyle={{
+                    height: 60,
+                    marginVertical: 10,
+                    width: '100%',
+                    alignSelf: 'center',
+                  }}>
                   <TouchableOpacity
-                    style={styles.chatBox}
                     onPress={() => {
                       props.navigation.navigate('Statics', {
                         screen: 'chat',
                       });
                     }}
-                    activeOpacity={0.8}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <View style={styles.chatProfile}>
-                        <Image
-                          source={item.image}
-                          style={{width: '100%', height: '100%'}}
-                        />
-                        {item.text === 'Helan' ||
-                        item.text === 'Marcia Dor' ||
-                        item.text === 'Lucy Grey' ? (
-                          <View style={styles.active}></View>
-                        ) : null}
-                      </View>
-
-                      <View>
-                        <Text style={styles.profileName}>{item.text}</Text>
-                        <Text style={styles.profileTitle}>{item.title}</Text>
-                      </View>
+                    activeOpacity={0.7}
+                    style={{
+                      width: '90%',
+                      alignSelf: 'center',
+                      height: '100%',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={styles.chatProfile}>
+                      <Image
+                        source={item.image}
+                        style={{width: '100%', height: '100%'}}
+                      />
                     </View>
+                    <View style={{flex: 1, paddingLeft: 15}}>
+                      <Text style={styles.profileName}>{item.text}</Text>
+                      <Text style={styles.profileTitle}>{item.title}</Text>
+                    </View>
+
                     <View
                       style={{
-                        alignSelf: 'flex-end',
                         height: 60,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginRight: 15,
+                        width: 60,
                       }}>
+                      {i < 2 && (
+                        <View
+                          style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: 100,
+                            backgroundColor: '#F54F84',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: 5,
+                          }}>
+                          <Text style={{fontSize: 10}}>5</Text>
+                        </View>
+                      )}
                       <Text style={{color: '#707070', fontSize: 10}}>
                         20 min
                       </Text>
                     </View>
                   </TouchableOpacity>
                 </Swipeable>
+
+                // <Swipeable rightButtons={rightButtons}>
+                //   <TouchableOpacity
+                //     style={styles.chatBox}
+                //     onPress={() => {
+                //       props.navigation.navigate('Statics', {
+                //         screen: 'chat',
+                //       });
+                //     }}
+                //     activeOpacity={0.8}>
+                //     <View
+                //       style={{
+                //         flexDirection: 'row',
+                //         alignItems: 'center',
+                //         justifyContent: 'center',
+                //       }}>
+                //       <View style={styles.chatProfile}>
+                //         <Image
+                //           source={item.image}
+                //           style={{width: '100%', height: '100%'}}
+                //         />
+                //         {item.text === 'Helan' ||
+                //         item.text === 'Marcia Dor' ||
+                //         item.text === 'Lucy Grey' ? (
+                //           <View style={styles.active}></View>
+                //         ) : null}
+                //       </View>
+
+                //       <View>
+                //         <Text style={styles.profileName}>{item.text}</Text>
+                //         <Text style={styles.profileTitle}>{item.title}</Text>
+                //       </View>
+                //     </View>
+                //     <View
+                //       style={{
+                //         alignSelf: 'flex-end',
+                //         height: 60,
+                //         alignItems: 'center',
+                //         justifyContent: 'center',
+                //         marginRight: 15,
+                //       }}>
+                //       <Text style={{color: '#707070', fontSize: 10}}>
+                //         20 min
+                //       </Text>
+                //     </View>
+                //   </TouchableOpacity>
+                // </Swipeable>
               );
             })}
           </View>
@@ -231,7 +365,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   chatBox: {
-    width: '100%',
+    width: '105%',
     height: 60,
     flexDirection: 'row',
     marginTop: 20,
@@ -258,9 +392,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 60,
     width: '20%',
-
     marginLeft: 18,
-
     alignItems: 'center',
 
     justifyContent: 'center',
@@ -274,4 +406,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  deleteBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 60,
+  },
 });
+const SCREEN_WIDTH = Dimensions.get('window').width;

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Swipeable from 'react-native-swipeable';
+// import Swipeable from 'react-native-swipeable';
 import {
   ScrollView,
   StatusBar,
@@ -11,19 +11,13 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {
-  FormInput,
-  AppButton,
-  CheckBox,
-  Header,
-  HomeHeader,
-  SearchBar,
-  ChatWithDeleteBlockBtn,
-} from '../../../components';
-import {Themes, Images} from './../../../constants';
-import {Icon, Item} from 'native-base';
-import {TouchableWithoutFeedback} from 'react-native';
+import {HomeHeader, SearchBar} from '../../../components';
+import {Images} from './../../../constants';
+import {Icon} from 'native-base';
+
 import Animated from 'react-native-reanimated';
+
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Connections = props => {
   console.log(Animated);
@@ -36,47 +30,56 @@ const Connections = props => {
       image: Images.Backgrounds.chatProfile2,
       text: 'Alicia Sierra',
       title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile1,
       text: 'Alison Parker',
       title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile2,
       text: 'Alicia Sierra',
       title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile4,
       text: 'Marcia Dor',
       title: '27 Mutual Friends',
+      active: true,
     },
 
     {
       image: Images.Backgrounds.chatProfile3,
       text: 'Helan',
       title: '27 Mutual Friends',
+      active: true,
     },
     {
       image: Images.Backgrounds.chatProfile2,
       text: 'Alicia Sierra',
       title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile1,
       text: 'Lucy Grey',
       title: '27 Mutual Friends',
+      active: true,
     },
     {
       image: Images.Backgrounds.chatProfile3,
       text: 'Anna May',
       title: '27 Mutual Friends',
+      active: false,
     },
     {
       image: Images.Backgrounds.chatProfile4,
       text: 'Helan',
       title: '27 Mutual Friends',
+      active: true,
     },
   ];
 
@@ -116,6 +119,75 @@ const Connections = props => {
       </TouchableOpacity>
     </View>,
   ];
+
+  const rightSwipe = (progress, dragX) => {
+    console.log({dragX});
+    return (
+      <View
+        style={{
+          width: 100,
+          height: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Animated.View
+          style={{
+            width: '100%',
+            height: '100%',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // transform: [
+            //   {
+            //     translateX: dragX.interpolate({
+            //       inputRange: [0, 0, 100],
+            //       outputRange: [0, 0, 100],
+            //     }),
+            //   },
+            // ],
+          }}>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View>
+              <View style={styles.rightContentHiddinData}>
+                <Image
+                  source={Images.Backgrounds.block}
+                  style={{width: 15, height: 15}}
+                />
+              </View>
+              <Text style={{fontSize: 9, color: 'black'}}>Block</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity activeOpacity={0.9} style={{marginLeft: 10}}>
+            <View>
+              <View
+                style={{
+                  width: 28,
+                  height: 27,
+                  borderRadius: 5,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#F779A1',
+                }}
+                opacity={0.3}>
+                <Image
+                  source={Images.Pictures.delete}
+                  style={{width: 15, height: 15}}
+                />
+              </View>
+              <Text style={{fontSize: 9, color: 'black'}}>Delete</Text>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+      // </View>
+
+      // </View>
+      // </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
@@ -149,7 +221,13 @@ const Connections = props => {
                   onPress={() => {
                     setState({...state, active: true});
                   }}>
-                  <Text style={{fontSize: 12}}>Friends</Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: state.active ? '#fff' : '#6D6B6B',
+                    }}>
+                    Friends
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
@@ -164,7 +242,11 @@ const Connections = props => {
                   onPress={() => {
                     setState({...state, active: false});
                   }}>
-                  <Text style={{fontSize: 12, color: '#6D6B6B'}}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: !state.active ? '#fff' : '#6D6B6B',
+                    }}>
                     Friend Request
                   </Text>
                 </TouchableOpacity>
@@ -174,40 +256,39 @@ const Connections = props => {
             {state.active === true
               ? ChatData.map((item, i) => {
                   return (
-                    <Swipeable rightButtons={rightButtons}>
+                    <Swipeable
+                      key={i}
+                      renderRightActions={rightSwipe}
+                      containerStyle={{
+                        height: 60,
+                        marginVertical: 10,
+                        width: '100%',
+                        alignSelf: 'center',
+                      }}>
                       <TouchableOpacity
-                        style={styles.chatBox}
                         // onPress={() => {
                         //   props.navigation.navigate('Statics', {
                         //     screen: 'chat',
                         //   });
                         // }}
-                        activeOpacity={0.8}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginLeft: 40,
-                          }}>
-                          <View style={styles.chatProfile}>
-                            <Image
-                              source={item.image}
-                              style={{width: '100%', height: '100%'}}
-                            />
-                            {item.text === 'Helan' ||
-                            item.text === 'Marcia Dor' ||
-                            item.text === 'Lucy Grey' ? (
-                              <View style={styles.active}></View>
-                            ) : null}
-                          </View>
-
-                          <View>
-                            <Text style={styles.profileName}>{item.text}</Text>
-                            <Text style={styles.profileTitle}>
-                              {item.title}
-                            </Text>
-                          </View>
+                        activeOpacity={0.7}
+                        style={{
+                          width: '90%',
+                          alignSelf: 'center',
+                          height: '100%',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}>
+                        <View style={styles.chatProfile}>
+                          <Image
+                            source={item.image}
+                            style={{width: '100%', height: '100%'}}
+                          />
+                        </View>
+                        <View style={{flex: 1, paddingLeft: 15}}>
+                          <Text style={styles.profileName}>{item.text}</Text>
+                          <Text style={styles.profileTitle}>{item.title}</Text>
                         </View>
                       </TouchableOpacity>
                     </Swipeable>
@@ -223,35 +304,24 @@ const Connections = props => {
                       //   });
                       // }}
                       activeOpacity={0.8}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        <View style={styles.chatProfile}>
-                          <Image
-                            source={item.image}
-                            style={{width: '100%', height: '100%'}}
-                          />
-                          {item.text === 'Helan' ||
-                          item.text === 'Marcia Dor' ||
-                          item.text === 'Lucy Grey' ? (
-                            <View style={styles.active}></View>
-                          ) : null}
-                        </View>
-
-                        <View style={{}}>
-                          <Text style={styles.profileName}>{item.text}</Text>
-                          <Text style={styles.profileTitle}>{item.title}</Text>
-                        </View>
+                      <View style={styles.chatProfile}>
+                        <Image
+                          source={item.image}
+                          style={{width: '100%', height: '100%'}}
+                        />
                       </View>
+
+                      <View style={{flex: 1, paddingLeft: 5}}>
+                        <Text style={styles.profileName}>{item.text}</Text>
+                        <Text style={styles.profileTitle}>{item.title}</Text>
+                      </View>
+
                       <View
                         style={{
                           alignItems: 'center',
-                          justifyContent: 'flex-end',
+                          justifyContent: 'space-between',
                           flexDirection: 'row',
-                          width: 120,
+                          width: 80,
                         }}>
                         <View style={styles.rightContentHiddin2}>
                           <TouchableOpacity activeOpacity={0.9}>
@@ -365,10 +435,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   chatBox: {
-    width: '100%',
+    width: '90%',
+    alignSelf: 'center',
     height: 60,
     flexDirection: 'row',
     marginTop: 20,
+    alignItems: 'center',
   },
   chatProfile: {width: 60, height: 60},
   profileName: {
