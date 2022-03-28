@@ -10,14 +10,7 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import {
-  AppButton,
-  AppHeader,
-  CheckBox,
-  FormInput,
-  HomeHeader,
-  CustomPopup,
-} from '../../../components';
+import {FormInput, HomeHeader, CustomPopup} from '../../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import {Images, Themes} from '../../../constants';
 
@@ -65,6 +58,7 @@ const PaymentMethod = props => {
                     color: '#0A0A0Aaa',
                     fontSize: 14,
                     fontWeight: 'bold',
+                    paddingLeft: 10,
                   }}>
                   Name on Card
                 </Text>
@@ -94,6 +88,7 @@ const PaymentMethod = props => {
                     color: '#0A0A0Aaa',
                     fontSize: 14,
                     fontWeight: 'bold',
+                    paddingLeft: 10,
                   }}>
                   Card Number
                 </Text>
@@ -102,23 +97,28 @@ const PaymentMethod = props => {
                     borderBottomColor: 'black',
                     flexDirection: 'row',
                     borderBottomWidth: 1,
-                    justifyContent: 'space-evenly',
+
                     // borderRadius: 8,
                   }}>
                   <FormInput
-                    value={userInfo.cardName}
+                    value={userInfo.cardNum}
                     onChangeText={value =>
-                      setUserInfo({...userInfo, cardName: value})
+                      setUserInfo({...userInfo, cardNum: value})
                     }
                     placeHolder="4560 5674 3224 4543"
                     placeHolderColor={'black'}
-                    onFocus={() => setState({...state, focus: 'David Spade'})}
+                    onFocus={() => setState({...state, focus: 'CardName'})}
                     onBlur={() => setState({...state, focus: ''})}
                     iconColor={'black'}
                   />
                   <Image
                     source={Images.Pictures.masterCard}
-                    style={{width: 42, height: 30}}
+                    style={{
+                      width: 42,
+                      height: 30,
+                      position: 'absolute',
+                      right: 0,
+                    }}
                   />
                 </View>
               </View>
@@ -129,12 +129,13 @@ const PaymentMethod = props => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{width: '40%'}}>
+                <View style={{width: '40%', alignItems: 'flex-start'}}>
                   <Text
                     style={{
                       color: '#0A0A0Aaa',
                       fontSize: 14,
                       fontWeight: 'bold',
+                      paddingLeft: 10,
                     }}>
                     Expiry Date
                   </Text>
@@ -146,13 +147,13 @@ const PaymentMethod = props => {
                       // borderRadius: 8,
                     }}>
                     <FormInput
-                      value={userInfo.cardName}
+                      value={userInfo.expDate}
                       onChangeText={value =>
-                        setUserInfo({...userInfo, cardName: value})
+                        setUserInfo({...userInfo, expDate: value})
                       }
                       placeHolder="09 / 18"
                       placeHolderColor={'black'}
-                      onFocus={() => setState({...state, focus: 'David Spade'})}
+                      onFocus={() => setState({...state, focus: 'expDate'})}
                       onBlur={() => setState({...state, focus: ''})}
                       iconColor={'white'}
                     />
@@ -165,36 +166,30 @@ const PaymentMethod = props => {
                       color: '#0A0A0Aaa',
                       fontSize: 14,
                       fontWeight: 'bold',
+                      paddingLeft: 10,
                     }}>
                     CVV
                   </Text>
                   <View
                     style={{
                       borderBottomColor: 'black',
-
                       borderBottomWidth: 1,
                     }}>
                     <FormInput
-                      value={userInfo.cardName}
+                      value={userInfo.cvv}
                       onChangeText={value =>
-                        setUserInfo({...userInfo, cardName: value})
+                        setUserInfo({...userInfo, cvv: value})
                       }
                       placeHolder="667"
                       placeHolderColor={'black'}
-                      onFocus={() => setState({...state, focus: 'David Spade'})}
+                      onFocus={() => setState({...state, focus: 'cvv'})}
                       onBlur={() => setState({...state, focus: ''})}
                       iconColor={'white'}
                     />
                   </View>
                 </View>
               </View>
-              <CheckBox
-                alignItem={'flex-start'}
-                onPress={() => setState({checked2: !state.checked2})}
-                checked={state.checked2}
-                text={'Save this card details'}
-                left
-              />
+
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => {
@@ -205,7 +200,7 @@ const PaymentMethod = props => {
                   style={{
                     width: 229,
                     alignSelf: 'center',
-                    marginTop: 20,
+                    marginTop: 50,
                     height: 66,
                     borderRadius: 15,
                     alignItems: 'center',

@@ -8,6 +8,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 const SubcriptionPlan = props => {
   const {navigation} = props;
 
+  const isHome = true;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -45,14 +46,16 @@ const SubcriptionPlan = props => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.container}>
-            <HomeHeader
-              settingIconProps={() => navigation.goBack()}
-              setting
-              right
-              text={'Subscriptions Plan'}
-              textColor={'#191919B8'}
-              fontSize={24}
-            />
+            <View style={{marginTop: 20}}>
+              <HomeHeader
+                settingIconProps={() => navigation.goBack()}
+                setting
+                right
+                text={'Subscriptions Plan'}
+                textColor={'#191919B8'}
+                fontSize={24}
+              />
+            </View>
             <View style={styles.mainContainer}>
               <View style={styles.headerView}>
                 <View

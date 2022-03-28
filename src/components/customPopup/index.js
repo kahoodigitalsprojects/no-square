@@ -41,6 +41,7 @@ const CustomPopup = props => {
     border_radius,
     tabPopup,
     paymentPopup,
+    isHome = false, // param from screen
     paymentSuccesProps,
     forgetPassword,
     privacy,
@@ -233,9 +234,11 @@ const CustomPopup = props => {
               </View>
               <TouchableOpacity
                 style={styles.paymentSuccesBtn}
-                onPress={() =>
-                  paymentSuccesProps.navigate('Auth', {screen: 'login'})
-                }>
+                onPress={() => {
+                  isHome
+                    ? paymentSuccesProps.goBack()
+                    : paymentSuccesProps.navigate('Auth', {screen: 'login'});
+                }}>
                 <Text style={{fontSize: 15, color: 'white'}}>Continue</Text>
               </TouchableOpacity>
             </View>

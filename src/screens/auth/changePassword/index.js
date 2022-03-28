@@ -44,14 +44,16 @@ const ChangePassword = props => {
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <HomeHeader
-        navigation={props.navigation}
-        setting
-        right
-        text={'Change Password'}
-        onPress={'settings'}
-        settingIconProps={() => props.navigation.goBack()}
-      />
+      <View style={{marginTop: 20}}>
+        <HomeHeader
+          navigation={props.navigation}
+          setting
+          right
+          text={'Change Password'}
+          onPress={'settings'}
+          settingIconProps={() => props.navigation.goBack()}
+        />
+      </View>
 
       <ScrollView
         keyboardShouldPersistTaps="handled"

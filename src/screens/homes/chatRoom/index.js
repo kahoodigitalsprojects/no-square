@@ -31,7 +31,13 @@ const ChatRoom = props => {
         contentContainerStyle={{flexGrow: 1}}>
         <>
           <HomeHeader navigation={props.navigation} home notify />
-          <SearchBar />
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Statics', {screen: 'searchPage'});
+            }}>
+            <SearchBar placeholder={'Search for Chat Room '} />
+          </TouchableOpacity>
+
           <View style={styles.mainBody}>
             <View style={styles.chatText}>
               <Text style={styles.textStyle}>Chat Rooms</Text>

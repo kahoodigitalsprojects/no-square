@@ -45,12 +45,35 @@ const Settings = props => {
       imageWidth: 30,
       statics: 1,
       onPath: () => {
-        props.navigation.navigate('Statics', {screen: 'subcriptionPlan'});
+        props.navigation.navigate(
+          'Statics',
+          {screen: 'subcriptionPlan'},
+          {isHome: true},
+        );
       },
     },
     {
+      icon: Images.Backgrounds.lock,
+      text: 'Change Password',
+      rightText: '',
+      rightIcon: 'right',
+      rightIconType: 'AntDesign',
+      imageHeight: 16.98,
+      imageWidth: 14.98,
+      onPress: 'changePassword',
+    },
+    {
+      icon: Images.Pictures.delete,
+      text: 'Delete Account',
+      rightIcon: 'right',
+      rightIconType: 'AntDesign',
+      imageHeight: 16.98,
+      imageWidth: 14.98,
+      onPress: 'deleteAccount',
+    },
+    {
       icon: Images.Backgrounds.terms,
-      text: 'Terms of Use',
+      text: 'Terms & Conditions',
       rightText: '',
       rightIcon: 'right',
       rightIconType: 'AntDesign',
@@ -58,35 +81,31 @@ const Settings = props => {
       imageWidth: 30,
       onProps: () => {
         setVisible(true);
+        setPrivacy('Terms & Conditions');
       },
     },
     {
-      icon: Images.Backgrounds.lock,
-      text: 'Change Password',
+      icon: Images.Pictures.eye,
+      text: 'Privacy Policy',
       rightText: '',
-      rightIcon: '',
-      rightIconType: '',
-      imageHeight: 16.98,
-      imageWidth: 14.98,
-      onPress: 'changePassword',
-    },
-    {
-      icon: Images.Backgrounds.lock,
-      text: 'Delete Account',
-      rightText: '',
-      rightIcon: '',
-      rightIconType: '',
-      imageHeight: 16.98,
-      imageWidth: 14.98,
-      onPress: 'deleteAccount',
+      rightIcon: 'right',
+      rightIconType: 'AntDesign',
+      imageHeight: 30,
+      imageWidth: 30,
+      onProps: () => {
+        setVisible(true);
+        setPrivacy('Privacy Policy');
+      },
     },
   ];
   const [visible, setVisible] = useState(false);
+  const [privacy, setPrivacy] = useState('Terms & Conditions');
+
   return (
     <>
       <SafeAreaView style={styles.screenContainer}>
         <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-        <View style={{marginTop: 40}}>
+        <View style={{marginTop: 20}}>
           <HomeHeader
             navigation={props.navigation}
             setting
@@ -106,7 +125,7 @@ const Settings = props => {
                   style={styles.bodyItems}
                   activeOpacity={0.8}
                   onPress={
-                    item.text === 'Terms of Use'
+                    i > 4
                       ? item.onProps
                       : item.statics == 1
                       ? item.onPath
@@ -118,6 +137,7 @@ const Settings = props => {
                   }>
                   <View style={styles.item1}>
                     <Image
+                      resizeMode="contain"
                       source={item.icon}
                       style={{width: item.imageWidth, height: item.imageHeight}}
                     />
@@ -157,14 +177,24 @@ const Settings = props => {
         setstateOverlay={() => setVisible(false)}
         modelHeight={618}
         modelWidth={332}
+        privacyText={privacy}
         privacy
-        paymentSuccesProps={navigation}
         border_radius={30}
-        privacyText={state.text}
         OBonPress={() => {
           setVisible(false);
         }}
       />
+      {/* <CustomPopup
+        stateOverlay={visibles}
+        setstateOverlay={() => setVvisible(false)}
+        modelHeight={618}
+        modelWidth={332}
+        privacy
+        border_radius={30}
+        OBonPress={() => {
+          setVvisible(false);
+        }}
+      /> */}
     </>
   );
 };

@@ -46,7 +46,7 @@ const SearchPage = props => {
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
       <HomeHeader
         settingIconProps={() => {
-          props.navigation.navigate('MyTabs', {screen: 'home'});
+          props.navigation.goBack();
         }}
         navigation={props.navigation}
         setting
@@ -57,7 +57,7 @@ const SearchPage = props => {
         left
         right
       />
-      <SearchBar width={'90%'} />
+      <SearchBar width={'90%'} edit={true} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}

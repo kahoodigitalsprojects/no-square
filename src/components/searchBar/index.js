@@ -1,8 +1,14 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {Icon} from 'native-base';
 
-const SearchBar = ({width, placeholder}) => {
+const SearchBar = ({width, placeholder, edit}) => {
   return (
     <View
       style={{
@@ -38,6 +44,7 @@ const SearchBar = ({width, placeholder}) => {
         </View>
         <View style={{width: '85%', height: 40}}>
           <TextInput
+            editable={edit || false}
             placeholder={placeholder || 'Search for Friends'}></TextInput>
         </View>
       </View>

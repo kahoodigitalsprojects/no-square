@@ -114,7 +114,12 @@ const Messeges = props => {
         contentContainerStyle={{flexGrow: 1}}>
         <>
           <HomeHeader home navigation={props.navigation} {...props} notify />
-          <SearchBar placeholder={'Search for Chat'} />
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Statics', {screen: 'searchPage'});
+            }}>
+            <SearchBar placeholder={'Search for Chat'} />
+          </TouchableOpacity>
           <View style={styles.mainBody}>
             <View style={styles.chatText}>
               <Text style={styles.textStyle}>Your Messages</Text>

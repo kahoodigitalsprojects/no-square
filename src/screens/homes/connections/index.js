@@ -125,7 +125,12 @@ const Connections = props => {
         contentContainerStyle={{flexGrow: 1}}>
         <>
           <HomeHeader home navigation={props.navigation} {...props} notify />
-          <SearchBar />
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Statics', {screen: 'searchPage'});
+            }}>
+            <SearchBar />
+          </TouchableOpacity>
           <View style={styles.mainBody}>
             <View style={styles.chatText}>
               <Text style={styles.textStyle}>Friends</Text>

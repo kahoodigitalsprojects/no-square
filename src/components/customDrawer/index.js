@@ -76,13 +76,15 @@ const CustomDrawer = ({navigation}) => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#FB437E', '#C70340']} style={styles.linear}>
-        <Header
-          width={49.34}
-          heightImage={50}
-          text
-          fontSize={20}
-          fontColor={'white'}
-        />
+        <View style={{marginTop: 50}}>
+          <Header
+            width={49.34}
+            heightImage={50}
+            text
+            fontSize={20}
+            fontColor={'white'}
+          />
+        </View>
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
@@ -141,7 +143,7 @@ const CustomDrawer = ({navigation}) => {
                 marginTop: 10,
               }}>
               <Text style={{fontSize: 15, color: 'white', marginLeft: 5}}>
-                DashBoard
+                Dashboard
               </Text>
             </View>
 
@@ -177,6 +179,7 @@ const CustomDrawer = ({navigation}) => {
                             <Image
                               style={{width: '100%', height: '100%'}}
                               source={item.image}
+                              resizeMode="contain"
                               tintColor={'white'}
                             />
                           </View>
@@ -219,7 +222,7 @@ const CustomDrawer = ({navigation}) => {
                           </View>
                         </View>
                       </TouchableOpacity>
-                      {item.text === 'All Chat' ? null : (
+                      {i === dashboardData.length - 1 ? null : (
                         <View
                           style={{
                             width: '60%',

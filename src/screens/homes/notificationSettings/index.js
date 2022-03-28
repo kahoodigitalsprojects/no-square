@@ -71,15 +71,17 @@ const NotificationSettings = props => {
         {/* ADD Header HERE */}
 
         <View style={{marginBottom: 20}}>
-          <HomeHeader
-            settingIconProps={() => props.navigation.goBack()}
-            setting
-            right
-            paddingRight
-            text={'Notification Privacy'}
-            textColor={'#191919B8'}
-            fontSize={20}
-          />
+          <View style={{marginTop: 20}}>
+            <HomeHeader
+              settingIconProps={() => props.navigation.goBack()}
+              setting
+              right
+              paddingRight
+              text={'Notification Privacy'}
+              textColor={'#191919B8'}
+              fontSize={20}
+            />
+          </View>
         </View>
 
         <ScrollView

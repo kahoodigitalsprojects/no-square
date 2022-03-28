@@ -31,7 +31,7 @@ const Status3 = props => {
           <View
             style={{
               position: 'absolute',
-              top: 10,
+              top: 20,
               right: 20,
               height: 150,
               justifyContent: 'space-between',
@@ -57,11 +57,16 @@ const Status3 = props => {
               <Icon name="text" type="Ionicons" style={{color: 'white'}} />
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={{width: '100%'}}>
             <TextInput
               placeholder="Hi! Everyone"
               placeholderTextColor={'white'}
-              style={{fontSize: 37}}
+              style={{
+                marginTop: 90,
+                fontSize: 37,
+                color: 'white',
+              }}
+              multiline={true}
             />
           </View>
           <TouchableOpacity
