@@ -7,12 +7,12 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Icon, Item} from 'native-base';
 import {Themes, Images} from './../../../constants';
 import {HomeHeader, CustomPopup} from '../../../components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-const [visible, setVisible] = useState(false);
+
 const Settings = props => {
   const Data = [
     {
@@ -58,7 +58,6 @@ const Settings = props => {
       imageWidth: 30,
       onProps: () => {
         setVisible(true);
-        setState({...state, text: 'Terms & Conditions'});
       },
     },
     {
@@ -82,6 +81,7 @@ const Settings = props => {
       onPress: 'deleteAccount',
     },
   ];
+  const [visible, setVisible] = useState(false);
   return (
     <>
       <SafeAreaView style={styles.screenContainer}>
