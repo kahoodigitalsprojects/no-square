@@ -351,7 +351,7 @@ export const Statics = () => {
 const MyStack = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Auth">
+      <Stack.Navigator>
         <Stack.Screen
           name="Auth"
           component={Auth}
@@ -367,7 +367,56 @@ const MyStack = () => {
           component={Homes}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
+          name="status"
+          component={Status}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="connections"
+          component={Connections}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="settings"
+          component={Settings}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="finessGame"
+          component={FitnessGame}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="chatRoom"
+          component={ChatRoom}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="savedPost"
+          component={SavedPost}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="contactUs"
+          component={ContactUs}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="myProfile"
+          component={MyProfile}
+          options={{headerShown: false}}
+        />
+
+        {/* <Stack.Screen
           name="MyTabs"
           component={MyTabs}
           options={{headerShown: false}}
@@ -376,7 +425,7 @@ const MyStack = () => {
           name="Statics"
           component={Statics}
           options={{headerShown: false}}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

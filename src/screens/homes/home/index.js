@@ -83,9 +83,12 @@ const Home = props => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      {isFocused && (
-        <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      )}
+      <StatusBar
+        backgroundColor={'white'}
+        barStyle="dark-content"
+        translucent={false}
+      />
+
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -94,7 +97,10 @@ const Home = props => {
           <HomeHeader home navigation={props.navigation} {...props} notify />
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Statics', {screen: 'searchPage'});
+              props.navigation.navigate('Statics', {
+                screen: 'searchPage',
+                params: {backScreen: 'home'},
+              });
             }}>
             <SearchBar />
           </TouchableOpacity>
@@ -122,9 +128,7 @@ const Home = props => {
                                 ? props.navigation.navigate('Statics', {
                                     screen: 'addStatus',
                                   })
-                                : props.navigation.navigate('Statics', {
-                                    screen: 'status',
-                                  });
+                                : props.navigation.navigate('status');
                             }
                           }}>
                           <ImageBackground

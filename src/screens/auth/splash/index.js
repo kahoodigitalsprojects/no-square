@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ImageBackground,
@@ -12,12 +12,31 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Themes, Images} from './../../../constants';
 
+import Security from 'react-native-vpn-detect';
+
 const Splash = ({navigation}) => {
   // useEffect(() => {
   //   setTimeout(() => {
   //     navigation.replace('mainAuth');
   //   }, 1500);
   // }, []);
+
+  // useEffect(() => {
+  //   checkSecurity();
+  // }, []);
+
+  // async function checkSecurity() {
+  //   let detectVPN = await Security.detectVPN().then(response => {
+  //     console.log('vpn', response);
+  //     alert(response, 'vpn');
+  //     return response;
+  //   });
+  //   let detectProxy = await Security.detectProxy().then(response => {
+  //     console.log('proxy', response);
+  //     alert(response, 'proxy');
+  //     return response;
+  //   });
+  // }
 
   return (
     <ScrollView

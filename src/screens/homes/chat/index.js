@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
+  BackHandler,
 } from 'react-native';
 import {Images, Themes} from '../../../constants';
 import {Icon} from 'native-base';
@@ -167,6 +168,31 @@ const Chat = props => {
 
   let [scrollViewRef, setRef] = useState({});
 
+  useEffect(() => {
+    const backScreen = props?.route?.params?.backScreen;
+    const backAction = () => {
+      props.navigation.navigate('MyTabs', {screen: 'messeges'});
+      // } else {
+      // props.navigation.goBack();
+      // }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <View
@@ -179,13 +205,14 @@ const Chat = props => {
         <View style={{width: '100%', height: orientation ? '90%' : '85%'}}>
           <View
             style={{
+              marginTop: 30,
               width: '100%',
               flexDirection: 'row',
               alignItems: 'center',
             }}>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.goBack();
+                props.navigation.navigate('MyTabs', {screen: 'messeges'});
               }}>
               <Icon name="chevron-back" type="Ionicons" />
             </TouchableOpacity>

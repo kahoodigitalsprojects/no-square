@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -9,6 +9,7 @@ import {
   Image,
   ImageBackground,
   TextInput,
+  BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -93,13 +94,35 @@ const MyProfile = props => {
       props: 'status',
     },
   ];
+
+  useEffect(() => {
+    const backScreen = props?.route?.params?.backScreen;
+    const backAction = () => {
+      props.navigation.navigate('MyTabs', {screen: backScreen});
+      // } else {
+      props.navigation.goBack();
+      // }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
+
   return (
     <>
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-        }}>
+      <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
         <StatusBar backgroundColor={'white'} barStyle="dark-content" />
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -146,7 +169,7 @@ const MyProfile = props => {
                       </TouchableOpacity>
                     )}
                   </ImageBackground>
-                  <View style={{alignItems: 'center', alignSelf: 'flex-start'}}>
+                  <View style={{alignItems: 'center'}}>
                     <Text
                       style={{
                         fontSize: 15,
@@ -276,8 +299,6 @@ const MyProfile = props => {
                             ) : null}
                           </ImageBackground>
                         </TouchableOpacity>
-
-                        {isCheck ? null : <Text>{item.Text}</Text>}
                       </View>
                     );
                   })}

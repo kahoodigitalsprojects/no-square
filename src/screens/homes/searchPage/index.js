@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -41,18 +42,43 @@ const SearchPage = props => {
       name: 'Martha Jose',
     },
   ];
+
+  const backScreen = props?.route?.params?.backScreen;
+  useEffect(() => {
+    const backAction = () => {
+      props.navigation.navigate('MyTabs', {screen: backScreen});
+      // } else {
+      // props.navigation.goBack();
+      // }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
       <HomeHeader
         settingIconProps={() => {
-          props.navigation.goBack();
+          props.navigation.navigate('MyTabs', {screen: backScreen});
         }}
         navigation={props.navigation}
         setting
         text={'Search'}
         onPress={() => {
-          props.navigation.goBack();
+          props.navigation.navigate('MyTabs', {screen: backScreen});
         }}
         left
         right

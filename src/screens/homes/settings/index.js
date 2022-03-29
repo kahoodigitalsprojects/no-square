@@ -6,12 +6,13 @@ import {
   ScrollView,
   StatusBar,
   Image,
+  TouchableOpacity,
+  BackHandler,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Icon, Item} from 'native-base';
 import {Themes, Images} from './../../../constants';
 import {HomeHeader, CustomPopup} from '../../../components';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Settings = props => {
   const Data = [
@@ -24,6 +25,7 @@ const Settings = props => {
       imageHeight: 15,
       imageWidth: 11.9,
       onPress: 'notificationPrivacy',
+      route: {screen: 'notificationPrivacy'},
     },
     {
       icon: Images.Backgrounds.privacy,
@@ -34,6 +36,7 @@ const Settings = props => {
       imageHeight: 30,
       imageWidth: 30,
       onPress: 'privacySetting',
+      route: {screen: 'privacySetting'},
     },
     {
       icon: Images.Backgrounds.privacy,
@@ -44,6 +47,7 @@ const Settings = props => {
       imageHeight: 30,
       imageWidth: 30,
       statics: 1,
+      route: {screen: 'subscriptionPlan'},
       onPath: () => {
         props.navigation.navigate(
           'Statics',
@@ -61,6 +65,7 @@ const Settings = props => {
       imageHeight: 16.98,
       imageWidth: 14.98,
       onPress: 'changePassword',
+      route: {screen: 'changePassword'},
     },
     {
       icon: Images.Pictures.delete,
@@ -70,6 +75,7 @@ const Settings = props => {
       imageHeight: 16.98,
       imageWidth: 14.98,
       onPress: 'deleteAccount',
+      route: {screen: 'deleteAccount'},
     },
     {
       icon: Images.Backgrounds.terms,
@@ -79,6 +85,7 @@ const Settings = props => {
       rightIconType: 'AntDesign',
       imageHeight: 30,
       imageWidth: 30,
+      route: {screen: 'termsAndConditions'},
       onProps: () => {
         setVisible(true);
         setPrivacy('Terms & Conditions');
@@ -92,6 +99,7 @@ const Settings = props => {
       rightIconType: 'AntDesign',
       imageHeight: 30,
       imageWidth: 30,
+      route: {screen: 'privacyPolicy'},
       onProps: () => {
         setVisible(true);
         setPrivacy('Privacy Policy');
@@ -100,6 +108,32 @@ const Settings = props => {
   ];
   const [visible, setVisible] = useState(false);
   const [privacy, setPrivacy] = useState('Terms & Conditions');
+
+  useEffect(() => {
+    const backScreen = props?.route?.params?.backScreen;
+    const backAction = () => {
+      if (backScreen) {
+        props.navigation.navigate('MyTabs', {screen: backScreen});
+      } else {
+        props.navigation.goBack();
+      }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -127,13 +161,7 @@ const Settings = props => {
                   onPress={
                     i > 4
                       ? item.onProps
-                      : item.statics == 1
-                      ? item.onPath
-                      : () => {
-                          i === 2
-                            ? null
-                            : props.navigation.navigate(item.onPress);
-                        }
+                      : () => props.navigation.navigate('Statics', item.route)
                   }>
                   <View style={styles.item1}>
                     <Image

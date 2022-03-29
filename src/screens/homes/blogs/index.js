@@ -22,7 +22,14 @@ const Blogs = props => {
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
 
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <HomeHeader setting left text="Discover" />
+        <View style={{marginTop: 30}}></View>
+        <HomeHeader
+          setting
+          left
+          text="Discover"
+          settingIconProps={() => props.navigation.goBack()}
+          onPress={() => props.navigation.goBack()}
+        />
 
         <View style={{width: '90%', alignSelf: 'center'}}>
           <View style={styles.boxImage}>
@@ -31,6 +38,8 @@ const Blogs = props => {
               style={{
                 width: '100%',
                 height: '100%',
+                alignContent: 'space-between',
+                justifyContent: 'space-between',
               }}>
               <View style={styles.boxIconMain}>
                 <TouchableOpacity style={styles.boxIconBtn} activeOpacity={0.9}>
@@ -46,21 +55,23 @@ const Blogs = props => {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={styles.boxTextView}>
-                <Text style={styles.boxText}>
-                  Lorem ipsum dolor sit amet, consetetur Sadipscing.
-                </Text>
-              </View>
-              <View style={styles.profileview}>
-                <View style={styles.profileImg}>
-                  <Image
-                    source={Images.Backgrounds.profileIcon}
-                    style={{width: '100%', height: '100%', borderRadius: 100}}
-                  />
+              <View style={{paddingBottom: 25}}>
+                <View style={styles.boxTextView}>
+                  <Text style={styles.boxText}>
+                    Lorem ipsum dolor sit amet, consetetur Sadipscing.
+                  </Text>
                 </View>
-                <Text style={{fontSize: 12, color: 'white', paddingLeft: 5}}>
-                  Martha Dorthy
-                </Text>
+                <View style={styles.profileview}>
+                  <View style={styles.profileImg}>
+                    <Image
+                      source={Images.Backgrounds.profileIcon}
+                      style={{width: '100%', height: '100%', borderRadius: 100}}
+                    />
+                  </View>
+                  <Text style={{fontSize: 12, color: 'white', paddingLeft: 5}}>
+                    Martha Dorthy
+                  </Text>
+                </View>
               </View>
             </ImageBackground>
           </View>
@@ -79,7 +90,7 @@ const Blogs = props => {
                 <Text
                   style={{
                     transform: [{rotate: '-90deg'}],
-                    fontSize: 20,
+                    fontSize: 16,
                     color: '#000000',
                   }}>
                   Introduction
@@ -110,7 +121,7 @@ const Blogs = props => {
                 <Text
                   style={{
                     transform: [{rotate: '-90deg'}],
-                    fontSize: 20,
+                    fontSize: 16,
                     color: '#000000',
                   }}>
                   About
@@ -146,7 +157,7 @@ const Blogs = props => {
                 <Text
                   style={{
                     transform: [{rotate: '-90deg'}],
-                    fontSize: 20,
+                    fontSize: 16,
                     color: '#000000',
                   }}>
                   Conclusion
@@ -328,22 +339,23 @@ const styles = StyleSheet.create({
   },
   boxTextView: {
     width: '100%',
-    height: 89,
-    position: 'absolute',
-    bottom: 40,
+    // height: 89,
+    paddingBottom: 10,
+    // position: 'absolute',
+    // bottom: 40,
   },
   boxText: {
     padding: 5,
-    width: '100%',
-    height: '100%',
-    fontSize: 27,
+    // width: '100%',
+    // height: '100%',
+    fontSize: 20,
     color: 'white',
   },
   profileview: {
     width: '100%',
     flexDirection: 'row',
-    position: 'absolute',
-    bottom: 20,
+    // position: 'absolute',
+    // bottom: 20,
     left: 15,
     alignItems: 'center',
   },

@@ -41,7 +41,7 @@ const CustomPopup = props => {
     border_radius,
     tabPopup,
     paymentPopup,
-    isHome = false, // param from screen
+    isHome, // param from screen
     paymentSuccesProps,
     forgetPassword,
     privacy,

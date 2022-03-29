@@ -7,8 +7,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 const SubcriptionPlan = props => {
   const {navigation} = props;
-
-  const isHome = true;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -142,6 +140,9 @@ const SubcriptionPlan = props => {
                   onPress={() => {
                     props.navigation.navigate('Statics', {
                       screen: 'paymentMethod',
+                      params: {
+                        isHome: true,
+                      },
                     });
                   }}
                 />
