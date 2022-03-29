@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
 import {FormInput, AppButton, Header} from '../../../components';
 import {Themes} from './../../../constants';
-
+//
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
 };
