@@ -63,15 +63,17 @@ const SavedPost = props => {
       <SafeAreaView style={styles.container}>
         {/* ADD Header HERE */}
 
-        <View style={{marginBottom: 20}}>
-          <HomeHeader
-            onPress={() => props.navigation.goBack()}
-            setting
-            left
-            text={'Saved Post'}
-            textColor={'#191919B8'}
-            fontSize={20}
-          />
+        <View style={{marginBottom: 10}}>
+          <View style={{marginTop: 20}}>
+            <HomeHeader
+              onPress={() => props.navigation.goBack()}
+              setting
+              left
+              text={'Saved Post'}
+              textColor={'#191919B8'}
+              fontSize={20}
+            />
+          </View>
         </View>
 
         <ScrollView

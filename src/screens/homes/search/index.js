@@ -31,7 +31,12 @@ const Search = props => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
         <HomeHeader navigation={props.navigation} home notify />
-        <SearchBar placeholder={'Search for People'} />
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Statics', {screen: 'searchPage'});
+          }}>
+          <SearchBar placeholder={'Search for People'} />
+        </TouchableOpacity>
         <View style={styles.mainBody}>
           <View style={styles.corouselStyle}>
             <Corousel />

@@ -13,6 +13,7 @@ import React, {useState} from 'react';
 import {Icon, Item} from 'native-base';
 import {Themes, Images} from './../../../constants';
 import {HomeHeader} from '../../../components';
+import {Header} from 'react-native-elements';
 
 const privacySetting = props => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -21,7 +22,8 @@ const privacySetting = props => {
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <View style={{marginTop: 30}}>
+
+      <View style={{marginTop: 40}}>
         <HomeHeader
           navigation={props.navigation}
           setting

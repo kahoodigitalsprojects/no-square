@@ -6,12 +6,12 @@ import {
   ScrollView,
   StatusBar,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Icon, Item} from 'native-base';
 import {Themes, Images} from './../../../constants';
 import {HomeHeader, CustomPopup} from '../../../components';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Settings = props => {
   const Data = [
@@ -105,7 +105,7 @@ const Settings = props => {
     <>
       <SafeAreaView style={styles.screenContainer}>
         <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-        <View style={{marginTop: 20}}>
+        <View style={{marginTop: 40}}>
           <HomeHeader
             navigation={props.navigation}
             setting
