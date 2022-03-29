@@ -7,7 +7,10 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+
   BackHandler,
+
+
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Icon, Item} from 'native-base';
@@ -139,7 +142,7 @@ const Settings = props => {
     <>
       <SafeAreaView style={styles.screenContainer}>
         <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-        <View style={{marginTop: 20}}>
+        <View style={{marginTop: 40}}>
           <HomeHeader
             navigation={props.navigation}
             setting

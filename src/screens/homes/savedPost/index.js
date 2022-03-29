@@ -89,6 +89,7 @@ const SavedPost = props => {
       <SafeAreaView style={styles.container}>
         {/* ADD Header HERE */}
 
+
         <View style={{marginBottom: 20}}>
           <HomeHeader
             onPress={() =>
@@ -100,6 +101,7 @@ const SavedPost = props => {
             textColor={'#191919B8'}
             fontSize={20}
           />
+
         </View>
 
         <ScrollView

@@ -1,6 +1,7 @@
 import {Icon} from 'native-base';
 import React, {useState} from 'react';
 import {
+  StatusBar,
   ScrollView,
   StyleSheet,
   View,
@@ -73,6 +74,7 @@ const CustomDrawer = ({navigation}) => {
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
   ];
+
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#FB437E', '#C70340']} style={styles.linear}>
