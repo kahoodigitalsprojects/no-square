@@ -33,7 +33,10 @@ const Search = props => {
         <HomeHeader navigation={props.navigation} home notify />
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate('Statics', {screen: 'searchPage'});
+            props.navigation.navigate('Statics', {
+              screen: 'searchPage',
+              params: {backScreen: 'search'},
+            });
           }}>
           <SearchBar placeholder={'Search for People'} />
         </TouchableOpacity>

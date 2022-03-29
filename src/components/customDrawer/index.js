@@ -36,8 +36,8 @@ const CustomDrawer = ({navigation}) => {
       image: Images.Pictures.fitness,
       text: 'Finesse Game',
       rightText: '',
-      stack: 'Statics',
-      nav: 'finessGame',
+      stack: 'MyTabs',
+      nav: 'fitnessGame',
     },
     {
       stack: 'MyTabs',

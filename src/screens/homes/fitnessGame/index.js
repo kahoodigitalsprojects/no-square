@@ -91,7 +91,9 @@ const FitnessGame = props => {
                       style={styles.box1}
                       activeOpacity={0.9}
                       onPress={() => {
-                        props.navigation.navigate(item.nav1);
+                        props.navigation.navigate('Statics', {
+                          screen: item.nav1,
+                        });
                       }}>
                       <Image
                         source={item.img1}

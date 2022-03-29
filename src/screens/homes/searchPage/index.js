@@ -70,19 +70,21 @@ const SearchPage = props => {
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <HomeHeader
-        settingIconProps={() => {
-          props.navigation.navigate('MyTabs', {screen: backScreen});
-        }}
-        navigation={props.navigation}
-        setting
-        text={'Search'}
-        onPress={() => {
-          props.navigation.navigate('MyTabs', {screen: backScreen});
-        }}
-        left
-        right
-      />
+      <View style={{marginTop: 30}}>
+        <HomeHeader
+          settingIconProps={() => {
+            props.navigation.navigate('MyTabs', {screen: backScreen});
+          }}
+          navigation={props.navigation}
+          setting
+          text={'Search'}
+          onPress={() => {
+            props.navigation.navigate('MyTabs', {screen: backScreen});
+          }}
+          left
+          right
+        />
+      </View>
       <SearchBar width={'90%'} edit={true} />
       <ScrollView
         keyboardShouldPersistTaps="handled"

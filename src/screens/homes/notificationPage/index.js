@@ -104,15 +104,17 @@ const NotificationPage = props => {
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <HomeHeader
-        navigation={props.navigation}
-        setting
-        text={'Notification'}
-        settingIconProps={() =>
-          props.navigation.navigate('MyTabs', {screen: 'home'})
-        }
-        right
-      />
+      <View style={{marginTop: 30}}>
+        <HomeHeader
+          navigation={props.navigation}
+          setting
+          text={'Notification'}
+          settingIconProps={() =>
+            props.navigation.navigate('MyTabs', {screen: 'home'})
+          }
+          right
+        />
+      </View>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}

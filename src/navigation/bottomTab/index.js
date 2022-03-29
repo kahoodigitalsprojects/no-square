@@ -8,6 +8,7 @@ import Search from '../../screens/homes/search';
 import Connections from '../../screens/homes/connections';
 import Home from '../../screens/homes/home';
 import Messeges from '../../screens/homes/messeges';
+import FitnessGame from '../../screens/homes/fitnessGame';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +31,11 @@ const MyTabs = () => {
       <Tab.Screen
         name="search"
         component={Search}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="fitnessGame"
+        component={FitnessGame}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
