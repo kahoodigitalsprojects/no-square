@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
+  BackHandler,
   ImageBackground,
   ScrollView,
   StyleSheet,
@@ -58,22 +59,49 @@ const SavedPostBox = () => {
 };
 
 const SavedPost = props => {
+  const backScreen = props?.route?.params?.backScreen;
+  useEffect(() => {
+    const backAction = () => {
+      if (backScreen) {
+        props.navigation.navigate('MyTabs', {screen: backScreen});
+      } else {
+        props.navigation.goBack();
+      }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
   return (
     <>
       <SafeAreaView style={styles.container}>
         {/* ADD Header HERE */}
 
-        <View style={{marginBottom: 10}}>
-          <View style={{marginTop: 20}}>
-            <HomeHeader
-              onPress={() => props.navigation.goBack()}
-              setting
-              left
-              text={'Saved Post'}
-              textColor={'#191919B8'}
-              fontSize={20}
-            />
-          </View>
+
+        <View style={{marginBottom: 20}}>
+          <HomeHeader
+            onPress={() =>
+              props.navigation.navigate('MyTabs', {screen: backScreen})
+            }
+            setting
+            left
+            text={'Saved Post'}
+            textColor={'#191919B8'}
+            fontSize={20}
+          />
+
         </View>
 
         <ScrollView

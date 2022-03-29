@@ -11,10 +11,44 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 
 import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
 import {Images} from './../../../constants';
 import {Icon} from 'native-base';
+
+const CheckBoxComponent = ({onPress, checked = true}) => {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
+      style={{
+        width: 20,
+        height: 20,
+        borderWidth: 1,
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#D3D3D3',
+      }}>
+      {checked && (
+        <Animatable.View
+          animation={checked ? 'bounceIn' : 'bounceOut'}
+          duration={500}
+          useNativeDriver={true}>
+          <Icon
+            name="check"
+            type="FontAwesome"
+            style={{
+              color: '#F52A6A',
+              fontSize: 15,
+            }}
+          />
+        </Animatable.View>
+      )}
+    </TouchableOpacity>
+  );
+};
 
 const EditProfile = props => {
   const [state, setState] = useState({
@@ -227,20 +261,25 @@ const EditProfile = props => {
                     Hide Email Address
                   </Text>
                 </View>
-                <View style={{}}>
+                <CheckBoxComponent
+                  checked={state.checked1}
+                  onPress={() => setState({checked1: !state.checked1})}
+                />
+                {/* <View style={{}}>
                   <CheckBox
                     onPress={() => setState({checked1: !state.checked1})}
                     checked={state.checked1}
                     left
                     checkedColor={'#F52A6A'}
                   />
-                </View>
+                </View> */}
               </View>
 
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
+                  marginTop: 15,
                 }}>
                 <View>
                   <Text
@@ -248,14 +287,10 @@ const EditProfile = props => {
                     Hide Phone Number
                   </Text>
                 </View>
-                <View style={{position: 'absolute', right: 0, top: -16}}>
-                  <CheckBox
-                    onPress={() => setState({checked2: !state.checked2})}
-                    checked={state.checked2}
-                    left
-                    checkedColor={'#F52A6A'}
-                  />
-                </View>
+                <CheckBoxComponent
+                  checked={state.checked2}
+                  onPress={() => setState({checked2: !state.checked2})}
+                />
               </View>
               <View style={styles.activeLine}></View>
             </View>

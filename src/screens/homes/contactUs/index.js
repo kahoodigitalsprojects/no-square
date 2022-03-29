@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  BackHandler,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -28,6 +35,32 @@ const ContactUs = props => {
     checked2: false,
   });
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const backScreen = props?.route?.params?.backScreen;
+    const backAction = () => {
+      if (backScreen) {
+        props.navigation.navigate('MyTabs', {screen: backScreen});
+      } else {
+        props.navigation.goBack();
+      }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
 
   return (
     <>

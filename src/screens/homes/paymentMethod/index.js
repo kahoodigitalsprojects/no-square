@@ -16,7 +16,8 @@ import {Images, Themes} from '../../../constants';
 
 const PaymentMethod = props => {
   const {navigation} = props;
-
+  console.log(props.route);
+  const isHome = props?.route?.params?.isHome || false;
   const [visible, setVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({
     cardName: '',
@@ -310,6 +311,7 @@ const PaymentMethod = props => {
         OBonPress={() => {
           setVisible(false);
         }}
+        isHome={isHome}
       />
     </>
   );

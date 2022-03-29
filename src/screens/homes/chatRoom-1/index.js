@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -8,6 +8,7 @@ import {
   View,
   Image,
   ImageBackground,
+  BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -47,6 +48,33 @@ const CreactChatRoom = props => {
   const [state, setState] = useState({
     focus: false,
   });
+
+  const backScreen = props?.route?.params?.backScreen;
+  useEffect(() => {
+    const backAction = () => {
+      if (backScreen) {
+        props.navigation.navigate('MyTabs', {screen: backScreen});
+      } else {
+        props.navigation.goBack();
+      }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
@@ -60,7 +88,9 @@ const CreactChatRoom = props => {
             setting
             text={'Create Chat Rooms'}
             left
-            onPress={() => props.navigation.goBack()}
+            onPress={() =>
+              props.navigation.navigate('MyTabs', {screen: backScreen})
+            }
           />
 
           <View style={styles.mainBody}>

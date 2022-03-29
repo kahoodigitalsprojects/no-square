@@ -107,15 +107,14 @@ const CustomDrawer = ({navigation}) => {
               style={styles.profileBox}
               activeOpacity={0.9}
               onPress={() => {
-                navigation.navigate('Statics', {screen: 'myProfile'});
+                navigation.navigate('Statics', {
+                  screen: 'myProfile',
+                  params: {backScreen: 'home'},
+                });
               }}>
               <View style={styles.profileBoxBody}>
                 <Image
-                  style={{
-                    width: 63,
-                    height: 71,
-                    borderRadius: 10,
-                  }}
+                  style={{width: 63, height: 71, borderRadius: 10}}
                   source={Images.Backgrounds.profileDrawer}
                 />
                 <View style={{justifyContent: 'center', paddingLeft: 2}}>
@@ -164,7 +163,10 @@ const CustomDrawer = ({navigation}) => {
                         style={styles.dashboardBoxBtn}
                         activeOpacity={0.8}
                         onPress={() => {
-                          navigation.navigate(item.stack, {screen: item.nav});
+                          navigation.navigate(item.stack, {
+                            screen: item.nav,
+                            params: {backScreen: 'Home'},
+                          });
                         }}>
                         <View
                           style={{
@@ -173,11 +175,7 @@ const CustomDrawer = ({navigation}) => {
                             alignItems: 'center',
                             justifyContent: 'flex-start',
                           }}>
-                          <View
-                            style={{
-                              width: 22,
-                              height: 17,
-                            }}>
+                          <View style={{width: 22, height: 17}}>
                             <Image
                               style={{width: '100%', height: '100%'}}
                               source={item.image}

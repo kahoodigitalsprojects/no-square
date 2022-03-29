@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -8,6 +8,7 @@ import {
   View,
   Image,
   ImageBackground,
+  BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -81,6 +82,31 @@ const AddStatus = props => {
       icon3: Images.Backgrounds.status6,
     },
   ];
+
+  useEffect(() => {
+    const backScreen = props?.route?.params?.backScreen;
+    const backAction = () => {
+      props.navigation.navigate('MyTabs', {screen: backScreen});
+      // } else {
+      props.navigation.goBack();
+      // }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
 
   return (
     <SafeAreaView

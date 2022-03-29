@@ -29,14 +29,14 @@ const ForgetPassword = props => {
     secureText: true,
   });
 
-  const showToast = text => {
-    Toast.show({
-      type: 'error',
-      text2: text,
-      visibilityTime: 4000,
-      topOffset: 15,
-    });
-  };
+  // const showToast = text => {
+  //   Toast.show({
+  //     type: 'error',
+  //     text2: text,
+  //     visibilityTime: 4000,
+  //     topOffset: 15,
+  //   });
+  // };
   return (
     <>
       <SafeAreaView

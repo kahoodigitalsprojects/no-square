@@ -221,6 +221,7 @@ const Messeges = props => {
                     onPress={() => {
                       props.navigation.navigate('Statics', {
                         screen: 'chat',
+                        params: {backScreen: 'messeges'},
                       });
                     }}
                     activeOpacity={0.7}
