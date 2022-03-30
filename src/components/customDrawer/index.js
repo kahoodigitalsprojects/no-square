@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  Dimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FormInput, AppButton, Header} from '../../components';

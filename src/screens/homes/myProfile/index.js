@@ -129,15 +129,17 @@ const MyProfile = props => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.container}>
-            <HomeHeader
-              setting
-              left
-              text={isCheck ? 'Profile' : 'My Profile'}
-              fontSize={24}
-              onPress={() => {
-                props.navigation.navigate('MyTabs', {screen: 'home'});
-              }}
-            />
+            <View style={{marginTop: 20}}>
+              <HomeHeader
+                setting
+                left
+                text={isCheck ? 'Profile' : 'My Profile'}
+                fontSize={24}
+                onPress={() => {
+                  props.navigation.navigate('MyTabs', {screen: 'home'});
+                }}
+              />
+            </View>
             <View style={styles.mainContainer}>
               <View
                 style={{
@@ -182,7 +184,7 @@ const MyProfile = props => {
                       style={{
                         fontSize: 12,
                         color: '#211E1F',
-                        marginLeft: 12,
+                        textAlign: 'center',
                       }}>
                       @Jena
                     </Text>

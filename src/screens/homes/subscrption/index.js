@@ -205,8 +205,11 @@ const Subcrption = props => {
                 <AppButton
                   label="Proceed To Pay"
                   onPress={() => {
-                    props.navigation.navigate('Statics', {
+                    navigation.navigate('Statics', {
                       screen: 'paymentMethod',
+                      params: {
+                        isHome: false,
+                      },
                     });
                   }}
                 />

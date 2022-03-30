@@ -120,18 +120,20 @@ const AddStatus = props => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
-          <HomeHeader
-            setting
-            left
-            text={'Status'}
-            iconName={'cross'}
-            iconT={'Entypo'}
-            color={'#B5B3B5'}
-            fontSize={35}
-            onPress={() => {
-              props.navigation.navigate('home');
-            }}
-          />
+          <View style={{marginTop: 20}}>
+            <HomeHeader
+              setting
+              left
+              text={'Status'}
+              iconName={'cross'}
+              iconT={'Entypo'}
+              color={'#B5B3B5'}
+              fontSize={35}
+              onPress={() => {
+                props.navigation.navigate('home');
+              }}
+            />
+          </View>
           <View style={styles.mainContainer}>
             <View style={styles.headerBoxes}>
               {[
@@ -158,8 +160,6 @@ const AddStatus = props => {
                   />
                 );
               })}
-              {/* <Box image={Images.Pictures.photos} text={'Images'} num={1} />
-              <Box image={Images.Pictures.photos} text={'Images'} /> */}
             </View>
             <View style={styles.textHeading}>
               <View style={styles.Text}>

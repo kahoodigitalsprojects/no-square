@@ -7,10 +7,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-
   BackHandler,
-
-
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Icon, Item} from 'native-base';
@@ -50,14 +47,7 @@ const Settings = props => {
       imageHeight: 30,
       imageWidth: 30,
       statics: 1,
-      route: {screen: 'subscriptionPlan'},
-      onPath: () => {
-        props.navigation.navigate(
-          'Statics',
-          {screen: 'subcriptionPlan'},
-          {isHome: true},
-        );
-      },
+      route: {screen: 'subcriptionPlan'},
     },
     {
       icon: Images.Backgrounds.lock,

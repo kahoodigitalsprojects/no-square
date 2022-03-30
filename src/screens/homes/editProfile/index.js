@@ -17,7 +17,7 @@ import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
 import {Images} from './../../../constants';
 import {Icon} from 'native-base';
 
-const CheckBoxComponent = ({onPress, checked = true}) => {
+const CheckBoxComponent = ({onPress, checked = false}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -54,9 +54,10 @@ const EditProfile = props => {
   const [state, setState] = useState({
     focus: false,
     secureText: true,
-    checked1: false,
-    checked2: false,
   });
+
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
   const [userInfo, setUserInfo] = useState({
     email: '',
     password: '',
@@ -82,15 +83,17 @@ const EditProfile = props => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
-          <HomeHeader
-            setting
-            left
-            text={'Edit Profile'}
-            fontSize={24}
-            onPress={() => {
-              props.navigation.goBack();
-            }}
-          />
+          <View style={{marginTop: 20}}>
+            <HomeHeader
+              setting
+              left
+              text={'Edit Profile'}
+              fontSize={24}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            />
+          </View>
           <View style={styles.profileView}>
             <ImageBackground
               source={Images.Backgrounds.myProfile}
@@ -157,7 +160,7 @@ const EditProfile = props => {
                 borderBottomWidth: 1,
               }}>
               <FormInput
-                placeHolder="User Name          "
+                placeHolder="User Name"
                 placeHolderColor={'black'}
                 iconColor={'black'}
                 iconLName="user"
@@ -262,8 +265,8 @@ const EditProfile = props => {
                   </Text>
                 </View>
                 <CheckBoxComponent
-                  checked={state.checked1}
-                  onPress={() => setState({checked1: !state.checked1})}
+                  checked={checked1}
+                  onPress={() => setChecked1(!checked1)}
                 />
                 {/* <View style={{}}>
                   <CheckBox
@@ -288,8 +291,8 @@ const EditProfile = props => {
                   </Text>
                 </View>
                 <CheckBoxComponent
-                  checked={state.checked2}
-                  onPress={() => setState({checked2: !state.checked2})}
+                  checked={checked2}
+                  onPress={() => setChecked2(!checked2)}
                 />
               </View>
               <View style={styles.activeLine}></View>

@@ -16,74 +16,77 @@ import {Icon} from 'native-base';
 const Status3 = props => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#D7245C'}}>
-      <StatusBar backgroundColor={'#D7245C'} />
+      <StatusBar backgroundColor={'#D7245C'} barStyle="light-content" />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
-        <View style={{flex: 1}}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              paddingTop: 20,
+              position: 'absolute',
+              top: '2%',
+              right: 10,
+              height: 150,
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity
+              style={{width: 34, height: 34}}
+              onPress={() => {
+                props.navigation.navigate('addStatus');
+              }}>
+              <Icon name="cross" type="Entypo" style={{color: 'white'}} />
+            </TouchableOpacity>
+            <TouchableOpacity style={{width: 34, height: 34}}>
+              <Icon
+                name="ios-color-palette-sharp"
+                type="Ionicons"
+                style={{color: 'white'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={{width: 34, height: 34}}>
+              <Icon name="smile" type="FontAwesome5" style={{color: 'white'}} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon name="text" type="Ionicons" style={{color: 'white'}} />
+            </TouchableOpacity>
+          </View>
+          <View style={{width: '100%', alignItems: 'center'}}>
+            <TextInput
+              placeholder="Hi! Everyone"
+              placeholderTextColor={'white'}
+              style={{
+                marginTop: 90,
+                fontSize: 37,
+                color: 'white',
+              }}
+              multiline={true}
+            />
+          </View>
           <View
             style={{
               width: '100%',
-              height: '100%',
-              alignItems: 'center',
+              height: 70,
+              alignItems: 'flex-end',
               justifyContent: 'center',
+              position: 'absolute',
+              bottom: '2%',
+              paddingRight: 10,
             }}>
-            <View
-              style={{
-                paddingTop: 20,
-                position: 'absolute',
-                top: 0,
-                right: 20,
-                height: 150,
-                justifyContent: 'space-between',
-              }}>
-              <TouchableOpacity
-                style={{width: 34, height: 34}}
-                onPress={() => {
-                  props.navigation.navigate('addStatus');
-                }}>
-                <Icon name="cross" type="Entypo" style={{color: 'white'}} />
-              </TouchableOpacity>
-              <TouchableOpacity style={{width: 34, height: 34}}>
-                <Icon
-                  name="ios-color-palette-sharp"
-                  type="Ionicons"
-                  style={{color: 'white'}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity style={{width: 34, height: 34}}>
-                <Icon
-                  name="smile"
-                  type="FontAwesome5"
-                  style={{color: 'white'}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Icon name="text" type="Ionicons" style={{color: 'white'}} />
-              </TouchableOpacity>
-            </View>
-            <View style={{width: '100%', alignItems: 'center'}}>
-              <TextInput
-                placeholder="Hi! Everyone"
-                placeholderTextColor={'white'}
-                style={{
-                  marginTop: 90,
-                  fontSize: 37,
-                  color: 'white',
-                }}
-                multiline={true}
-              />
-            </View>
             <TouchableOpacity
               style={{
                 width: 71,
                 height: 71,
                 backgroundColor: 'white',
                 borderRadius: 50,
-                position: 'absolute',
-                bottom: 15,
-                right: 10,
+
                 alignItems: 'center',
                 justifyContent: 'center',
               }}

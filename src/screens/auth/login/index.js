@@ -73,15 +73,17 @@ const Login = props => {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{flexGrow: 1}}>
-          <Header
-            leftIconProps={() => props.navigation.navigate('mainAuth')}
-            viewHeight={200}
-            heightImage={101}
-            width={103}
-            fontSize={49}
-            leftIcon
-            text
-          />
+          <View style={{marginTop: 25}}>
+            <Header
+              leftIconProps={() => props.navigation.navigate('mainAuth')}
+              viewHeight={200}
+              heightImage={101}
+              width={103}
+              fontSize={49}
+              leftIcon
+              text
+            />
+          </View>
 
           <View style={styles.mainBody}>
             <View style={styles.screenBody}>
