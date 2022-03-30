@@ -93,6 +93,9 @@ const FitnessGame = props => {
                       onPress={() => {
                         props.navigation.navigate('Statics', {
                           screen: item.nav1,
+                          params: {
+                            backScreen: 'FitnessGame',
+                          },
                         });
                       }}>
                       <Image

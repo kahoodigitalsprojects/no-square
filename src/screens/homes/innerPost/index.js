@@ -25,6 +25,13 @@ import {
 } from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+  renderers,
+} from 'react-native-popup-menu';
 
 const InnerPost = props => {
   useEffect(() => {
@@ -45,12 +52,11 @@ const InnerPost = props => {
       }
     });
   }, []);
+
+  const [menu, setMenu] = React.useState(false);
+  const [bookMark, setBookMark] = React.useState(false);
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-      }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -100,12 +106,48 @@ const InnerPost = props => {
                     </Text>
                   </View>
                 </View>
-
-                <View style={styles.dotLine}>
-                  <Image
-                    style={{width: 12.68, height: 3.6}}
-                    source={Images.Backgrounds.dotLine}
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Icon
+                    onPress={() => setBookMark(!bookMark)}
+                    name={bookMark ? 'bookmark' : 'bookmark-o'}
+                    type="FontAwesome"
+                    style={{color: '#969EB7', fontSize: 15, marginRight: 10}}
                   />
+
+                  <View style={styles.dotLine}>
+                    <Menu opened={menu} onBackdropPress={() => setMenu(false)}>
+                      <MenuTrigger onPress={() => setMenu(menu => !menu)}>
+                        <Icon
+                          name="dots-three-horizontal"
+                          type="Entypo"
+                          style={{fontSize: 15}}
+                        />
+                      </MenuTrigger>
+                      <MenuOptions
+                        optionsContainerStyle={{
+                          marginTop: 20,
+                          marginLeft: -15,
+                          width: 100,
+                          height: 100,
+                          borderRadius: 10,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        {['Report', 'Block', 'Delete'].map((item, index) => {
+                          return (
+                            <MenuOption onSelect={() => {}} key={index}>
+                              <TouchableOpacity>
+                                <Text style={{color: 'grey'}}>
+                                  {' '}
+                                  {item} Post{' '}
+                                </Text>
+                              </TouchableOpacity>
+                            </MenuOption>
+                          );
+                        })}
+                      </MenuOptions>
+                    </Menu>
+                  </View>
                 </View>
               </View>
               <View style={{width: '100%', marginTop: 20}}>
@@ -206,68 +248,65 @@ const InnerPost = props => {
                 height: 63,
                 backgroundColor: '#B9B3B333',
                 alignItems: 'center',
-                justifyContent: 'space-evenly',
+                justifyContent: 'space-between',
                 flexDirection: 'row',
               }}>
-              <TouchableOpacity
+              <View
                 style={{
-                  alignItems: 'center',
+                  width: '50%',
                   justifyContent: 'center',
-                  width: 30,
-                  height: 30,
-                  borderRadius: 50,
-                  backgroundColor: '#F54F8444',
+                  alignItems: 'center',
+                  borderRightWidth: 0.5,
+                  borderRightColor: '#747EA0',
                 }}>
-                <Icon
-                  name="like"
-                  type="Fontisto"
+                <TouchableOpacity
                   style={{
-                    fontSize: 14,
-                    alignSelf: 'center',
-                    color: '#F54F84',
-                  }}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 30,
+                    height: 30,
+                    borderRadius: 50,
+                    backgroundColor: '#F54F8444',
+                  }}>
+                  <Icon
+                    name="like"
+                    type="Fontisto"
+                    style={{
+                      fontSize: 14,
+                      alignSelf: 'center',
+                      color: '#F54F84',
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
                 style={{
-                  alignItems: 'center',
+                  width: '50%',
                   justifyContent: 'center',
-                  width: 30,
-                  height: 30,
-                  borderRadius: 50,
-                  backgroundColor: '#F54F8444',
-                }}>
-                <Icon
-                  name="message-circle"
-                  type="Feather"
-                  style={{
-                    fontSize: 14,
-                    alignSelf: 'center',
-                    color: '#F54F84',
-                  }}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={{
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 30,
-                  height: 30,
-                  borderRadius: 50,
-                  backgroundColor: '#F54F8444',
+                  borderLeftWidth: 0.5,
+                  borderLeftColor: '#747EA0',
                 }}>
-                <Icon
-                  name="share"
-                  type="FontAwesome"
+                <TouchableOpacity
                   style={{
-                    fontSize: 14,
-                    alignSelf: 'center',
-                    color: '#F54F84',
-                  }}
-                />
-              </TouchableOpacity>
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 30,
+                    height: 30,
+                    borderRadius: 50,
+                    backgroundColor: '#F54F8444',
+                  }}>
+                  <Icon
+                    name="share"
+                    type="FontAwesome"
+                    style={{
+                      fontSize: 14,
+                      alignSelf: 'center',
+                      color: '#F54F84',
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={{width: '90%', alignSelf: 'center', marginTop: 20}}>
               <UserComment nested />

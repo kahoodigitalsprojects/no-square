@@ -13,11 +13,100 @@ import {Icon} from 'native-base';
 import {Image} from 'react-native';
 import {TextInput} from 'react-native';
 import {ScrollView} from 'react-native';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+  renderers,
+} from 'react-native-popup-menu';
+
+const ChatMessage = ({message, i}) => {
+  const [menu, setMenu] = useState(false);
+  return (
+    <View
+      style={{
+        width: '70%',
+        flexDirection: message?.user?._id == 1 ? 'row' : 'row-reverse',
+        marginVertical: 10,
+        alignItems: 'flex-start',
+
+        alignSelf: message?.user?._id == 1 ? 'flex-start' : 'flex-end',
+      }}>
+      <View
+        style={{
+          marginLeft: message?.user?._id == 1 ? 0 : 5,
+          marginRight: message?.user?._id == 1 ? 5 : 0,
+          width: 40,
+          aspectRatio: 1,
+          borderRadius: 100,
+          marginTop: 5,
+        }}>
+        <Image
+          source={Images.Backgrounds.chatProfile}
+          style={{width: '100%', height: '100%'}}
+        />
+      </View>
+      <View
+        style={{
+          minHeight: 50,
+          paddingVertical: 10,
+          overflow: 'hidden',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: message?.user?._id == 1 ? '#4996D6' : '#F54F84',
+          borderRadius: 25,
+          paddingHorizontal: 10,
+          minWidth: 80,
+        }}>
+        <Text style={{color: '#fff'}}> {message?.text} </Text>
+      </View>
+      {/* <TouchableOpacity
+        style={{
+          alignSelf: 'center',
+          width: 3.6,
+          height: 18,
+          marginLeft: 5,
+          marginRight: 5,
+          justifyContent: 'space-between',
+        }}> */}
+      <View style={{marginTop: 18}}>
+        <Menu opened={menu} onBackdropPress={() => setMenu(false)}>
+          <MenuTrigger onPress={() => setMenu(menu => !menu)}>
+            <Icon
+              onPress={() => setMenu(menu => !menu)}
+              name="dots-three-vertical"
+              type="Entypo"
+              style={{fontSize: 15}}
+            />
+          </MenuTrigger>
+          <MenuOptions
+            optionsContainerStyle={{
+              marginTop: -5,
+              width: 50,
+              marginLeft: message?.user?._id == 1 ? 15 : -50,
+            }}>
+            <MenuOption onSelect={() => {}}>
+              <TouchableOpacity
+                onPress={() => {
+                  setMenu(menu => !menu);
+                }}>
+                <Text style={{color: 'grey'}}> Copy </Text>
+              </TouchableOpacity>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
+      </View>
+      {/* </TouchableOpacity> */}
+    </View>
+  );
+};
 
 const Chat = props => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [orientation, setOrientation] = useState(true);
+  const [menu, setMenu] = React.useState(false);
 
   const isPortrait = () => {
     const dim = Dimensions.get('screen');
@@ -258,7 +347,9 @@ const Chat = props => {
             {messages.map((message, i) => {
               return (
                 <>
-                  <View
+                  <ChatMessage message={message} i={i} />
+
+                  {/* <View
                     style={{
                       width: '70%',
                       flexDirection:
@@ -298,7 +389,7 @@ const Chat = props => {
                       }}>
                       <Text style={{color: '#fff'}}> {message?.text} </Text>
                     </View>
-                    <View
+                    <TouchableOpacity
                       style={{
                         alignSelf: 'center',
                         width: 3.6,
@@ -307,32 +398,43 @@ const Chat = props => {
                         marginRight: 5,
                         justifyContent: 'space-between',
                       }}>
-                      <View
-                        style={{
-                          opacity: 0.5,
-                          width: '100%',
-                          height: '30%',
-                          borderRadius: 100,
-                          backgroundColor: '#4E4C4Ccc',
-                        }}></View>
-                      <View
-                        style={{
-                          borderRadius: 100,
-                          width: '100%',
-                          height: '30%',
-                          backgroundColor: '#4E4C4Ccc',
-                          opacity: 0.5,
-                        }}></View>
-                      <View
-                        style={{
-                          opacity: 0.5,
-                          borderRadius: 100,
-                          width: '100%',
-                          height: '30%',
-                          backgroundColor: '#4E4C4Ccc',
-                        }}></View>
-                    </View>
-                  </View>
+                      <Menu
+                        opened={menu}
+                        onBackdropPress={() => setMenu(false)}>
+                        <MenuTrigger onPress={() => setMenu(menu => !menu)}>
+                          <Icon
+                            name="dots-three-horizontal"
+                            type="Entypo"
+                            style={{fontSize: 15}}
+                          />
+                        </MenuTrigger>
+                        <MenuOptions
+                        // optionsContainerStyle={{
+                        //   marginTop: 20,
+                        //   marginLeft: -15,
+                        //   width: 100,
+                        //   height: 100,
+                        //   borderRadius: 10,
+                        //   justifyContent: 'center',
+                        //   alignItems: 'center',
+                        // }}
+                        >
+                          {['Report', 'Block', 'Delete'].map((item, index) => {
+                            return (
+                              <MenuOption onSelect={() => {}} key={index}>
+                                <TouchableOpacity>
+                                  <Text style={{color: 'grey'}}>
+                                    {' '}
+                                    {item} Post{' '}
+                                  </Text>
+                                </TouchableOpacity>
+                              </MenuOption>
+                            );
+                          })}
+                        </MenuOptions>
+                      </Menu>
+                    </TouchableOpacity>
+                  </View> */}
                 </>
               );
             })}

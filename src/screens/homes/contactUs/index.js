@@ -36,8 +36,8 @@ const ContactUs = props => {
   });
   const [visible, setVisible] = useState(false);
 
+  const backScreen = props?.route?.params?.backScreen;
   useEffect(() => {
-    const backScreen = props?.route?.params?.backScreen;
     const backAction = () => {
       if (backScreen) {
         props.navigation.navigate('MyTabs', {screen: backScreen});
@@ -76,7 +76,13 @@ const ContactUs = props => {
               setting
               text={'Contact Us '}
               left
-              onPress={() => props.navigation.goBack()}
+              onPress={() => {
+                if (backScreen) {
+                  props.navigation.navigate('MyTabs', {screen: backScreen});
+                } else {
+                  props.navigation.goBack();
+                }
+              }}
             />
 
             <View style={styles.mainBody}>

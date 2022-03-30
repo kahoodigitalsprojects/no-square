@@ -1,11 +1,14 @@
 import React from 'react';
 import MyStack from './src/navigation/stack';
 import Toast from 'react-native-toast-message';
+import {MenuProvider} from 'react-native-popup-menu';
 
 const App = props => {
   return (
     <>
-      <MyStack {...props} />
+      <MenuProvider>
+        <MyStack {...props} />
+      </MenuProvider>
       <Toast />
     </>
   );

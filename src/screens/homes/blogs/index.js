@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -8,6 +8,7 @@ import {
   View,
   Image,
   ImageBackground,
+  BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,6 +18,32 @@ import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 
 const Blogs = props => {
+  const backScreen = props?.route?.params?.backScreen;
+  useEffect(() => {
+    const backAction = () => {
+      if (backScreen) {
+        props.navigation.navigate('MyTabs', {screen: backScreen});
+      } else {
+        props.navigation.goBack();
+      }
+
+      return true;
+    };
+    let backHandler;
+    props.navigation.addListener('focus', () => {
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+    });
+
+    props.navigation.addListener('blur', () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    });
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
@@ -27,8 +54,12 @@ const Blogs = props => {
           setting
           left
           text="Discover"
-          settingIconProps={() => props.navigation.goBack()}
-          onPress={() => props.navigation.goBack()}
+          settingIconProps={() =>
+            props.navigation.navigate('MyTabs', {screen: backScreen})
+          }
+          onPress={() =>
+            props.navigation.navigate('MyTabs', {screen: backScreen})
+          }
         />
 
         <View style={{width: '90%', alignSelf: 'center'}}>

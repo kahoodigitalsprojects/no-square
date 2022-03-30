@@ -84,6 +84,11 @@ const Auth = () => {
         component={Subcrption}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="paymentMethod"
+        component={PaymentMethod}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

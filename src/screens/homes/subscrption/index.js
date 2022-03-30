@@ -205,13 +205,16 @@ const Subcrption = props => {
                 <AppButton
                   label="Proceed To Pay"
                   onPress={() => {
-                    navigation.navigate('Statics', {
-                      screen: 'paymentMethod',
-                      params: {
-                        isHome: false,
-                      },
-                    });
+                    navigation.navigate('paymentMethod');
                   }}
+                  // onPress={() => {
+                  //   navigation.navigate('Statics', {
+                  //     screen: 'paymentMethod',
+                  //     params: {
+                  //       isHome: false,
+                  //     },
+                  //   });
+                  // }}
                 />
               </LinearGradient>
             </View>
