@@ -76,7 +76,7 @@ const Blogs = props => {
             </ImageBackground>
           </View>
 
-          <View style={{paddingTop: 20}}>
+          <View style={{paddingTop: 20, marginLeft: -20}}>
             <View
               style={{
                 width: '100%',
@@ -92,13 +92,18 @@ const Blogs = props => {
                     transform: [{rotate: '-90deg'}],
                     fontSize: 16,
                     color: '#000000',
+                    fontWeight: 'bold',
                   }}>
                   Introduction
                 </Text>
               </View>
-              <View style={{width: '70%'}}>
+              <View style={{width: '72%'}}>
                 <Text>
-                  Luyam erat, sed diam voluptua. At vero eos et accusam et justo
+                  <Text
+                    style={{fontSize: 20, color: 'black', fontWeight: 'bold'}}>
+                    L
+                  </Text>
+                  uyam erat, sed diam voluptua. At vero eos et accusam et justo
                   duo dolores et ea rebum. Stet clita kasd gubergren, no sea
                   takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
                   dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -122,7 +127,8 @@ const Blogs = props => {
                   style={{
                     transform: [{rotate: '-90deg'}],
                     fontSize: 16,
-                    color: '#000000',
+                    color: '#6D6A6A',
+                    fontWeight: '500',
                   }}>
                   About
                 </Text>
@@ -158,7 +164,8 @@ const Blogs = props => {
                   style={{
                     transform: [{rotate: '-90deg'}],
                     fontSize: 16,
-                    color: '#000000',
+                    color: '#6D6A6A',
+                    fontWeight: '500',
                   }}>
                   Conclusion
                 </Text>

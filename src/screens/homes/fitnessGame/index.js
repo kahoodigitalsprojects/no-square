@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '100%',
     alignSelf: 'center',
-    paddingBottom: 150,
+    paddingBottom: 108,
   },
   heading: {
     width: '100%',

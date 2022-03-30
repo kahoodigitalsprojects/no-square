@@ -301,6 +301,11 @@ const MyProfile = props => {
                             ) : null}
                           </ImageBackground>
                         </TouchableOpacity>
+                        {i === 0 && (
+                          <View>
+                            {isCheck ? null : <Text>{item.Text}</Text>}
+                          </View>
+                        )}
                       </View>
                     );
                   })}
