@@ -18,6 +18,7 @@ import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
 import {useIsFocused} from '@react-navigation/native';
 import Tooltip from 'rn-tooltip';
+
 const Home = props => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
@@ -95,6 +96,7 @@ const Home = props => {
         contentContainerStyle={{flexGrow: 1}}>
         <>
           <HomeHeader home navigation={props.navigation} {...props} notify />
+
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('Statics', {
@@ -104,6 +106,7 @@ const Home = props => {
             }}>
             <SearchBar />
           </TouchableOpacity>
+
           <View style={styles.container}>
             <View style={styles.mainContainer}>
               <View style={styles.header}>

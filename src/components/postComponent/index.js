@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,9 +6,17 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  Dimensions,
 } from 'react-native';
 import {Images, Themes} from '../../constants';
 import {Icon} from 'native-base';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+  renderers,
+} from 'react-native-popup-menu';
 
 const PostComponent = props => {
   const {
@@ -24,6 +32,26 @@ const PostComponent = props => {
   } = props;
 
   //   const [tooltipVisible, setTooltipVisible] = React.useState(false);
+
+  const [menu, setMenu] = React.useState(false);
+  const [bookMark, setBookMark] = React.useState(false);
+  const [orientation, setOrientation] = React.useState(false);
+
+  const isPortait = () => {
+    const dim = Dimensions.get('window');
+    if (dim.height >= dim.width) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    Dimensions.addEventListener('change', () => {
+      setOrientation(isPortait());
+      console.log('orientation', isPortait());
+    });
+  }, []);
 
   return (
     <View style={styles.PostVIew}>
@@ -60,18 +88,48 @@ const PostComponent = props => {
 
           <View style={styles.postIcon}>
             <TouchableOpacity
-              onPress={onBookMarkPress}
+              onPress={() => setBookMark(!bookMark)}
               style={styles.dotLine}
               activeOpacity={0.9}>
               <Icon
                 style={{fontSize: 15, color: '#969EB7'}}
                 borderColor="#969EB7"
                 borderWidth={1}
-                name={'bookmark'}
+                name={bookMark ? 'bookmark' : 'bookmark-o'}
                 type={'FontAwesome'}
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            <View style={styles.dotLine}>
+              <Menu opened={menu} onBackdropPress={() => setMenu(false)}>
+                <MenuTrigger onPress={() => setMenu(menu => !menu)}>
+                  <Icon
+                    name="dots-three-horizontal"
+                    type="Entypo"
+                    style={{fontSize: 15}}
+                  />
+                </MenuTrigger>
+                <MenuOptions
+                  optionsContainerStyle={{
+                    marginTop: 20,
+                    width: 100,
+                    height: 100,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  {['Report', 'Block', 'Delete'].map((item, index) => {
+                    return (
+                      <MenuOption onSelect={() => {}} key={index}>
+                        <TouchableOpacity>
+                          <Text style={{color: 'grey'}}> {item} Post </Text>
+                        </TouchableOpacity>
+                      </MenuOption>
+                    );
+                  })}
+                </MenuOptions>
+              </Menu>
+            </View>
+            {/* <TouchableOpacity
               onPress={() => {
                 onToolTipPress(props.index);
               }}
@@ -82,7 +140,7 @@ const PostComponent = props => {
                 type="Entypo"
                 style={{fontSize: 15}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         <Text

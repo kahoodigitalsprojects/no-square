@@ -14,6 +14,13 @@ import {Icon} from 'native-base';
 import {Image} from 'react-native';
 import {TextInput} from 'react-native';
 import {ScrollView} from 'react-native';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+  renderers,
+} from 'react-native-popup-menu';
 
 const BusinessRoom = props => {
   const [messages, setMessages] = useState([]);
@@ -79,6 +86,8 @@ const BusinessRoom = props => {
 
   let [scrollViewRef, setRef] = useState({});
 
+  const [menu, setMenu] = useState(false);
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} />
@@ -136,14 +145,31 @@ const BusinessRoom = props => {
               alignItems: 'center',
             }}>
             <View style={styles.view}>
-              <Tooltip
-                popover={<Text style={{color: 'white'}}>Leave Room</Text>}
-                width={83}
-                backgroundColor={'#F54F84'}>
-                <View style={styles.dot}></View>
-                <View style={styles.dot}></View>
-                <View style={styles.dot}></View>
-              </Tooltip>
+              <Menu opened={menu} onBackdropPress={() => setMenu(false)}>
+                <MenuTrigger onPress={() => setMenu(menu => !menu)}>
+                  <Icon
+                    name="dots-three-vertical"
+                    type="Entypo"
+                    style={{fontSize: 15}}
+                  />
+                </MenuTrigger>
+                <MenuOptions
+                  optionsContainerStyle={{
+                    marginTop: 20,
+                    width: 100,
+                    // height: 100,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#F54F84',
+                  }}>
+                  <MenuOption onSelect={() => {}}>
+                    <TouchableOpacity>
+                      <Text style={{color: '#fff'}}> Leave Room </Text>
+                    </TouchableOpacity>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu>
             </View>
           </View>
           <View
