@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {
   ScrollView,
@@ -7,6 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
+import {login} from '../../../api/authAPI';
+import authService from '../../../services/authenticationService';
+import {setSourceType} from '../../../slices/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
@@ -28,6 +34,8 @@ const Login = props => {
     email: '',
     password: '',
   });
+  const { loginInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const [error, setError] = useState();
 
@@ -64,7 +72,22 @@ const Login = props => {
     //   showToast(isValidForm());
     // }
   };
+  const loginHandler = ()=>{
+   
+    dispatch(login(userInfo))
+    .then(data =>{
+      console.log("hello this is data given from toolkit",JSON.stringify(data.payload.data.message.accessToken));
+      authService.storeToken(data.payload.data.message.accessToken);
+      console.log("asyncStorage : ,",authService.getToken());
+      dispatch(setSourceType(authService.getToken()));
+      props.navigation.replace('MyDrawer', {screen: 'home'});
+    }).catch(err => {
+      console.log(err);
+    });
+    // console.log("login :",userInfo);
+  };
 
+  // console.log(loginInfo);
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
@@ -181,9 +204,10 @@ const Login = props => {
                     <AppButton
                       buttonStyle={styles.loginBtn}
                       label="Log In"
-                      onPress={() => {
-                        props.navigation.replace('MyDrawer', {screen: 'home'});
-                      }}
+                      // onPress={() => {
+                      //   props.navigation.replace('MyDrawer', {screen: 'home'});
+                      // }}
+                      onPress={loginHandler}
                     />
                   </LinearGradient>
 
