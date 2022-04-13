@@ -9,6 +9,8 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+
+import {login} from '../../../api/authAPI';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
 import {Icon, Item} from 'native-base';
@@ -16,6 +18,7 @@ import {Themes, Images} from './../../../constants';
 import {HomeHeader, FormInput, AppButton} from '../../../components';
 
 const ChangePassword = props => {
+  const [loading,setLoading]= useState(false);
   const [userInfo, setUserInfo] = useState({
     email: '',
     currentPassword: '',
@@ -40,6 +43,30 @@ const ChangePassword = props => {
       topOffset: 15,
     });
   };
+
+  const changePasswordHandler = async()=>{
+
+    setLoading(true);
+  const resultAction= await dispatch(login(userInfo));
+  if (login.fulfilled.match(resultAction)) {
+    // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+    setLoading(false);
+    const user = resultAction.payload;
+    showToast("Password Changed successfully")
+    props.navigation.replace('MyDrawer', {screen: 'home'});
+  } else {
+    if (resultAction.payload) {
+      // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+      // formikHelpers.setErrors(resultAction.payload.field_errors)
+      console.log("inside login 1",resultAction.payload);
+      showToast(resultAction.payload);
+    } else {
+      // showToast('error', `Update failed: ${resultAction.error}`)
+      console.log("inside login 2",(resultAction.error));
+    }
+    setLoading(false);
+  };
+}
 
   return (
     <SafeAreaView style={styles.screenContainer}>
