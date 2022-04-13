@@ -169,6 +169,7 @@ const ChangePassword = props => {
                 colors={['#F52667', '#F54F84']}
                 style={styles.loginBtn}>
                 <AppButton
+                loader = {loading}
                   buttonStyle={styles.loginBtn}
                   label="Save"
                   onPress={() => {

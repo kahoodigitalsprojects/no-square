@@ -67,12 +67,17 @@ const CustomDrawer = ({navigation}) => {
       stack: 'Statics',
     },
   ];
+  // const {navigation} = props;
   const recentChatDate = [
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
   ];
+
+  const logoutHandler = () =>{
+    navigation.replace('Auth',{screen: 'login'});
+  }
 
   return (
     <View style={styles.container}>
@@ -332,11 +337,12 @@ const CustomDrawer = ({navigation}) => {
           </View>
         </ScrollView>
         <TouchableOpacity
+          onPress={logoutHandler}
           style={{
             width: '100%',
             flexDirection: 'row',
             marginLeft: 5,
-            height: 50,
+            height: 50, 
             alignItems: 'center',
           }}
           activeOpacity={0.8}>

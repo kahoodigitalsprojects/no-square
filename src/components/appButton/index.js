@@ -1,8 +1,9 @@
 import {Icon} from 'native-base';
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity,ActivityIndicator} from 'react-native';
 
 const AppButton = ({
+  loader,
   onPress,
   label,
   iconBG,
@@ -13,11 +14,13 @@ const AppButton = ({
   buttonStyle,
   color,
   fontSize,
+  disable,
 }) => {
   const icon = iconL || iconR;
 
   return (
     <TouchableOpacity
+      disabled={loader}
       onPress={onPress}
       activeOpacity={0.7}
       style={
@@ -29,10 +32,11 @@ const AppButton = ({
           alignItems: 'center',
         }
       }>
-      <Text style={{color: color || 'white', fontSize: fontSize || 15}}>
+      {loader? <ActivityIndicator color={'white'}size={'small'} />: <Text style={{color: color || 'white', fontSize: fontSize || 15}}>
         {' '}
         {label}{' '}
       </Text>
+      }
       {icon && (
         <View
           style={{

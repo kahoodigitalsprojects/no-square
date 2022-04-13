@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import {sendMailForResetPassword} from '../../../api/authAPI';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   FormInput,
@@ -20,6 +22,7 @@ import {Themes, Images} from './../../../constants';
 
 const ForgetPassword = props => {
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
     email: '',
     password: '',
@@ -28,15 +31,41 @@ const ForgetPassword = props => {
     focus: false,
     secureText: true,
   });
+  // const { loginInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  // const showToast = text => {
-  //   Toast.show({
-  //     type: 'error',
-  //     text2: text,
-  //     visibilityTime: 4000,
-  //     topOffset: 15,
-  //   });
-  // };
+  const showToast = text => {
+    Toast.show({
+      type: 'error',
+      text2: text,
+      visibilityTime: 4000,
+      topOffset: 15,
+    });
+  };
+
+  const forgotPasswordHandler = async () => {
+    // console.log(userInfo);
+    setLoading(true);
+    console.log("checking that where is the problem",userInfo.email);
+    const resultAction = await dispatch(sendMailForResetPassword({email:userInfo.email}));
+    if (sendMailForResetPassword.fulfilled.match(resultAction)) {
+      // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+      const user = resultAction.payload;
+      console.log("checking that where is the problem 1")
+      console.log(user);
+      setLoading(false);
+      setVisible(true);
+    } else {
+      if (resultAction.payload) {
+        console.log('inside sendMailForResetPassword 1', resultAction.payload);
+        showToast(resultAction.payload);
+      } else {
+        // showToast('error', `Update failed: ${resultAction.error}`)
+        console.log('inside sendMailForResetPassword 2', resultAction.error);
+      }
+      setLoading(false);
+    }
+  };
   return (
     <>
       <SafeAreaView
@@ -103,9 +132,11 @@ const ForgetPassword = props => {
                     colors={['#F52667', '#F54F84']}
                     style={styles.loginBtn}>
                     <AppButton
-                      onPress={() => {
-                        setVisible(true);
-                      }}
+                      // onPress={() => {
+                      //   setVisible(true);
+                      // }}
+                      onPress={forgotPasswordHandler}
+                      loader={loading}
                       buttonStyle={styles.loginBtn}
                       label="Submit"
                       fontSize={25}

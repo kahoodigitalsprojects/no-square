@@ -7,13 +7,18 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ActivityIndicator
 } from 'react-native';
+import {signup} from '../../../api/authAPI';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
 import {FormInput, AppButton, CheckBox, Header} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from '../../../http-common';
+
 
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
@@ -28,14 +33,16 @@ const isValidEmail = value => {
 const Login = props => {
   const [userInfo, setUserInfo] = useState({
     firstName: '',
-    LastName: '',
+    lastName: '',
     userName: '',
     email: '',
+    gender:'',
+    age:null,
     confirmPassword: '',
     password: '',
-    phone: '',
+    phoneNo: '',
   });
-
+  const dispatch = useDispatch();
   const [error, setError] = useState('');
 
   const [state, setState] = useState({
@@ -46,12 +53,14 @@ const Login = props => {
     checked2: false,
   });
 
+  const [loading,setLoading]= useState(false);
   const showToast = text => {
+    // console.log("toast checj",text);
     Toast.show({
       type: 'error',
       text2: text,
       visibilityTime: 4000,
-      topOffset: 15,
+      topOffset: 30,
     });
   };
 
@@ -74,6 +83,89 @@ const Login = props => {
     //   showToast(isValidForm());
     // }
   };
+
+  const signupHandler = async()=>{
+    let check=false;
+    Object.entries(userInfo).map(item => {
+      console.log(userInfo[item[0]])
+      let a = userInfo[item[0]]
+      if(!a){
+        console.log(" chekc")
+        if(!state.checked  && !state.checked2){
+          check = true;
+        }
+      }
+    })
+    if(check){
+      showToast("Please Fill All Fields")
+    }
+    else {
+
+    console.log("checking",check);
+    setLoading(true);
+    const resultAction= await dispatch(signup(userInfo));
+    if (signup.fulfilled.match(resultAction)) {
+      // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+      const user = resultAction.payload;
+      // console.log("accessToken",JSON.stringify(user));
+      // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
+      setLoading(false);
+      Object.entries(userInfo).map(item => {
+        console.log(userInfo[item[0]])
+        let a = userInfo[item[0]];
+        setUserInfo({a:null});
+      })
+      setUserInfo({...state,checked:false,checked2:false,secureText:true,secureText2:true})
+      props.navigation.navigate('subcrption');
+    } else {
+      if (resultAction.payload) {
+        // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+        // formikHelpers.setErrors(resultAction.payload.field_errors)
+        console.log("inside login 1",resultAction.payload);
+        showToast(resultAction.payload);
+      } else {
+        // showToast('error', `Update failed: ${resultAction.error}`)
+        console.log("inside login 2",(resultAction.error));
+      }
+      setLoading(false);
+    }
+    // console.log(userInfo);
+    // dispatch(signup(userInfo))
+    // .then(data =>{
+    //   // console.log(data);
+    //   console.log("hello this is data given from toolkit",data);
+    //   // authService.storeToken(data.payload.data.message.accessToken);
+    //   // console.log("asyncStorage : ,",authService.getToken());
+    //   // dispatch(setSourceType(authService.getToken()));
+    //   props.navigation.navigate('subcrption');
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+    // setLoading(true);
+    // axios.post('/authentication/signUp',userInfo)
+    // .then(data =>{
+    //   console.log(data);
+    //   setLoading(false);
+    //   props.navigation.navigate('subcrption');
+    // }).catch(error=>{
+    //   if (error.response) {
+    //     // Request made and server responded
+    //     console.log(error.response.data);
+    //     showToast(error.response.data);
+    //     console.log(error.response.status);
+    //     console.log(error.response.headers);
+    //   } else if (error.request) {
+    //     // The request was made but no response was received
+    //     console.log(error.request);
+    //   } else {
+    //     // Something happened in setting up the request that triggered an Error
+    //     console.log('Error', error.message);
+    //   }
+    //   setLoading(false);
+    // })
+    // console.log("login :",userInfo);
+  };
+}
 
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -149,9 +241,9 @@ const Login = props => {
                       borderW={1}
                       borderC={'#F52667'}
                       autoCapitalize="none"
-                      value={userInfo.LastName}
+                      value={userInfo.lastName}
                       onChangeText={value =>
-                        setUserInfo({...userInfo, LastName: value})
+                        setUserInfo({...userInfo, lastName: value})
                       }
                       iconL
                       iconLName="user"
@@ -217,7 +309,10 @@ const Login = props => {
                       />
                       <CheckBox
                         alignItem={'flex-start'}
-                        onPress={() => setState({checked: !state.checked})}
+                        onPress={() => {
+                          setUserInfo({...userInfo,gender:'Male'})
+                          setState({...state,checked: !state.checked,checked2:false})}
+                        }
                         checked={state.checked}
                         text={'Male'}
                       />
@@ -236,7 +331,10 @@ const Login = props => {
                       />
                       <CheckBox
                         alignItem={'flex-end'}
-                        onPress={() => setState({checked2: !state.checked2})}
+                        onPress={() => {
+                          setUserInfo({...userInfo,gender:'Female'})
+                          setState({...state,checked2: !state.checked2,checked:false})}
+                        }
                         checked={state.checked2}
                         text={'Female'}
                       />
@@ -332,9 +430,9 @@ const Login = props => {
                     <FormInput
                       borderW={1}
                       borderC={'#F52667'}
-                      value={userInfo.phone}
+                      value={userInfo.phoneNo}
                       onChangeText={value =>
-                        setUserInfo({...userInfo, phone: value})
+                        setUserInfo({...userInfo, phoneNo: value})
                       }
                       iconL
                       iconLName="phone"
@@ -436,11 +534,10 @@ const Login = props => {
                     colors={['#F52667', '#F54F84']}
                     style={styles.loginBtn}>
                     <AppButton
+                    loader = {loading}
                       buttonStyle={styles.loginBtn}
                       label="Next"
-                      onPress={() => {
-                        props.navigation.navigate('subcrption');
-                      }}
+                      onPress={signupHandler}
                     />
                   </LinearGradient>
                   <View

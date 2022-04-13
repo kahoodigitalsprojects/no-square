@@ -12,12 +12,14 @@ import {
 import {login} from '../../../api/authAPI';
 import authService from '../../../services/authenticationService';
 import {setSourceType} from '../../../slices/authSlice';
+// import storage from '../../../api/asynStorage/asynStorage';
 import { useSelector, useDispatch } from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
 import {FormInput, AppButton, Header} from '../../../components';
 import {Themes} from './../../../constants';
+import axios from '../../../http-common';
 //
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
@@ -31,13 +33,14 @@ const isValidEmail = value => {
 
 const Login = props => {
   const [userInfo, setUserInfo] = useState({
-    email: '',
-    password: '',
+    email: 'junaid@gmail.com',
+    password: 'hello1234',
   });
   const { loginInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [error, setError] = useState();
+  const [loading,setLoading]= useState(false);
 
   const [state, setState] = useState({
     focus: false,
@@ -49,7 +52,7 @@ const Login = props => {
       type: 'error',
       text2: text,
       visibilityTime: 4000,
-      topOffset: 15,
+      topOffset: 30,
     });
   };
 
@@ -72,18 +75,65 @@ const Login = props => {
     //   showToast(isValidForm());
     // }
   };
-  const loginHandler = ()=>{
-   
-    dispatch(login(userInfo))
-    .then(data =>{
-      console.log("hello this is data given from toolkit",JSON.stringify(data.payload.data.message.accessToken));
-      authService.storeToken(data.payload.data.message.accessToken);
-      console.log("asyncStorage : ,",authService.getToken());
-      dispatch(setSourceType(authService.getToken()));
+  const loginHandler = async()=>{
+    handleSubmit();
+    // console.log(userInfo);
+    setLoading(true);
+    const resultAction= await dispatch(login(userInfo));
+    if (login.fulfilled.match(resultAction)) {
+      // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+      setLoading(false);
+      const user = resultAction.payload;
+      // storage.storeToken("check")
+      // storage.storeToken(user.data.message.accessToken);
+      // console.log("accessToken=",JSON.stringify(user.data));
+      // console.log(storage.getToken());
+      // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
       props.navigation.replace('MyDrawer', {screen: 'home'});
-    }).catch(err => {
-      console.log(err);
-    });
+    } else {
+      if (resultAction.payload) {
+        // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+        // formikHelpers.setErrors(resultAction.payload.field_errors)
+        console.log("inside login 1",resultAction.payload);
+        showToast(resultAction.payload);
+      } else {
+        // showToast('error', `Update failed: ${resultAction.error}`)
+        console.log("inside login 2",(resultAction.error));
+      }
+      setLoading(false);
+    }
+    // .then(data =>{
+    //   console.log(data);
+    //   // authService.storeToken(data.payload.data.message.accessToken);
+    //   // console.log("asyncStorage : ,",authService.getToken());
+    //   dispatch(setSourceType(authService.getToken()));
+    //   props.navigation.replace('MyDrawer', {screen: 'home'});
+    // }).catch(error => {
+    //   console.log(error)
+    //   console.log(error.response.data);
+    // });
+    // setLoading(true);
+    // axios.post('/authentication/login',userInfo)
+    // .then(data =>{
+    //   console.log(data);
+    //         props.navigation.replace('MyDrawer', {screen: 'home'});
+    //   setLoading(false);
+    // }).catch(error=>{
+    //   if (error.response) {
+    //     // Request made and server responded
+    //     console.log(error.response.data);
+    //     showToast(error.response.data);
+    //     console.log(error.response.status);
+    //     console.log(error.response.headers);
+    //   } else if (error.request) {
+    //     // The request was made but no response was received
+    //     console.log(error.request);
+    //   } else {
+    //     // Something happened in setting up the request that triggered an Error
+    //     console.log('Error', error.message);
+    //   }
+    //   setLoading(false);
+    // })
     // console.log("login :",userInfo);
   };
 
@@ -202,6 +252,7 @@ const Login = props => {
                     colors={['#F52667', '#F54F84']}
                     style={styles.loginBtn}>
                     <AppButton
+                    loader = {loading}
                       buttonStyle={styles.loginBtn}
                       label="Log In"
                       // onPress={() => {

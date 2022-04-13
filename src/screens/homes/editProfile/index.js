@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -9,6 +9,8 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
+// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
@@ -16,6 +18,9 @@ import * as Animatable from 'react-native-animatable';
 import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
 import {Images} from './../../../constants';
 import {Icon} from 'native-base';
+import {editProfile} from '../../../api/authAPI';
+import { useSelector, useDispatch } from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 const CheckBoxComponent = ({onPress, checked = false}) => {
   return (
@@ -51,17 +56,63 @@ const CheckBoxComponent = ({onPress, checked = false}) => {
 };
 
 const EditProfile = props => {
+  const { userData } = useSelector((state) => state.auth);
+  const { loginInfo } = useSelector((state) => state.auth);
+const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
     secureText: true,
   });
-
+  const [imageData,setImageData]=useState({
+    filepath: {
+      data: '',
+      uri: ''
+    },
+    fileData: '',
+    fileUri: ''
+  });
+  console.log(userData);
+  const [loading, setLoading] = useState(false);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [userInfo, setUserInfo] = useState({
+    // firstName: userData.user.firstName,
+    // lastName: userData.user.lastName,
+    // userName: userData.user.userName,
+    // email: userData.user.email,
+    // gender:userData.user.gender,
+    // age:userData.user.age,
+    // confirmPassword: '',
+    // password: '',
+    // phoneNo: userData.user.phoneNo,
+    // profileImage:userData.user.image
+    firstName: '',
+    lastName: '',
+    userName: '',
     email: '',
+    gender:'',
+    age:'',
+    confirmPassword: '',
     password: '',
+    phoneNo: '',
+    profileImage:''
   });
+
+  useEffect(()=>{
+    setUserInfo({
+    firstName: userData.data.firstName,
+    lastName: userData.data.lastName,
+    userName: userData.data.userName,
+    email: userData.data.email,
+    gender:userData.data.gender,
+    age:userData.data.age,
+    confirmPassword: '',
+    password: '',
+    phoneNo: userData.data.phoneNo,
+    profileImage:userData.data.image
+    })
+        
+  },[])
   const showToast = text => {
     Toast.show({
       type: 'error',
@@ -70,6 +121,163 @@ const EditProfile = props => {
       topOffset: 15,
     });
   };
+  const getFormData = object =>
+  Object.keys(object).reduce((formData, key) => {
+   formData.append(key, object[key]);
+   return formData;
+  }, new FormData());
+
+  // const imagePicker = ()=>{
+  //   const result = await launchImageLibrary(options?);
+  // }
+  // chooseImage = () => {
+  //   let options = {
+  //     title: 'Select Image',
+  //     customButtons: [
+  //       { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+  //     ],
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images',
+  //     },
+  //   };
+  //   ImagePicker.showImagePicker(options, (response) => {
+  //     console.log('Response = ', response);
+
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker');
+  //     } else if (response.error) {
+  //       console.log('ImagePicker Error: ', response.error);
+  //     } else if (response.customButton) {
+  //       console.log('User tapped custom button: ', response.customButton);
+  //       alert(response.customButton);
+  //     } else {
+  //       const source = { uri: response.uri };
+
+  //       // You can also display the image using data:
+  //       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+  //       // alert(JSON.stringify(response));s
+  //       console.log('response', JSON.stringify(response));
+  //       setImageData({
+  //         filePath: response,
+  //         fileData: response.data,
+  //         fileUri: response.uri
+  //       });
+  //     }
+  //   });
+  // }
+
+  // launchCamera = () => {
+  //   let options = {
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images',
+  //     },
+  //   };
+  //   ImagePicker.launchCamera(options, (response) => {
+  //     console.log('Response = ', response);
+
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker');
+  //     } else if (response.error) {
+  //       console.log('ImagePicker Error: ', response.error);
+  //     } else if (response.customButton) {
+  //       console.log('User tapped custom button: ', response.customButton);
+  //       alert(response.customButton);
+  //     } else {
+  //       const source = { uri: response.uri };
+  //       console.log('response', JSON.stringify(response));
+  //       setImageData({
+  //         filePath: response,
+  //         fileData: response.data,
+  //         fileUri: response.uri
+  //       });
+  //     }
+  //   });
+
+  // }
+
+  // launchImageLibrary = () => {
+  //   let options = {
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images',
+  //     },
+  //   };
+  //   ImagePicker.launchImageLibrary(options, (response) => {
+  //     console.log('Response = ', response);
+
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker');
+  //     } else if (response.error) {
+  //       console.log('ImagePicker Error: ', response.error);
+  //     } else if (response.customButton) {
+  //       console.log('User tapped custom button: ', response.customButton);
+  //       alert(response.customButton);
+  //     } else {
+  //       const source = { uri: response.uri };
+  //       console.log('response', JSON.stringify(response));
+  //       setImageData({
+  //         filePath: response,
+  //         fileData: response.data,
+  //         fileUri: response.uri
+  //       });
+  //     }
+  //   });
+
+  // }
+
+  // const renderFileData=()=> {
+  //   if (this.state.fileData) {
+  //     return <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
+  //       style={styles.images}
+  //     />
+  //   } else {
+  //     return null
+  //   }
+  // }
+
+  // // const renderFileUri =() => {
+  // //   if (this.state.fileUri) {
+  // //     return <Image
+  // //       source={{ uri: this.state.fileUri }}
+  // //       style={styles.images}
+  // //     />
+  // //   } else {
+  // //     return <Image
+  // //       source={require('./assets/galeryImages.jpg')}
+  // //       style={styles.images}
+  // //     />
+  // //   }
+  // // }
+  console.log(userInfo.profileImage);
+  const editProfileHandler = async ()=>{
+    const newUserData= getFormData(userInfo)
+    setLoading(true);
+      console.log("access token",loginInfo.data.message.accessToken)
+      const accessToken = loginInfo.data.message.accessToken;
+    const resultAction= await dispatch(editProfile(newUserData));
+    if (editProfile.fulfilled.match(resultAction)) {
+      // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+      const user = resultAction.payload;
+      // console.log("accessToken",JSON.stringify(user));
+      // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
+      setLoading(false);
+      props.navigation.navigate('myProfile');
+    } else {
+      if (resultAction.payload) {
+        // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+        // formikHelpers.setErrors(resultAction.payload.field_errors)
+        console.log("inside login 1",resultAction.payload);
+        showToast(resultAction.payload);
+      } else {
+        // showToast('error', `Update failed: ${resultAction.error}`)
+        console.log("inside login 2",(resultAction.error));
+      }
+      setLoading(false);
+    }
+  }
+  
 
   return (
     <SafeAreaView
@@ -96,9 +304,14 @@ const EditProfile = props => {
           </View>
           <View style={styles.profileView}>
             <ImageBackground
+            // source={{uri:
+            //   userInfo.profileImage
+            // }}
               source={Images.Backgrounds.myProfile}
+            
               style={{width: 116, height: 119}}>
               <TouchableOpacity
+                // onPress={this.launchImageLibrary}
                 style={{
                   position: 'absolute',
                   top: -10,
@@ -132,6 +345,10 @@ const EditProfile = props => {
                 iconRName="edit"
                 iconRType="AntDesign"
                 iconL
+                value={userInfo.firstName}
+                onChangeText={value =>
+                  setUserInfo({...userInfo, firstName: value})
+                }
               />
             </View>
             <View
@@ -150,6 +367,10 @@ const EditProfile = props => {
                 iconRName="edit"
                 iconRType="AntDesign"
                 iconL
+                value={userInfo.lastName}
+                onChangeText={value =>
+                  setUserInfo({...userInfo, lastName: value})
+                }
               />
             </View>
 
@@ -169,6 +390,10 @@ const EditProfile = props => {
                 iconRName="edit"
                 iconRType="AntDesign"
                 iconL
+                value={userInfo.userName}
+                onChangeText={value =>
+                  setUserInfo({...userInfo, userName: value})
+                }
               />
             </View>
             <View
@@ -184,6 +409,10 @@ const EditProfile = props => {
                 iconLName="mail"
                 iconLType="AntDesign"
                 iconL
+                value={userInfo.email}
+                onChangeText={value =>
+                  setUserInfo({...userInfo, email: value})
+                }
               />
             </View>
             <View
@@ -201,6 +430,10 @@ const EditProfile = props => {
                 iconRType="AntDesign"
                 keyboardType={'number-pad'}
                 placeHolder="    56 775 8196"
+                value={userInfo.phoneNo}
+                onChangeText={value =>
+                  setUserInfo({...userInfo, phoneNo: value})
+                }
               />
             </View>
 
@@ -302,11 +535,13 @@ const EditProfile = props => {
                 colors={['#F52667', '#F54F84']}
                 style={styles.loginBtn}>
                 <AppButton
+                loader={loading}
                   buttonStyle={styles.loginBtn}
                   label="Update"
-                  onPress={() => {
-                    props.navigation.navigate('myProfile');
-                  }}
+                  // onPress={() => {
+                  //   props.navigation.navigate('myProfile');
+                  // }}
+                  onPress={editProfileHandler}
                 />
               </LinearGradient>
             </View>
