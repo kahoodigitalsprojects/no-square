@@ -58,16 +58,16 @@ const Login = props => {
 
   const isValidForm = () => {
     if (!isValidFeilds(userInfo)) return 'All feilds are required';
-
-    if (!isValidEmail(userInfo.email)) return 'Invalid Email';
   };
 
   const handleSubmit = () => {
     console.log(isValidForm());
     if (!isValidForm()) {
       console.log(userInfo);
+      return false;
     } else {
       showToast(isValidForm());
+      return true;
     }
     // if (isValidForm()) {
     //   console.log(userInfo);
@@ -76,9 +76,15 @@ const Login = props => {
     // }
   };
   const loginHandler = async()=>{
-    handleSubmit();
-    // console.log(userInfo);
     setLoading(true);
+    const check = handleSubmit();
+    if(check){
+      showToast("all field")
+    }
+    else {
+      showToast("no field")
+    }
+    // console.log(userInfo);
     const resultAction= await dispatch(login(userInfo));
     if (login.fulfilled.match(resultAction)) {
       // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
@@ -88,6 +94,7 @@ const Login = props => {
       // storage.storeToken(user.data.message.accessToken);
       // console.log("accessToken=",JSON.stringify(user.data));
       // console.log(storage.getToken());
+      console.log(user.data);
       // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
       props.navigation.replace('MyDrawer', {screen: 'home'});
     } else {

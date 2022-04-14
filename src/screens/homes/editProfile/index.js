@@ -71,29 +71,18 @@ const dispatch = useDispatch();
     fileData: '',
     fileUri: ''
   });
-  console.log(userData);
   const [loading, setLoading] = useState(false);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    // firstName: userData.user.firstName,
-    // lastName: userData.user.lastName,
-    // userName: userData.user.userName,
-    // email: userData.user.email,
-    // gender:userData.user.gender,
-    // age:userData.user.age,
-    // confirmPassword: '',
-    // password: '',
-    // phoneNo: userData.user.phoneNo,
-    // profileImage:userData.user.image
     firstName: '',
     lastName: '',
     userName: '',
     email: '',
     gender:'',
     age:'',
-    confirmPassword: '',
-    password: '',
+    // confirmPassword: '',
+    // password: '',
     phoneNo: '',
     profileImage:''
   });
@@ -106,11 +95,15 @@ const dispatch = useDispatch();
     email: userData.data.email,
     gender:userData.data.gender,
     age:userData.data.age,
-    confirmPassword: '',
-    password: '',
+    // confirmPassword: '',
+    // password: '',
     phoneNo: userData.data.phoneNo,
     profileImage:userData.data.image
-    })
+    });
+    return () => {
+      // console.log("unmount works")
+      setUserInfo({}); // This worked for me
+    };
         
   },[])
   const showToast = text => {
@@ -126,6 +119,15 @@ const dispatch = useDispatch();
    formData.append(key, object[key]);
    return formData;
   }, new FormData());
+
+  const toFormData = object =>{
+    var form_data = new FormData();
+    // console.log("user object",userInfo);
+    for ( var key in object ) {
+        form_data.append(key, object[key]);
+    }
+    return form_data;
+  }
 
   // const imagePicker = ()=>{
   //   const result = await launchImageLibrary(options?);
@@ -250,26 +252,29 @@ const dispatch = useDispatch();
   // //     />
   // //   }
   // // }
-  console.log(userInfo.profileImage);
+  // console.log(userInfo.profileImage);
   const editProfileHandler = async ()=>{
-    const newUserData= getFormData(userInfo)
+    
+    // const newUserData= getFormData(userInfo)
+    // const newUserData= toFormData(userInfo);
+    // console.log("MY FORM DATA", newUserData)
     setLoading(true);
-      console.log("access token",loginInfo.data.message.accessToken)
-      const accessToken = loginInfo.data.message.accessToken;
-    const resultAction= await dispatch(editProfile(newUserData));
+      
+    const resultAction= await dispatch(editProfile(userInfo));
     if (editProfile.fulfilled.match(resultAction)) {
       // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
       const user = resultAction.payload;
-      // console.log("accessToken",JSON.stringify(user));
-      // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
+      console.log("user data for update",user.data);
       setLoading(false);
+      showToast("updated Successfully");
       props.navigation.navigate('myProfile');
     } else {
       if (resultAction.payload) {
         // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
         // formikHelpers.setErrors(resultAction.payload.field_errors)
+        setLoading(false);
         console.log("inside login 1",resultAction.payload);
-        showToast(resultAction.payload);
+        showToast(resultAction.payload.message);
       } else {
         // showToast('error', `Update failed: ${resultAction.error}`)
         console.log("inside login 2",(resultAction.error));
@@ -304,10 +309,10 @@ const dispatch = useDispatch();
           </View>
           <View style={styles.profileView}>
             <ImageBackground
-            // source={{uri:
-            //   userInfo.profileImage
-            // }}
-              source={Images.Backgrounds.myProfile}
+            source={{uri:
+              userInfo.profileImage
+            }}
+              // source={Images.Backgrounds.myProfile}
             
               style={{width: 116, height: 119}}>
               <TouchableOpacity
@@ -444,10 +449,10 @@ const dispatch = useDispatch();
                 borderBottomWidth: 1,
               }}>
               <FormInput
-                value={userInfo.password}
-                onChangeText={value =>
-                  setUserInfo({...userInfo, password: value})
-                }
+                // value={userInfo.password}
+                // onChangeText={value =>
+                //   setUserInfo({...userInfo, password: value})
+                // }
                 iconL
                 secureText={state.secureText}
                 iconLName="lock"

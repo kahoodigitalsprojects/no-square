@@ -87,10 +87,10 @@ const Login = props => {
   const signupHandler = async()=>{
     let check=false;
     Object.entries(userInfo).map(item => {
-      console.log(userInfo[item[0]])
+      // console.log(userInfo[item[0]])
       let a = userInfo[item[0]]
       if(!a){
-        console.log(" chekc")
+        // console.log(" chekc")
         if(!state.checked  && !state.checked2){
           check = true;
         }

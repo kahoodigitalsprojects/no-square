@@ -3,11 +3,15 @@ import {createSlice} from '@reduxjs/toolkit';
 import {login, signup,
   sendMailForResetPassword,
   resetPasswordById,
-  editProfile} from '../api/authAPI';
+  editProfile,
+  changPassword,
+deleteAccount} from '../api/authAPI';
 const initialState = {
   loginInfo: {data: [], err: '', loading: true},
   signupInfo: {data: [], err: '', loading: true},
   userData:{data:[]},
+  changePassword:{data: [], err: '', loading: true},
+  deleteAccount:{data: [], err: '', loading: true},
   forgotPasswordInfo: {data: [], err: '', loading: true},
   resetPasswordInfo: {data: [], err: '', loading: true},
 };
@@ -83,6 +87,36 @@ export const authSlice = createSlice({
       state.signupInfo.err = false;
       // console.log('reducer data:', data);
       state.signupInfo.data = data;
+    },
+    [changPassword.pending]: state => {
+      state.changePassword.loading = true;
+    },
+    [changPassword.rejected]: (state,action) => {
+      state.changePassword.err = action.error.message;
+      state.changePassword.loading = false;
+      // console.log("check ")
+      state.changePassword.data = [];
+    },
+    [changPassword.fulfilled]: (state, {meta, payload: {data}}) => {
+      state.changePassword.loading = false;
+      state.changePassword.err = false;
+      // console.log('reducer data:', data);
+      state.changePassword.data = data;
+    },
+    [deleteAccount.pending]: state => {
+      state.deleteAccount.loading = true;
+    },
+    [deleteAccount.rejected]: (state,action) => {
+      state.deleteAccount.err = action.error.message;
+      state.deleteAccount.loading = false;
+      // console.log("check ")
+      state.deleteAccount.data = [];
+    },
+    [deleteAccount.fulfilled]: (state, {meta, payload: {data}}) => {
+      state.deleteAccount.loading = false;
+      state.deleteAccount.err = false;
+      // console.log('reducer data:', data);
+      state.deleteAccount.data = data;
     },
   },
 });

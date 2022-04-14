@@ -10,24 +10,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {login} from '../../../api/authAPI';
+import {changPassword} from '../../../api/authAPI';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
 import {Icon, Item} from 'native-base';
 import {Themes, Images} from './../../../constants';
+import {useSelector, useDispatch} from 'react-redux';
 import {HomeHeader, FormInput, AppButton} from '../../../components';
 
+const isValidFeilds = userInfo => {
+  return Object.values(userInfo).every(value => value.trim());
+};
 const ChangePassword = props => {
-  const [loading,setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    email: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
 
   const [error, setError] = useState();
-
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
     secureText1: true,
@@ -35,6 +38,20 @@ const ChangePassword = props => {
     secureText3: true,
   });
 
+  const isValidForm = () => {
+    if (!isValidFeilds(userInfo)) return 'All feilds are required';
+    // if (!isValidEmail(userInfo.email)) return 'Invalid Email';
+  };
+
+  const handleSubmit = () => {
+    if (!isValidForm()) {
+      console.log(userInfo);
+      return true;
+    } else {
+      showToast(isValidForm());
+      return false;
+    }
+  };
   const showToast = text => {
     Toast.show({
       type: 'error',
@@ -44,29 +61,35 @@ const ChangePassword = props => {
     });
   };
 
-  const changePasswordHandler = async()=>{
-
+  const changePasswordHandler = async () => {
     setLoading(true);
-  const resultAction= await dispatch(login(userInfo));
-  if (login.fulfilled.match(resultAction)) {
-    // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
-    setLoading(false);
-    const user = resultAction.payload;
-    showToast("Password Changed successfully")
-    props.navigation.replace('MyDrawer', {screen: 'home'});
-  } else {
-    if (resultAction.payload) {
-      // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
-      // formikHelpers.setErrors(resultAction.payload.field_errors)
-      console.log("inside login 1",resultAction.payload);
-      showToast(resultAction.payload);
+    const check = handleSubmit();
+    if (!check) {
+      // showToast('all field');
+      setLoading(false);
     } else {
-      // showToast('error', `Update failed: ${resultAction.error}`)
-      console.log("inside login 2",(resultAction.error));
+
+      const resultAction = await dispatch(changPassword(userInfo));
+      if (changPassword.fulfilled.match(resultAction)) {
+        // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+        setLoading(false);
+        const user = resultAction.payload;
+        showToast('Password Changed successfully');
+        props.navigation.replace('MyDrawer', {screen: 'login'});
+      } else {
+        if (resultAction.payload) {
+          // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+          // formikHelpers.setErrors(resultAction.payload.field_errors)
+          console.log('inside changepassword 1', resultAction.payload);
+          showToast(resultAction.payload);
+        } else {
+          // showToast('error', `Update failed: ${resultAction.error}`)
+          console.log('inside changepassword 2', resultAction.error);
+        }
+        setLoading(false);
+      }
     }
-    setLoading(false);
   };
-}
 
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -196,12 +219,13 @@ const ChangePassword = props => {
                 colors={['#F52667', '#F54F84']}
                 style={styles.loginBtn}>
                 <AppButton
-                loader = {loading}
+                  loader={loading}
                   buttonStyle={styles.loginBtn}
                   label="Save"
-                  onPress={() => {
-                    // props.navigation.replace('MyDrawer', {screen: 'home'});
-                  }}
+                  // onPress={() => {
+                  //   // props.navigation.replace('MyDrawer', {screen: 'home'});
+                  // }}
+                  onPress={changePasswordHandler}
                 />
               </LinearGradient>
             </View>
