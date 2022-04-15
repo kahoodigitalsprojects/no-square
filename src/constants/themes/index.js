@@ -3,7 +3,7 @@ const Themes = {
   secondaryColor: '',
 
   backgrounds: {
-    primaryBG: '',
+    primaryBG: '#F54F84',
     secondaryBG: '',
     screenBG: '#FFFFFF',
     whiteBG: '#FFFFFF',

@@ -40,57 +40,114 @@ import DeleteAccountConfirmation from '../../screens/homes/deleteAccountConfirma
 import SubcriptionPlan from '../../screens/homes/subcriptionPlan';
 import Messeges from '../../screens/homes/messeges';
 import BusinessRoom from '../../screens/homes/businessRoom';
+import {useSelector, useDispatch} from 'react-redux';
+import CheckingCredentials from '../../screens/auth/CheckingCredentials';
+import {isNewApp} from '../../slices/authSlice';
 
 const Stack = createNativeStackNavigator();
 
 const Auth = () => {
-  return (
-    <Stack.Navigator initialRouteName="splash">
-      <Stack.Screen
-        name="splash"
-        component={splash}
-        options={{headerShown: false}}
-      />
+  const {isLogin, checkIsNewApp} = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  let scrn;
+  let a = undefined;
+  if (checkIsNewApp == a || (checkIsNewApp == true && isLogin == false)) {
+    scrn = (
+      <>
+        <Stack.Screen
+          name="splash"
+          component={splash}
+          options={{headerShown: false}}
+        />
 
-      <Stack.Screen
-        name="splash2"
-        component={Splash2}
-        options={{headerShown: false}}
-      />
+        <Stack.Screen
+          name="splash2"
+          component={Splash2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="mainAuth"
+          component={mainAuth}
+          options={{headerShown: false}}
+        />
 
-      <Stack.Screen
-        name="mainAuth"
-        component={mainAuth}
-        options={{headerShown: false}}
-      />
+        <Stack.Screen
+          name="login"
+          component={login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="signup"
+          component={signup}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="forgetPassword"
+          component={ForgetPassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="subcrption"
+          component={Subcrption}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="paymentMethod"
+          component={PaymentMethod}
+          options={{headerShown: false}}
+        />
+      </>
+    );
+    dispatch(isNewApp());
+  } else {
+    if (isLogin == false) {
+      scrn(
+        <>
+          <Stack.Screen
+            name="mainAuth"
+            component={mainAuth}
+            options={{headerShown: false}}
+          />
 
-      <Stack.Screen
-        name="login"
-        component={login}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="signup"
-        component={signup}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="forgetPassword"
-        component={ForgetPassword}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="subcrption"
-        component={Subcrption}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="paymentMethod"
-        component={PaymentMethod}
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
-  );
+          <Stack.Screen
+            name="login"
+            component={login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="signup"
+            component={signup}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="forgetPassword"
+            component={ForgetPassword}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="subcrption"
+            component={Subcrption}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="paymentMethod"
+            component={PaymentMethod}
+            options={{headerShown: false}}
+          />
+        </>,
+      );
+    } else {
+      scrn = (
+        <Stack.Screen
+          name="CheckingCredentials"
+          component={CheckingCredentials}
+          options={{headerShown: false}}
+        />
+      );
+    }
+  }
+
+  return <Stack.Navigator>{scrn}</Stack.Navigator>;
 };
 
 export const Homes = () => {

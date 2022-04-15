@@ -33,6 +33,7 @@ const DeleteAccountConfirmation = props => {
 
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const { userData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
@@ -68,8 +69,8 @@ const DeleteAccountConfirmation = props => {
       // showToast('all field');
       setLoading(false);
     } else {
-
-      const resultAction = await dispatch(deleteAccount(userInfo));
+      const token = userData.data.accessToken;
+      const resultAction = await dispatch(deleteAccount({token:token,data:userInfo}));
       if (deleteAccount.fulfilled.match(resultAction)) {
         // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
         setLoading(false);

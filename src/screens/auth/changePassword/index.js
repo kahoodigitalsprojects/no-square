@@ -30,6 +30,7 @@ const ChangePassword = props => {
   });
 
   const [error, setError] = useState();
+  const { userData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
@@ -68,8 +69,9 @@ const ChangePassword = props => {
       // showToast('all field');
       setLoading(false);
     } else {
-
-      const resultAction = await dispatch(changPassword(userInfo));
+      const token = userData.data.accessToken;
+      console.log(token);
+      const resultAction = await dispatch(changPassword({token:token,data:userInfo}));
       if (changPassword.fulfilled.match(resultAction)) {
         // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
         setLoading(false);

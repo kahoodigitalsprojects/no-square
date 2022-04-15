@@ -25,7 +25,7 @@ const Settings = props => {
       imageHeight: 15,
       imageWidth: 11.9,
       onPress: 'notificationPrivacy',
-      route: {screen: 'notificationPrivacy'},
+      route: 'notificationPrivacy',
     },
     {
       icon: Images.Backgrounds.privacy,
@@ -36,7 +36,7 @@ const Settings = props => {
       imageHeight: 30,
       imageWidth: 30,
       onPress: 'privacySetting',
-      route: {screen: 'privacySetting'},
+      route: 'privacySetting',
     },
     {
       icon: Images.Backgrounds.privacy,
@@ -47,7 +47,7 @@ const Settings = props => {
       imageHeight: 30,
       imageWidth: 30,
       statics: 1,
-      route: {screen: 'subcriptionPlan'},
+      route: 'subcriptionPlan',
     },
     {
       icon: Images.Backgrounds.lock,
@@ -58,7 +58,7 @@ const Settings = props => {
       imageHeight: 16.98,
       imageWidth: 14.98,
       onPress: 'changePassword',
-      route: {screen: 'changePassword'},
+      route: 'changePassword',
     },
     {
       icon: Images.Pictures.delete,
@@ -68,7 +68,7 @@ const Settings = props => {
       imageHeight: 16.98,
       imageWidth: 14.98,
       onPress: 'deleteAccount',
-      route: {screen: 'deleteAccount'},
+      route: 'deleteAccount',
     },
     {
       icon: Images.Backgrounds.terms,
@@ -78,7 +78,7 @@ const Settings = props => {
       rightIconType: 'AntDesign',
       imageHeight: 30,
       imageWidth: 30,
-      route: {screen: 'termsAndConditions'},
+      route: 'termsAndConditions',
       onProps: () => {
         setVisible(true);
         setPrivacy('Terms & Conditions');
@@ -92,7 +92,7 @@ const Settings = props => {
       rightIconType: 'AntDesign',
       imageHeight: 30,
       imageWidth: 30,
-      route: {screen: 'privacyPolicy'},
+      route: 'privacyPolicy',
       onProps: () => {
         setVisible(true);
         setPrivacy('Privacy Policy');
@@ -154,7 +154,10 @@ const Settings = props => {
                   onPress={
                     i > 4
                       ? item.onProps
-                      : () => props.navigation.navigate('Statics', item.route)
+                      : () =>
+                          props.navigation.navigate('Statics', {
+                            screen: item.route,
+                          })
                   }>
                   <View style={styles.item1}>
                     <Image

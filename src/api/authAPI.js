@@ -95,9 +95,8 @@ export const changPassword = createAsyncThunk(
   'auth/changPassword',
   async (payload, {rejectWithValue}) => {
     try {
-      const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2OGU4NmMxM2I3NGZhYzQwYjZjYWQiLCJpYXQiOjE2NDk5MTI3NjV9.7tUUvOxfcimJyPlM0SVnVFcX9w3UgcTXfdaSFXore7w';
-      const response = await axios.patch('/users/changePassword', payload, {
+      const token = payload.token;
+      const response = await axios.patch('/users/changePassword', payload.data, {
         headers: {
           // 'Content-Type': 'application/json',
           // "Content-Type": "multipart/form-data",
@@ -118,9 +117,8 @@ export const deleteAccount = createAsyncThunk(
   'auth/deleteAccount',
   async (payload, {rejectWithValue}) => {
     try {
-      const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU3ZjAzNjUxM2FhNDYxNTU0OWE4MGUiLCJpYXQiOjE2NDk5MzEyMzN9.j-f0aP7A6JfgkhOsufbwQHaV8JDoDdvCV7VN72fbmCk';
-      const response = await axios.delete('/users/remove', payload, {
+      const token =payload.token;
+      const response = await axios.delete('/users/remove', payload.data, {
         headers: {
           'Content-Type': 'application/json',
           // "Content-Type": "multipart/form-data",

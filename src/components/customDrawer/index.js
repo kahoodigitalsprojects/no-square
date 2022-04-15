@@ -13,8 +13,11 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {FormInput, AppButton, Header} from '../../components';
 import {Images} from '../../constants';
+import {logout} from '../../slices/authSlice';
+import {useSelector, useDispatch} from 'react-redux';
 
 const CustomDrawer = ({navigation}) => {
+  const dispatch = useDispatch();
   const dashboardData = [
     {
       image: Images.Pictures.user,
@@ -75,9 +78,11 @@ const CustomDrawer = ({navigation}) => {
     {image: Images.Backgrounds.profileImg, text: 'Ashley Snchayaz'},
   ];
 
-  const logoutHandler = () =>{
-    navigation.replace('Auth',{screen: 'login'});
-  }
+  const logoutHandler = () => {
+    dispatch(logout());
+
+    navigation.replace('Auth', {screen: 'login'});
+  };
 
   return (
     <View style={styles.container}>
@@ -342,7 +347,7 @@ const CustomDrawer = ({navigation}) => {
             width: '100%',
             flexDirection: 'row',
             marginLeft: 5,
-            height: 50, 
+            height: 50,
             alignItems: 'center',
           }}
           activeOpacity={0.8}>

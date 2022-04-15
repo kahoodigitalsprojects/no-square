@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -19,7 +19,7 @@ import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
 import {Images} from './../../../constants';
 import {Icon} from 'native-base';
 import {editProfile} from '../../../api/authAPI';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 
 const CheckBoxComponent = ({onPress, checked = false}) => {
@@ -54,22 +54,24 @@ const CheckBoxComponent = ({onPress, checked = false}) => {
     </TouchableOpacity>
   );
 };
-
+const isValidFeilds = userInfo => {
+  return Object.values(userInfo).every(value => value.trim());
+};
 const EditProfile = props => {
-  const { userData } = useSelector((state) => state.auth);
-  const { loginInfo } = useSelector((state) => state.auth);
-const dispatch = useDispatch();
+  const {userData} = useSelector(state => state.auth);
+  const {loginInfo} = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
     secureText: true,
   });
-  const [imageData,setImageData]=useState({
+  const [imageData, setImageData] = useState({
     filepath: {
       data: '',
-      uri: ''
+      uri: '',
     },
     fileData: '',
-    fileUri: ''
+    fileUri: '',
   });
   const [loading, setLoading] = useState(false);
   const [checked1, setChecked1] = useState(false);
@@ -79,33 +81,48 @@ const dispatch = useDispatch();
     lastName: '',
     userName: '',
     email: '',
-    gender:'',
-    age:'',
+    gender: '',
+    age: '',
     // confirmPassword: '',
     // password: '',
     phoneNo: '',
-    profileImage:''
+    profileImage: '',
+    description: '',
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setUserInfo({
-    firstName: userData.data.firstName,
-    lastName: userData.data.lastName,
-    userName: userData.data.userName,
-    email: userData.data.email,
-    gender:userData.data.gender,
-    age:userData.data.age,
-    // confirmPassword: '',
-    // password: '',
-    phoneNo: userData.data.phoneNo,
-    profileImage:userData.data.image
+      firstName: userData.data.firstName,
+      lastName: userData.data.lastName,
+      userName: userData.data.userName,
+      email: userData.data.email,
+      gender: userData.data.gender,
+      age: userData.data.age,
+      // confirmPassword: '',
+      // password: '',
+      phoneNo: userData.data.phoneNo,
+      profileImage: userData.data.image,
+      description: userData.data.description,
     });
     return () => {
       // console.log("unmount works")
       setUserInfo({}); // This worked for me
     };
-        
-  },[])
+  }, []);
+  const isValidForm = () => {
+    if (!isValidFeilds(userInfo)) return 'All feilds are required';
+    // if (!isValidEmail(userInfo.email)) return 'Invalid Email';
+  };
+
+  const handleSubmit = () => {
+    if (!isValidForm()) {
+      console.log(userInfo);
+      return true;
+    } else {
+      showToast(isValidForm());
+      return false;
+    }
+  };
   const showToast = text => {
     Toast.show({
       type: 'error',
@@ -115,19 +132,19 @@ const dispatch = useDispatch();
     });
   };
   const getFormData = object =>
-  Object.keys(object).reduce((formData, key) => {
-   formData.append(key, object[key]);
-   return formData;
-  }, new FormData());
+    Object.keys(object).reduce((formData, key) => {
+      formData.append(key, object[key]);
+      return formData;
+    }, new FormData());
 
-  const toFormData = object =>{
+  const toFormData = object => {
     var form_data = new FormData();
     // console.log("user object",userInfo);
-    for ( var key in object ) {
-        form_data.append(key, object[key]);
+    for (var key in object) {
+      form_data.append(key, object[key]);
     }
     return form_data;
-  }
+  };
 
   // const imagePicker = ()=>{
   //   const result = await launchImageLibrary(options?);
@@ -253,36 +270,37 @@ const dispatch = useDispatch();
   // //   }
   // // }
   // console.log(userInfo.profileImage);
-  const editProfileHandler = async ()=>{
-    
-    // const newUserData= getFormData(userInfo)
-    // const newUserData= toFormData(userInfo);
-    // console.log("MY FORM DATA", newUserData)
+  const editProfileHandler = async () => {
     setLoading(true);
-      
-    const resultAction= await dispatch(editProfile(userInfo));
-    if (editProfile.fulfilled.match(resultAction)) {
-      // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
-      const user = resultAction.payload;
-      console.log("user data for update",user.data);
+    const check = handleSubmit();
+    if (!check) {
+      // showToast('all field');
       setLoading(false);
-      showToast("updated Successfully");
-      props.navigation.navigate('myProfile');
     } else {
-      if (resultAction.payload) {
-        // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
-        // formikHelpers.setErrors(resultAction.payload.field_errors)
+      const token = userData.data.accessToken;
+      const resultAction = await dispatch(editProfile(userInfo));
+      if (editProfile.fulfilled.match(resultAction)) {
+        // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+        const user = resultAction.payload;
+        console.log('user data for update', user.data);
         setLoading(false);
-        console.log("inside login 1",resultAction.payload);
-        showToast(resultAction.payload.message);
+        showToast('updated Successfully');
+        props.navigation.navigate('myProfile');
       } else {
-        // showToast('error', `Update failed: ${resultAction.error}`)
-        console.log("inside login 2",(resultAction.error));
+        if (resultAction.payload) {
+          // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+          // formikHelpers.setErrors(resultAction.payload.field_errors)
+          setLoading(false);
+          console.log('inside login 1', resultAction.payload);
+          showToast(resultAction.payload.message);
+        } else {
+          // showToast('error', `Update failed: ${resultAction.error}`)
+          console.log('inside login 2', resultAction.error);
+        }
+        setLoading(false);
       }
-      setLoading(false);
     }
-  }
-  
+  };
 
   return (
     <SafeAreaView
@@ -309,11 +327,9 @@ const dispatch = useDispatch();
           </View>
           <View style={styles.profileView}>
             <ImageBackground
-            source={{uri:
-              userInfo.profileImage
-            }}
+              source={{uri: userInfo.profileImage}}
               // source={Images.Backgrounds.myProfile}
-            
+
               style={{width: 116, height: 119}}>
               <TouchableOpacity
                 // onPress={this.launchImageLibrary}
@@ -415,9 +431,7 @@ const dispatch = useDispatch();
                 iconLType="AntDesign"
                 iconL
                 value={userInfo.email}
-                onChangeText={value =>
-                  setUserInfo({...userInfo, email: value})
-                }
+                onChangeText={value => setUserInfo({...userInfo, email: value})}
               />
             </View>
             <View
@@ -476,10 +490,15 @@ const dispatch = useDispatch();
                   minHeight: 50,
                   marginTop: 15,
                 }}>
-                <Text style={{color: '#000000', fontSize: 12}}>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                <Text
+                  style={{color: '#000000', fontSize: 12}}
+                  value={userInfo.description}
+                  onChangeText={value => {
+                    setUserInfo({...userInfo, description: value});
+                  }}>
+                  {/* Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                   diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua
+                  aliquyam erat, sed diam voluptua */}
                 </Text>
               </View>
               <View style={styles.activeLine}></View>
@@ -540,7 +559,7 @@ const dispatch = useDispatch();
                 colors={['#F52667', '#F54F84']}
                 style={styles.loginBtn}>
                 <AppButton
-                loader={loading}
+                  loader={loading}
                   buttonStyle={styles.loginBtn}
                   label="Update"
                   // onPress={() => {

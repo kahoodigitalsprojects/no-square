@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {HomeHeader, TextWithLine, CustomPopup} from '../../../components';
 import {Themes, Images} from './../../../constants';
@@ -22,6 +23,13 @@ const MyProfile = props => {
   console.log('what is my props.routes', props.route);
   const isCheck = props?.route?.params?.check || null;
   const {navigation} = props;
+  const {userData} = useSelector(state => state.auth);
+  const [userInfo, setUserInfo] = useState({
+    profileImage: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
+  });
   const [visible, setVisible] = useState(false);
   const statusImage = [
     {
@@ -97,6 +105,12 @@ const MyProfile = props => {
 
   useEffect(() => {
     const backScreen = props?.route?.params?.backScreen;
+    setUserInfo({
+      profileImage: userData.data.image,
+      firstName: userData.data.firstName,
+      lastName: userData.data.lastName,
+      userName: userData.data.userName,
+    });
     const backAction = () => {
       props.navigation.navigate('MyTabs', {screen: backScreen});
       // } else {
@@ -150,7 +164,8 @@ const MyProfile = props => {
                 }}>
                 <View style={styles.profileView}>
                   <ImageBackground
-                    source={Images.Backgrounds.myProfile}
+                    source={{uri: userInfo.profileImage}}
+                    // source={Images.Backgrounds.myProfile}
                     style={{width: 116, height: 119}}>
                     {isCheck ? null : (
                       <TouchableOpacity
@@ -178,7 +193,7 @@ const MyProfile = props => {
                         color: '#211E1F',
                         textAlign: 'center',
                       }}>
-                      Jena William
+                      {`${userInfo.firstName} ${userInfo.lastName}`}
                     </Text>
                     <Text
                       style={{
@@ -186,7 +201,7 @@ const MyProfile = props => {
                         color: '#211E1F',
                         textAlign: 'center',
                       }}>
-                      @Jena
+                      {`@${userInfo.userName}`}
                     </Text>
                   </View>
                 </View>
