@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 // import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
@@ -18,7 +20,7 @@ import * as Animatable from 'react-native-animatable';
 import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
 import {Images} from './../../../constants';
 import {Icon} from 'native-base';
-import {editProfile} from '../../../api/authAPI';
+import {updateProfile, updateProfileImage} from '../../../api/userAPI';
 import {useSelector, useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 
@@ -54,12 +56,12 @@ const CheckBoxComponent = ({onPress, checked = false}) => {
     </TouchableOpacity>
   );
 };
+
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
 };
 const EditProfile = props => {
-  const {userData} = useSelector(state => state.auth);
-  const {loginInfo} = useSelector(state => state.auth);
+  const {userData} = useSelector(state => state.user);
   const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
@@ -76,6 +78,7 @@ const EditProfile = props => {
   const [loading, setLoading] = useState(false);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
+  // const [Token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState({
     firstName: '',
     lastName: '',
@@ -87,30 +90,35 @@ const EditProfile = props => {
     // password: '',
     phoneNo: '',
     profileImage: '',
-    description: '',
+    imageUrl: '',
+    // description: 'a',
   });
-
   useEffect(() => {
+    console.log(userData);
+    // setToken(userData.accessToken);
     setUserInfo({
-      firstName: userData.data.firstName,
-      lastName: userData.data.lastName,
-      userName: userData.data.userName,
-      email: userData.data.email,
-      gender: userData.data.gender,
-      age: userData.data.age,
+      firstName: userData.user.firstName,
+      lastName: userData.user.lastName,
+      userName: userData.user.userName,
+      email: userData.user.email,
+      gender: userData.user.gender,
+      age: userData.user.age,
       // confirmPassword: '',
       // password: '',
-      phoneNo: userData.data.phoneNo,
-      profileImage: userData.data.image,
-      description: userData.data.description,
+      imageUrl: userData.user.image,
+      phoneNo: userData.user.phoneNo,
+      profileImage: userData.user.image,
+      // description: userData.user.description,
     });
-    return () => {
-      // console.log("unmount works")
-      setUserInfo({}); // This worked for me
-    };
+    // return () => {
+    //   // console.log("unmount works")
+    //   setUserInfo({}); // This worked for me
+    // };
   }, []);
   const isValidForm = () => {
-    if (!isValidFeilds(userInfo)) return 'All feilds are required';
+    if (!isValidFeilds(userInfo)) {
+      return 'All feilds are required';
+    }
     // if (!isValidEmail(userInfo.email)) return 'Invalid Email';
   };
 
@@ -131,176 +139,116 @@ const EditProfile = props => {
       topOffset: 15,
     });
   };
-  const getFormData = object =>
-    Object.keys(object).reduce((formData, key) => {
-      formData.append(key, object[key]);
-      return formData;
-    }, new FormData());
+  // const getFormData = object =>
+  //   Object.keys(object).reduce((formData, key) => {
+  //     formData.append(key, object[key]);
+  //     return formData;
+  //   }, new FormData());
 
-  const toFormData = object => {
-    var form_data = new FormData();
-    // console.log("user object",userInfo);
-    for (var key in object) {
-      form_data.append(key, object[key]);
-    }
-    return form_data;
+  // const toFormData = object => {
+  //   var form_data = new FormData();
+  //   // console.log("user object",userInfo);
+  //   for (var key in object) {
+  //     form_data.append(key, object[key]);
+  //   }
+  //   return form_data;
+  // };
+  // console.log(userInfo.profileImage);
+  const openCamera = () => {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+      // setUserInfo({profileImage: 'dfjahsdfjh'});
+      // editProfileHandler();
+      // profileImgeHandler();
+    });
+  };
+  const selectImage = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+      setUserInfo({profileImage: image});
+      // editProfileHandler();
+    });
   };
 
-  // const imagePicker = ()=>{
-  //   const result = await launchImageLibrary(options?);
-  // }
-  // chooseImage = () => {
-  //   let options = {
-  //     title: 'Select Image',
-  //     customButtons: [
-  //       { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-  //     ],
-  //     storageOptions: {
-  //       skipBackup: true,
-  //       path: 'images',
-  //     },
-  //   };
-  //   ImagePicker.showImagePicker(options, (response) => {
-  //     console.log('Response = ', response);
-
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else if (response.customButton) {
-  //       console.log('User tapped custom button: ', response.customButton);
-  //       alert(response.customButton);
-  //     } else {
-  //       const source = { uri: response.uri };
-
-  //       // You can also display the image using data:
-  //       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-  //       // alert(JSON.stringify(response));s
-  //       console.log('response', JSON.stringify(response));
-  //       setImageData({
-  //         filePath: response,
-  //         fileData: response.data,
-  //         fileUri: response.uri
-  //       });
-  //     }
-  //   });
-  // }
-
-  // launchCamera = () => {
-  //   let options = {
-  //     storageOptions: {
-  //       skipBackup: true,
-  //       path: 'images',
-  //     },
-  //   };
-  //   ImagePicker.launchCamera(options, (response) => {
-  //     console.log('Response = ', response);
-
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else if (response.customButton) {
-  //       console.log('User tapped custom button: ', response.customButton);
-  //       alert(response.customButton);
-  //     } else {
-  //       const source = { uri: response.uri };
-  //       console.log('response', JSON.stringify(response));
-  //       setImageData({
-  //         filePath: response,
-  //         fileData: response.data,
-  //         fileUri: response.uri
-  //       });
-  //     }
-  //   });
-
-  // }
-
-  // launchImageLibrary = () => {
-  //   let options = {
-  //     storageOptions: {
-  //       skipBackup: true,
-  //       path: 'images',
-  //     },
-  //   };
-  //   ImagePicker.launchImageLibrary(options, (response) => {
-  //     console.log('Response = ', response);
-
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else if (response.customButton) {
-  //       console.log('User tapped custom button: ', response.customButton);
-  //       alert(response.customButton);
-  //     } else {
-  //       const source = { uri: response.uri };
-  //       console.log('response', JSON.stringify(response));
-  //       setImageData({
-  //         filePath: response,
-  //         fileData: response.data,
-  //         fileUri: response.uri
-  //       });
-  //     }
-  //   });
-
-  // }
-
-  // const renderFileData=()=> {
-  //   if (this.state.fileData) {
-  //     return <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
-  //       style={styles.images}
-  //     />
-  //   } else {
-  //     return null
-  //   }
-  // }
-
-  // // const renderFileUri =() => {
-  // //   if (this.state.fileUri) {
-  // //     return <Image
-  // //       source={{ uri: this.state.fileUri }}
-  // //       style={styles.images}
-  // //     />
-  // //   } else {
-  // //     return <Image
-  // //       source={require('./assets/galeryImages.jpg')}
-  // //       style={styles.images}
-  // //     />
-  // //   }
-  // // }
-  // console.log(userInfo.profileImage);
   const editProfileHandler = async () => {
-    setLoading(true);
-    const check = handleSubmit();
-    if (!check) {
-      // showToast('all field');
-      setLoading(false);
-    } else {
-      const token = userData.data.accessToken;
-      const resultAction = await dispatch(editProfile(userInfo));
-      if (editProfile.fulfilled.match(resultAction)) {
+    try {
+      const token = userData.accessToken;
+      // console.log(token);
+      const resultAction = await dispatch(
+        updateProfile({token: token, data: userInfo}),
+      );
+      if (updateProfile.fulfilled.match(resultAction)) {
         // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
-        const user = resultAction.payload;
-        console.log('user data for update', user.data);
         setLoading(false);
-        showToast('updated Successfully');
-        props.navigation.navigate('myProfile');
+        const user = resultAction.payload;
+        showToast('updated successfully');
+        props.navigation.replace('MyDrawer', {screen: 'login'});
       } else {
         if (resultAction.payload) {
           // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
           // formikHelpers.setErrors(resultAction.payload.field_errors)
-          setLoading(false);
-          console.log('inside login 1', resultAction.payload);
-          showToast(resultAction.payload.message);
+          console.log('inside changepassword 1', resultAction.payload);
+          showToast(resultAction.payload);
         } else {
           // showToast('error', `Update failed: ${resultAction.error}`)
-          console.log('inside login 2', resultAction.error);
+          console.log('inside changepassword 2', resultAction.error);
         }
         setLoading(false);
       }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
     }
   };
+
+  // const profileImgeHandler = async () => {
+  //   try {
+  //     setLoading(true);
+  //     console.log('working???????');
+  //     // const check = handleSubmit();
+  //     // if (!check) {
+  //     //   // showToast('all field');
+  //     //   setLoading(false);
+  //     // } else {
+  //     const token = userData.accessToken;
+  //     console.log('checking that image is working?');
+  //     const resultAction = await dispatch(
+  //       editProfileImage({token: token, data: userInfo.profileImage}),
+  //     );
+  //     console.log(resultAction);
+  //     if (editProfileImage.fulfilled.match(resultAction)) {
+  //       // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+  //       const user = resultAction.payload;
+  //       console.log('user data for update', user.data);
+  //       setLoading(false);
+  //       showToast('updated Successfully');
+  //       props.navigation.navigate('myProfile');
+  //     } else {
+  //       if (resultAction.payload) {
+  //         // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+  //         // formikHelpers.setErrors(resultAction.payload.field_errors)
+  //         setLoading(false);
+  //         console.log('inside login 1', resultAction.payload);
+  //         showToast(resultAction.payload.message);
+  //       } else {
+  //         // showToast('error', `Update failed: ${resultAction.error}`)
+  //         console.log('inside login 2', resultAction.error);
+  //       }
+  //       setLoading(false);
+  //     }
+  //     // }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <SafeAreaView
@@ -327,12 +275,12 @@ const EditProfile = props => {
           </View>
           <View style={styles.profileView}>
             <ImageBackground
-              source={{uri: userInfo.profileImage}}
+              source={{uri: userInfo.imageUrl}}
               // source={Images.Backgrounds.myProfile}
 
               style={{width: 116, height: 119}}>
               <TouchableOpacity
-                // onPress={this.launchImageLibrary}
+                onPress={openCamera}
                 style={{
                   position: 'absolute',
                   top: -10,
@@ -492,10 +440,11 @@ const EditProfile = props => {
                 }}>
                 <Text
                   style={{color: '#000000', fontSize: 12}}
-                  value={userInfo.description}
-                  onChangeText={value => {
-                    setUserInfo({...userInfo, description: value});
-                  }}>
+                  // value={userInfo.description}
+                  // onChangeText={value => {
+                  // setUserInfo({...userInfo, description: value});
+                  // }}
+                >
                   {/* Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                   diam nonumy eirmod tempor invidunt ut labore et dolore magna
                   aliquyam erat, sed diam voluptua */}

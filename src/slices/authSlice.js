@@ -33,10 +33,10 @@ export const authSlice = createSlice({
       // state.filters.sourceType = action.payload;
       console.log(action);
     },
-    isNewApp: (state = initialState => {
+    isNewApp: (state = initialState) => {
       state.checkIsNewApp = false;
       state.nn = false;
-    }),
+    },
     logout: (state = initialState) => {
       state.isLogin = false;
       state.loginInfo.data = [];

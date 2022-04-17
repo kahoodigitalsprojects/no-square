@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   ScrollView,
@@ -10,7 +11,8 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {sendMailForResetPassword} from '../../../api/authAPI';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 import {
   FormInput,
@@ -46,12 +48,14 @@ const ForgetPassword = props => {
   const forgotPasswordHandler = async () => {
     // console.log(userInfo);
     setLoading(true);
-    console.log("checking that where is the problem",userInfo.email);
-    const resultAction = await dispatch(sendMailForResetPassword({email:userInfo.email}));
+    console.log('checking that where is the problem', userInfo.email);
+    const resultAction = await dispatch(
+      sendMailForResetPassword({email: userInfo.email}),
+    );
     if (sendMailForResetPassword.fulfilled.match(resultAction)) {
       // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
       const user = resultAction.payload;
-      console.log("checking that where is the problem 1")
+      console.log('checking that where is the problem 1');
       console.log(user);
       setLoading(false);
       setVisible(true);

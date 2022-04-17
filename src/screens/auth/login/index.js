@@ -10,17 +10,15 @@ import {
 } from 'react-native';
 
 import {login} from '../../../api/authAPI';
-import authService from '../../../services/authenticationService';
-import {setSourceType} from '../../../slices/authSlice';
-// import storage from '../../../api/asynStorage/asynStorage';
+
 import {useSelector, useDispatch} from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-toast-message';
 import {FormInput, AppButton, Header} from '../../../components';
 import {Themes} from './../../../constants';
-import axios from '../../../http-common';
 //
+import {saveUserData} from '../../../slices/userSlice';
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
 };
@@ -57,7 +55,9 @@ const Login = props => {
   };
 
   const isValidForm = () => {
-    if (!isValidFeilds(userInfo)) return 'All feilds are required';
+    if (!isValidFeilds(userInfo)) {
+      return 'All feilds are required';
+    }
   };
 
   const handleSubmit = () => {
@@ -80,13 +80,9 @@ const Login = props => {
         // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
         setLoading(false);
         const user = resultAction.payload;
+        // console.log('user payload', user.data.message);
+        dispatch(saveUserData({data: user.data.message}));
         props.navigation.replace('MyDrawer', {screen: 'home'});
-        // storage.storeToken("check")
-        // storage.storeToken(user.data.message.accessToken);
-        // console.log("accessToken=",JSON.stringify(user.data));
-        // console.log(storage.getToken());
-        // console.log(user.data);
-        // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
       } else {
         if (resultAction.payload) {
           // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.

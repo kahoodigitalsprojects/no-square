@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ActivityIndicator
 } from 'react-native';
 import {signup} from '../../../api/authAPI';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,9 +15,7 @@ import Toast from 'react-native-toast-message';
 import {FormInput, AppButton, CheckBox, Header} from '../../../components';
 import {Themes, Images} from './../../../constants';
 import {Icon} from 'native-base';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from '../../../http-common';
-
+import {useSelector, useDispatch} from 'react-redux';
 
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
@@ -36,8 +33,8 @@ const Login = props => {
     lastName: '',
     userName: '',
     email: '',
-    gender:'',
-    age:null,
+    gender: '',
+    age: null,
     confirmPassword: '',
     password: '',
     phoneNo: '',
@@ -53,7 +50,7 @@ const Login = props => {
     checked2: false,
   });
 
-  const [loading,setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   const showToast = text => {
     // console.log("toast checj",text);
     Toast.show({
@@ -84,88 +81,55 @@ const Login = props => {
     // }
   };
 
-  const signupHandler = async()=>{
-    let check=false;
+  const signupHandler = async () => {
+    let check = false;
     Object.entries(userInfo).map(item => {
       // console.log(userInfo[item[0]])
-      let a = userInfo[item[0]]
-      if(!a){
+      let a = userInfo[item[0]];
+      if (!a) {
         // console.log(" chekc")
-        if(!state.checked  && !state.checked2){
+        if (!state.checked && !state.checked2) {
           check = true;
         }
       }
-    })
-    if(check){
-      showToast("Please Fill All Fields")
-    }
-    else {
-
-    console.log("checking",check);
-    setLoading(true);
-    const resultAction= await dispatch(signup(userInfo));
-    if (signup.fulfilled.match(resultAction)) {
-      // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
-      const user = resultAction.payload;
-      // console.log("accessToken",JSON.stringify(user));
-      // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
-      setLoading(false);
-      Object.entries(userInfo).map(item => {
-        console.log(userInfo[item[0]])
-        let a = userInfo[item[0]];
-        setUserInfo({a:null});
-      })
-      setUserInfo({...state,checked:false,checked2:false,secureText:true,secureText2:true})
-      props.navigation.navigate('subcrption');
+    });
+    if (check) {
+      showToast('Please Fill All Fields');
     } else {
-      if (resultAction.payload) {
-        // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
-        // formikHelpers.setErrors(resultAction.payload.field_errors)
-        console.log("inside login 1",resultAction.payload);
-        showToast(resultAction.payload);
+      console.log('checking', check);
+      setLoading(true);
+      const resultAction = await dispatch(signup(userInfo));
+      if (signup.fulfilled.match(resultAction)) {
+        // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+        // const user = resultAction.payload;
+        // console.log("accessToken",JSON.stringify(user));
+        // showToast('success', `Updated ${user.first_name} ${user.last_name}`)
+        setLoading(false);
+        Object.entries(userInfo).map(item => {
+          console.log(userInfo[item[0]]);
+          let a = userInfo[item[0]];
+          setUserInfo({a: null});
+        });
+        setUserInfo({
+          ...state,
+          checked: false,
+          checked2: false,
+          secureText: true,
+          secureText2: true,
+        });
+        props.navigation.navigate('subcrption');
       } else {
-        // showToast('error', `Update failed: ${resultAction.error}`)
-        console.log("inside login 2",(resultAction.error));
+        if (resultAction.payload) {
+          // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+          // console.log('inside login 1', resultAction.payload);
+          showToast(resultAction.payload);
+        } else {
+          // console.log('inside login 2', resultAction.error);
+        }
+        setLoading(false);
       }
-      setLoading(false);
     }
-    // console.log(userInfo);
-    // dispatch(signup(userInfo))
-    // .then(data =>{
-    //   // console.log(data);
-    //   console.log("hello this is data given from toolkit",data);
-    //   // authService.storeToken(data.payload.data.message.accessToken);
-    //   // console.log("asyncStorage : ,",authService.getToken());
-    //   // dispatch(setSourceType(authService.getToken()));
-    //   props.navigation.navigate('subcrption');
-    // }).catch(err => {
-    //   console.log(err);
-    // });
-    // setLoading(true);
-    // axios.post('/authentication/signUp',userInfo)
-    // .then(data =>{
-    //   console.log(data);
-    //   setLoading(false);
-    //   props.navigation.navigate('subcrption');
-    // }).catch(error=>{
-    //   if (error.response) {
-    //     // Request made and server responded
-    //     console.log(error.response.data);
-    //     showToast(error.response.data);
-    //     console.log(error.response.status);
-    //     console.log(error.response.headers);
-    //   } else if (error.request) {
-    //     // The request was made but no response was received
-    //     console.log(error.request);
-    //   } else {
-    //     // Something happened in setting up the request that triggered an Error
-    //     console.log('Error', error.message);
-    //   }
-    //   setLoading(false);
-    // })
-    // console.log("login :",userInfo);
   };
-}
 
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -310,9 +274,13 @@ const Login = props => {
                       <CheckBox
                         alignItem={'flex-start'}
                         onPress={() => {
-                          setUserInfo({...userInfo,gender:'Male'})
-                          setState({...state,checked: !state.checked,checked2:false})}
-                        }
+                          setUserInfo({...userInfo, gender: 'Male'});
+                          setState({
+                            ...state,
+                            checked: !state.checked,
+                            checked2: false,
+                          });
+                        }}
                         checked={state.checked}
                         text={'Male'}
                       />
@@ -332,9 +300,13 @@ const Login = props => {
                       <CheckBox
                         alignItem={'flex-end'}
                         onPress={() => {
-                          setUserInfo({...userInfo,gender:'Female'})
-                          setState({...state,checked2: !state.checked2,checked:false})}
-                        }
+                          setUserInfo({...userInfo, gender: 'Female'});
+                          setState({
+                            ...state,
+                            checked2: !state.checked2,
+                            checked: false,
+                          });
+                        }}
                         checked={state.checked2}
                         text={'Female'}
                       />
@@ -534,7 +506,7 @@ const Login = props => {
                     colors={['#F52667', '#F54F84']}
                     style={styles.loginBtn}>
                     <AppButton
-                    loader = {loading}
+                      loader={loading}
                       buttonStyle={styles.loginBtn}
                       label="Next"
                       onPress={signupHandler}

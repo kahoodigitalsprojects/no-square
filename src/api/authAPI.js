@@ -69,10 +69,8 @@ export const resetPasswordById = createAsyncThunk(
 export const editProfile = createAsyncThunk(
   'auth/editProfile',
   async (payload, {rejectWithValue}) => {
+    const token = payload.token;
 
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2OGU4NmMxM2I3NGZhYzQwYjZjYWQiLCJpYXQiOjE2NDk5MTI3NjV9.7tUUvOxfcimJyPlM0SVnVFcX9w3UgcTXfdaSFXore7w';
-  
     try {
       const response = await axios.put('/users/update', payload, {
         headers: {
@@ -96,13 +94,17 @@ export const changPassword = createAsyncThunk(
   async (payload, {rejectWithValue}) => {
     try {
       const token = payload.token;
-      const response = await axios.patch('/users/changePassword', payload.data, {
-        headers: {
-          // 'Content-Type': 'application/json',
-          // "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        }
-        });
+      const response = await axios.patch(
+        '/users/changePassword',
+        payload.data,
+        {
+          headers: {
+            // 'Content-Type': 'application/json',
+            // "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       return response;
     } catch (err) {
       if (!err.response) {
@@ -117,14 +119,14 @@ export const deleteAccount = createAsyncThunk(
   'auth/deleteAccount',
   async (payload, {rejectWithValue}) => {
     try {
-      const token =payload.token;
+      const token = payload.token;
       const response = await axios.delete('/users/remove', payload.data, {
         headers: {
           'Content-Type': 'application/json',
           // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
-        }
-        });
+        },
+      });
       return response;
     } catch (err) {
       if (!err.response) {

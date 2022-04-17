@@ -30,7 +30,7 @@ const ChangePassword = props => {
   });
 
   const [error, setError] = useState();
-  const { userData } = useSelector((state) => state.auth);
+  const {loginInfo} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
@@ -40,7 +40,9 @@ const ChangePassword = props => {
   });
 
   const isValidForm = () => {
-    if (!isValidFeilds(userInfo)) return 'All feilds are required';
+    if (!isValidFeilds(userInfo)) {
+      return 'All feilds are required';
+    }
     // if (!isValidEmail(userInfo.email)) return 'Invalid Email';
   };
 
@@ -63,33 +65,42 @@ const ChangePassword = props => {
   };
 
   const changePasswordHandler = async () => {
-    setLoading(true);
-    const check = handleSubmit();
-    if (!check) {
-      // showToast('all field');
-      setLoading(false);
-    } else {
-      const token = userData.data.accessToken;
-      console.log(token);
-      const resultAction = await dispatch(changPassword({token:token,data:userInfo}));
-      if (changPassword.fulfilled.match(resultAction)) {
-        // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+    try {
+      setLoading(true);
+      const check = handleSubmit();
+      if (!check) {
+        // showToast('all field');
         setLoading(false);
-        const user = resultAction.payload;
-        showToast('Password Changed successfully');
-        props.navigation.replace('MyDrawer', {screen: 'login'});
       } else {
-        if (resultAction.payload) {
-          // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
-          // formikHelpers.setErrors(resultAction.payload.field_errors)
-          console.log('inside changepassword 1', resultAction.payload);
-          showToast(resultAction.payload);
+        console.log(loginInfo);
+        const token = loginInfo.data.message.accessToken;
+        // console.log(token);
+        console.log('user info ', userInfo);
+        const resultAction = await dispatch(
+          changPassword({token: token, data: userInfo}),
+        );
+        if (changPassword.fulfilled.match(resultAction)) {
+          // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+          setLoading(false);
+          const user = resultAction.payload;
+          showToast('Password Changed successfully');
+          props.navigation.replace('MyDrawer', {screen: 'login'});
         } else {
-          // showToast('error', `Update failed: ${resultAction.error}`)
-          console.log('inside changepassword 2', resultAction.error);
+          if (resultAction.payload) {
+            // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+            // formikHelpers.setErrors(resultAction.payload.field_errors)
+            console.log('inside changepassword 1', resultAction.payload);
+            showToast(resultAction.payload);
+          } else {
+            // showToast('error', `Update failed: ${resultAction.error}`)
+            console.log('inside changepassword 2', resultAction.error);
+          }
+          setLoading(false);
         }
-        setLoading(false);
       }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
     }
   };
 

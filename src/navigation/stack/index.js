@@ -49,9 +49,14 @@ const Stack = createNativeStackNavigator();
 const Auth = () => {
   const {isLogin, checkIsNewApp} = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  console.log(isLogin);
   let scrn;
   let a = undefined;
-  if (checkIsNewApp == a || (checkIsNewApp == true && isLogin == false)) {
+  if (
+    checkIsNewApp === a ||
+    (checkIsNewApp === true && isLogin === false) ||
+    isLogin === a
+  ) {
     scrn = (
       <>
         <Stack.Screen
@@ -100,8 +105,9 @@ const Auth = () => {
     );
     dispatch(isNewApp());
   } else {
-    if (isLogin == false) {
-      scrn(
+    console.log('login', isLogin);
+    if (isLogin === false || isLogin === a) {
+      scrn = (
         <>
           <Stack.Screen
             name="mainAuth"
@@ -134,7 +140,7 @@ const Auth = () => {
             component={PaymentMethod}
             options={{headerShown: false}}
           />
-        </>,
+        </>
       );
     } else {
       scrn = (

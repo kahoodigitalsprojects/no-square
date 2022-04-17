@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
@@ -14,6 +15,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector, useDispatch} from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {HomeHeader, TextWithLine, CustomPopup} from '../../../components';
 import {Themes, Images} from './../../../constants';
@@ -23,9 +25,9 @@ const MyProfile = props => {
   console.log('what is my props.routes', props.route);
   const isCheck = props?.route?.params?.check || null;
   const {navigation} = props;
-  const {userData} = useSelector(state => state.auth);
+  const {userData} = useSelector(state => state.user);
   const [userInfo, setUserInfo] = useState({
-    profileImage: '',
+    profileImage: userData.user.image,
     firstName: '',
     lastName: '',
     userName: '',
@@ -105,12 +107,14 @@ const MyProfile = props => {
 
   useEffect(() => {
     const backScreen = props?.route?.params?.backScreen;
+    console.log('userData', userData.user.image);
     setUserInfo({
-      profileImage: userData.data.image,
-      firstName: userData.data.firstName,
-      lastName: userData.data.lastName,
-      userName: userData.data.userName,
+      profileImage: userData.user.image,
+      firstName: userData.user.firstName,
+      lastName: userData.user.lastName,
+      userName: userData.user.userName,
     });
+    console.log('userInfo', userInfo.profileImage);
     const backAction = () => {
       props.navigation.navigate('MyTabs', {screen: backScreen});
       // } else {

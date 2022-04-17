@@ -135,6 +135,8 @@ android {
         applicationId "com.project_starter"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        //  add this ro react native image crop picker
+        vectorDrawables.useSupportLibrary = true
         versionCode 1
         versionName "1.0"
     }
