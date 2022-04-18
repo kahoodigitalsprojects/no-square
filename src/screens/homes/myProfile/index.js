@@ -25,9 +25,9 @@ const MyProfile = props => {
   console.log('what is my props.routes', props.route);
   const isCheck = props?.route?.params?.check || null;
   const {navigation} = props;
-  const {userData} = useSelector(state => state.user);
+  const {userData} = useSelector(state => state.auth);
   const [userInfo, setUserInfo] = useState({
-    profileImage: userData.user.image,
+    profileImage: userData.data.image,
     firstName: '',
     lastName: '',
     userName: '',
@@ -107,12 +107,12 @@ const MyProfile = props => {
 
   useEffect(() => {
     const backScreen = props?.route?.params?.backScreen;
-    console.log('userData', userData.user.image);
+    // console.log('userData', userData);
     setUserInfo({
-      profileImage: userData.user.image,
-      firstName: userData.user.firstName,
-      lastName: userData.user.lastName,
-      userName: userData.user.userName,
+      profileImage: userData.data.image,
+      firstName: userData.data.firstName,
+      lastName: userData.data.lastName,
+      userName: userData.data.userName,
     });
     console.log('userInfo', userInfo.profileImage);
     const backAction = () => {

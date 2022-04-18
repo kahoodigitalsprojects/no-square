@@ -8,6 +8,7 @@ import {
   editProfile,
   changPassword,
   deleteAccount,
+  updateProfileImage,
 } from '../api/authAPI';
 const initialState = {
   loginInfo: {data: [], err: '', loading: true},
@@ -21,6 +22,7 @@ const initialState = {
   deleteAccount: {data: [], err: '', loading: true},
   forgotPasswordInfo: {data: [], err: '', loading: true},
   resetPasswordInfo: {data: [], err: '', loading: true},
+  updateProfileImageData: {data: [], err: '', loading: true},
 };
 
 export const authSlice = createSlice({
@@ -37,15 +39,25 @@ export const authSlice = createSlice({
       state.checkIsNewApp = false;
       state.nn = false;
     },
+    saveImageToStore: (state, action) => {
+      console.log(action.image);
+      state.loginInfo.data.message.user.image = action.image;
+    },
     logout: (state = initialState) => {
       state.isLogin = false;
       state.loginInfo.data = [];
+      state.loginInfo.err = '';
       state.userData.data = [];
       state.signupInfo.data = [];
+      state.signupInfo.err = '';
       state.changePassword.data = [];
+      state.changePassword.err = '';
       state.deleteAccount.data = [];
+      state.deleteAccount.err = '';
       state.forgotPasswordInfo.data = [];
+      state.forgotPasswordInfo.err = '';
       state.resetPasswordInfo.data = [];
+      state.resetPasswordInfo.err = '';
       console.log(state.isLogin);
     },
   },
@@ -142,6 +154,21 @@ export const authSlice = createSlice({
       state.deleteAccount.err = false;
       // console.log('reducer data:', data);
       state.deleteAccount.data = data;
+    },
+    [updateProfileImage.pending]: state => {
+      state.deleteAccount.loading = true;
+    },
+    [updateProfileImage.rejected]: (state, action) => {
+      state.updateProfileImageData.err = action.error.message;
+      state.updateProfileImageData.loading = false;
+      // console.log("check ")
+      state.updateProfileImageData.data = [];
+    },
+    [updateProfileImage.fulfilled]: (state, {meta, payload: {data}}) => {
+      state.updateProfileImageData.loading = false;
+      state.updateProfileImageData.err = false;
+      // console.log('reducer data:', data);
+      state.updateProfileImageData.data = data;
     },
   },
 });

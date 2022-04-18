@@ -22,6 +22,7 @@ import {
 } from '../../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
+import {logout} from '../../../slices/authSlice';
 const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
 };
@@ -33,7 +34,7 @@ const DeleteAccountConfirmation = props => {
 
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-  const { userData } = useSelector((state) => state.auth);
+  const {userData} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
@@ -62,7 +63,7 @@ const DeleteAccountConfirmation = props => {
       topOffset: 15,
     });
   };
-  const accountDeleteHandler = async () =>{
+  const accountDeleteHandler = async () => {
     setLoading(true);
     const check = handleSubmit();
     if (!check) {
@@ -70,11 +71,15 @@ const DeleteAccountConfirmation = props => {
       setLoading(false);
     } else {
       const token = userData.data.accessToken;
-      const resultAction = await dispatch(deleteAccount({token:token,data:userInfo}));
+      const resultAction = await dispatch(
+        deleteAccount({token: token, data: userInfo}),
+      );
       if (deleteAccount.fulfilled.match(resultAction)) {
         // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
         setLoading(false);
         const user = resultAction.payload;
+
+        dispatch(logout());
         showToast('Account Delete successfully');
         props.navigation.replace('Auth', {screen: 'mainAuth'});
       } else {
@@ -90,7 +95,7 @@ const DeleteAccountConfirmation = props => {
         setLoading(false);
       }
     }
-  }
+  };
   return (
     <>
       <SafeAreaView style={styles.screenContainer}>
@@ -168,7 +173,7 @@ const DeleteAccountConfirmation = props => {
               colors={['#F52667', '#F54F84']}
               style={styles.loginBtn}>
               <AppButton
-              loader = {loading}
+                loader={loading}
                 label="Confirm"
                 onPress={() => {
                   setVisible(true);

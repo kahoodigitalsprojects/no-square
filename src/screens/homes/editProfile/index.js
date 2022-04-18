@@ -20,9 +20,12 @@ import * as Animatable from 'react-native-animatable';
 import {FormInput, AppButton, CheckBox, HomeHeader} from '../../../components';
 import {Images} from './../../../constants';
 import {Icon} from 'native-base';
-import {updateProfile, updateProfileImage} from '../../../api/userAPI';
+import {updateProfile, updateProfileImage} from '../../../api/authAPI';
 import {useSelector, useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
+import FormData from 'form-data';
+import axios from '../../../http-common';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const CheckBoxComponent = ({onPress, checked = false}) => {
   return (
@@ -61,19 +64,11 @@ const isValidFeilds = userInfo => {
   return Object.values(userInfo).every(value => value.trim());
 };
 const EditProfile = props => {
-  const {userData} = useSelector(state => state.user);
+  const {userData, loginInfo} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [state, setState] = useState({
     focus: false,
     secureText: true,
-  });
-  const [imageData, setImageData] = useState({
-    filepath: {
-      data: '',
-      uri: '',
-    },
-    fileData: '',
-    fileUri: '',
   });
   const [loading, setLoading] = useState(false);
   const [checked1, setChecked1] = useState(false);
@@ -88,6 +83,7 @@ const EditProfile = props => {
     age: '',
     // confirmPassword: '',
     // password: '',
+    image: '',
     phoneNo: '',
     profileImage: '',
     imageUrl: '',
@@ -97,17 +93,17 @@ const EditProfile = props => {
     console.log(userData);
     // setToken(userData.accessToken);
     setUserInfo({
-      firstName: userData.user.firstName,
-      lastName: userData.user.lastName,
-      userName: userData.user.userName,
-      email: userData.user.email,
-      gender: userData.user.gender,
-      age: userData.user.age,
+      firstName: userData.data.firstName,
+      lastName: userData.data.lastName,
+      userName: userData.data.userName,
+      email: userData.data.email,
+      gender: userData.data.gender,
+      age: userData.data.age,
       // confirmPassword: '',
       // password: '',
-      imageUrl: userData.user.image,
-      phoneNo: userData.user.phoneNo,
-      profileImage: userData.user.image,
+      imageUrl: userData.data.image,
+      phoneNo: userData.data.phoneNo,
+      profileImage: userData.data.image,
       // description: userData.user.description,
     });
     // return () => {
@@ -139,32 +135,73 @@ const EditProfile = props => {
       topOffset: 15,
     });
   };
-  // const getFormData = object =>
-  //   Object.keys(object).reduce((formData, key) => {
-  //     formData.append(key, object[key]);
-  //     return formData;
-  //   }, new FormData());
+  const getFormData = object =>
+    Object.keys(object).reduce((formData, key) => {
+      formData.append(key, object[key]);
+      return formData;
+    }, new FormData());
 
-  // const toFormData = object => {
-  //   var form_data = new FormData();
-  //   // console.log("user object",userInfo);
-  //   for (var key in object) {
-  //     form_data.append(key, object[key]);
-  //   }
-  //   return form_data;
-  // };
-  // console.log(userInfo.profileImage);
-  const openCamera = () => {
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then(image => {
-      console.log(image);
-      // setUserInfo({profileImage: 'dfjahsdfjh'});
-      // editProfileHandler();
-      // profileImgeHandler();
+  let options = {
+    title: 'Camara Photo',
+    mediaType: 'photo',
+    base64: true,
+    noData: false,
+    quality: 0.1,
+    storageOptions: {
+      skipBackup: true,
+      path: 'The Gestore',
+    },
+  };
+
+  // You can also use as a promise without 'callback':
+  // const result = await launchCamera(options?);
+  const openCamera = async () => {
+    let image = '';
+    launchCamera(options).then(image => {
+      console.log(image.assets[0]);
+      image = image;
     });
+    // ImagePicker.openCamera({
+    //   width: 300,
+    //   height: 400,
+    //   cropping: true,
+    // }).then(async image => {
+    //   // SETTING UP FORM DATA
+    //   console.log(image, 'image');
+    const formData = new FormData();
+    formData.append('profileImage', {
+      uri: image.assets[0].uri,
+      type: image.assets[0].type,
+      name: image.assets[0].fileName || `${Date.now()}.jpg`,
+    });
+    //   // APPENDING IMAGE
+    //   console.log(formData);
+    const token = loginInfo.data.message.accessToken;
+    //   setLoading(true); // Loading True
+    const response = await axios.post('/users/updateProfile', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type':
+          'multipart/form-data; charset=utf-8; boundary="another cool boundary";',
+      },
+    });
+
+    // const resultAction = dispatch(updateProfileImage(data));
+
+    // if (updateProfileImage.fulfilled.match(resultAction)) {
+    //   const user = resultAction.payload;
+    //   setLoading(false);
+    //   showToast('updated Successfully');
+    // } else {
+    //   if (resultAction.payload) {
+    //     setLoading(false);
+    //     showToast(resultAction.payload.message);
+    //   } else {
+    //     console.log('inside login 2', resultAction.error);
+    //   }
+    //   setLoading(false);
+    // }
+    // });
   };
   const selectImage = () => {
     ImagePicker.openPicker({
@@ -172,7 +209,7 @@ const EditProfile = props => {
       height: 400,
       cropping: true,
     }).then(image => {
-      console.log(image);
+      console.log('checking', image);
       setUserInfo({profileImage: image});
       // editProfileHandler();
     });
@@ -180,8 +217,8 @@ const EditProfile = props => {
 
   const editProfileHandler = async () => {
     try {
-      const token = userData.accessToken;
-      // console.log(token);
+      const token = loginInfo.message.accessToken;
+      console.log(token);
       const resultAction = await dispatch(
         updateProfile({token: token, data: userInfo}),
       );
@@ -209,46 +246,28 @@ const EditProfile = props => {
     }
   };
 
-  // const profileImgeHandler = async () => {
-  //   try {
-  //     setLoading(true);
-  //     console.log('working???????');
-  //     // const check = handleSubmit();
-  //     // if (!check) {
-  //     //   // showToast('all field');
-  //     //   setLoading(false);
-  //     // } else {
-  //     const token = userData.accessToken;
-  //     console.log('checking that image is working?');
-  //     const resultAction = await dispatch(
-  //       editProfileImage({token: token, data: userInfo.profileImage}),
-  //     );
-  //     console.log(resultAction);
-  //     if (editProfileImage.fulfilled.match(resultAction)) {
-  //       // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
-  //       const user = resultAction.payload;
-  //       console.log('user data for update', user.data);
-  //       setLoading(false);
-  //       showToast('updated Successfully');
-  //       props.navigation.navigate('myProfile');
-  //     } else {
-  //       if (resultAction.payload) {
-  //         // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
-  //         // formikHelpers.setErrors(resultAction.payload.field_errors)
-  //         setLoading(false);
-  //         console.log('inside login 1', resultAction.payload);
-  //         showToast(resultAction.payload.message);
-  //       } else {
-  //         // showToast('error', `Update failed: ${resultAction.error}`)
-  //         console.log('inside login 2', resultAction.error);
-  //       }
-  //       setLoading(false);
-  //     }
-  //     // }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const profileImageHandler = async () => {
+    try {
+      // const check = handleSubmit();
+      // if (!check) {
+      //   // showToast('all field');
+      //   setLoading(false);
+      // } else {
+      // Display the key/value pairs
+      // for (var pair of data.entries()) {
+      //   console.log(pair[0] + ', ' + pair[1]);
+      // }
+
+      // console.log(token);
+      // console.log('checking that image is working?');
+
+      console.log(resultAction);
+
+      // }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <SafeAreaView

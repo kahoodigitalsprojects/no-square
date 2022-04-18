@@ -70,64 +70,36 @@ const Login = props => {
     }
   };
   const loginHandler = async () => {
-    setLoading(true);
-    const check = handleSubmit();
-    if (!check) {
-      setLoading(false);
-    } else {
-      const resultAction = await dispatch(login(userInfo));
-      if (login.fulfilled.match(resultAction)) {
-        // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+    try {
+      setLoading(true);
+      const check = handleSubmit();
+      if (!check) {
         setLoading(false);
-        const user = resultAction.payload;
-        // console.log('user payload', user.data.message);
-        dispatch(saveUserData({data: user.data.message}));
-        props.navigation.replace('MyDrawer', {screen: 'home'});
       } else {
-        if (resultAction.payload) {
-          // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
-          // formikHelpers.setErrors(resultAction.payload.field_errors)
-          console.log('inside login 1', resultAction.payload);
-          showToast(resultAction.payload);
+        const resultAction = await dispatch(login(userInfo));
+        if (login.fulfilled.match(resultAction)) {
+          // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+          setLoading(false);
+          const user = resultAction.payload;
+          // console.log('user payload', user.data.message);
+          dispatch(saveUserData({data: user.data.message}));
+          props.navigation.replace('MyDrawer', {screen: 'home'});
         } else {
-          // showToast('error', `Update failed: ${resultAction.error}`)
-          console.log('inside login 2', resultAction.error);
+          if (resultAction.payload) {
+            // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+            // formikHelpers.setErrors(resultAction.payload.field_errors)
+            console.log('inside login 1', resultAction.payload);
+            showToast(resultAction.payload);
+          } else {
+            // showToast('error', `Update failed: ${resultAction.error}`)
+            console.log('inside login 2', resultAction.error);
+          }
+          setLoading(false);
         }
-        setLoading(false);
       }
-      // .then(data =>{
-      //   console.log(data);
-      //   // authService.storeToken(data.payload.data.message.accessToken);
-      //   // console.log("asyncStorage : ,",authService.getToken());
-      //   dispatch(setSourceType(authService.getToken()));
-      //   props.navigation.replace('MyDrawer', {screen: 'home'});
-      // }).catch(error => {
-      //   console.log(error)
-      //   console.log(error.response.data);
-      // });
-      // setLoading(true);
-      // axios.post('/authentication/login',userInfo)
-      // .then(data =>{
-      //   console.log(data);
-      //         props.navigation.replace('MyDrawer', {screen: 'home'});
-      //   setLoading(false);
-      // }).catch(error=>{
-      //   if (error.response) {
-      //     // Request made and server responded
-      //     console.log(error.response.data);
-      //     showToast(error.response.data);
-      //     console.log(error.response.status);
-      //     console.log(error.response.headers);
-      //   } else if (error.request) {
-      //     // The request was made but no response was received
-      //     console.log(error.request);
-      //   } else {
-      //     // Something happened in setting up the request that triggered an Error
-      //     console.log('Error', error.message);
-      //   }
-      //   setLoading(false);
-      // })
-      // console.log("login :",userInfo);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
     }
   };
 
