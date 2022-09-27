@@ -5,7 +5,9 @@ import authSlice from './slices/authSlice';
 import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
 // import thunk from 'redux-thunk';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// import AsyncStorage from '@react-native-community/async-storage';
 
 const reducers = combineReducers({
   auth: authSlice,

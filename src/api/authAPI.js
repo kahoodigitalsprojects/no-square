@@ -1,7 +1,9 @@
 /* eslint-disable prettier/prettier */
 import axios from '.././http-common';
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-community/async-storage';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// import AsyncStorage from '@react-native-community/async-storage';
 export const login = createAsyncThunk(
   'auth/login',
   async (payload, {rejectWithValue}) => {
